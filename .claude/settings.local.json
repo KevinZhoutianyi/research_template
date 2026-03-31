@@ -1,0 +1,53 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python:*)",
+      "Bash(python3:*)",
+      "Bash(uv run python:*)",
+      "Bash(uv run:*)",
+
+      "Bash(ls:*)",
+      "Bash(cat:*)",
+      "Bash(find:*)",
+      "Bash(head:*)",
+      "Bash(tail:*)",
+      "Bash(wc:*)",
+      "Bash(du:*)",
+      "Bash(echo:*)",
+      "Bash(mkdir:*)",
+
+      "Bash(git:*)",
+
+      "Bash(module:*)",
+      "Bash(nvidia-smi:*)",
+
+      "Bash(sbatch:*)",
+      "Bash(scancel:*)",
+      "Bash(sinfo:*)",
+      "Bash(squeue:*)",
+
+      "Bash(ssh:*)",
+
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:arxiv.org)"
+    ],
+    "deny": [
+      "Bash(rm -rf:*)",
+      "Bash(rm -fr:*)",
+      "Bash(sudo rm:*)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ~/.claude/hooks/check_rm.py"
+          }
+        ]
+      }
+    ]
+  }
+}
