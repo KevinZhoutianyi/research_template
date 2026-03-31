@@ -73,13 +73,48 @@ The layout of code should be simple to follow above all else. This means the con
 
 When reporting results, configs, comparisons, or any structured information, use a markdown table instead of bullet points or paragraphs. Tables are easier to scan and compare at a glance. This applies to written reports, `tracking.md` entries, and printed experiment summaries.
 
+## Compute Environments
+
+I work across two clusters. Key differences are noted below.
+
+### Delta (NCSA)
+
+- Login: `delta.ncsa.illinois.edu`
+- Default storage for large files: `/data/PROJECT_NAME/`
+
+### Endeavour (USC CARC)
+
+- Login: `ssh tzhou029@endeavour.usc.edu` (requires USC VPN)
+- Lab allocation: `robinjia_875` (~60 A6000 GPUs, 20 A100 GPUs)
+- Personal lab space: `/project2/robinjia_875/tzhou029/`
+- Redirect HF model cache (home quota is small): `export HF_HOME=/project2/robinjia_875/tzhou029/.cache/huggingface`
+
+**Partitions:**
+
+| partition | use | GPU limit | notes |
+|---|---|---|---|
+| `nlp_hiprio` | default | 8 GPUs/student | priority access on condo nodes |
+| `nlp` | overflow | — | preemptible; checkpoint frequently |
+
+**GPUs:**
+- A6000 (48 GB): `--gres=gpu:a6000:1` — default choice
+- A100 (80 GB): `--gres=gpu:a100:1` — use only for large models that won't fit on A6000
+
+**Default resource request:** `--cpus-per-task=8 --mem=32G` — don't over-request shared node resources.
+
+**Check node availability:** `noderes -f -g -p nlp`
+
 ## File Storage
 
-All large files — model checkpoints, datasets, generated outputs, and anything that should not be committed to git — must be saved under `/data/PROJECT_NAME/`. Never save these inside the repository directory. Use the repo only for code, configs, and small result artifacts (e.g. figures, summary CSVs).
+All large files — model checkpoints, datasets, generated outputs, and anything that should not be committed to git — must be stored outside the repo. Use the repo only for code, configs, and small result artifacts (e.g. figures, summary CSVs).
 
-Suggested layout:
+**On Delta:** save under `/data/PROJECT_NAME/`
+
+**On Endeavour:** save under `/project2/robinjia_875/tzhou029/PROJECT_NAME/`
+
+Suggested layout (same on both clusters):
 ```
-/data/PROJECT_NAME/
+<base_path>/PROJECT_NAME/
   checkpoints/   # model weights saved during training
   datasets/      # raw and preprocessed data
   outputs/       # large generated outputs (e.g. decoded sequences, embeddings)
