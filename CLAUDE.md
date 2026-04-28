@@ -57,3 +57,45 @@ Each entry contains:
 | ETA | UTC finish time, from recent epoch timing | `Mar 27 ~18:30 UTC` |
 
 Update at the start of each session **and** whenever any status changes. Always include ETAs for running experiments.
+
+---
+
+## 4. Surgical Changes
+
+Touch only what you must. Clean up only your own mess.
+
+When editing existing code:
+
+- Don't "improve" adjacent code, comments, or formatting.
+- Don't refactor things that aren't broken.
+- Match existing style, even if you'd do it differently.
+- If you notice unrelated dead code, mention it — don't delete it.
+
+When your changes create orphans:
+
+- Remove imports/variables/functions that YOUR changes made unused.
+- Don't remove pre-existing dead code unless asked.
+
+The test: every changed line should trace directly to the user's request.
+
+---
+
+## 5. Verify Each Step
+
+Transform tasks into verifiable goals and loop until verified.
+
+For multi-step tasks, state a brief plan:
+
+```
+1. [Step] → verify: [check]
+2. [Step] → verify: [check]
+3. [Step] → verify: [check]
+```
+
+Examples:
+
+- "Add validation" → write tests for invalid inputs, then make them pass.
+- "Fix the bug" → write a test that reproduces it, then make it pass.
+- "Refactor X" → ensure tests pass before and after.
+
+Strong success criteria let you loop independently. Weak criteria ("make it work") require clarification — ask before starting.
