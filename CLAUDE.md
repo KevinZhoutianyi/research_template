@@ -29,34 +29,35 @@ For results, configs, comparisons, or any structured information, use a markdown
 
 ---
 
-## 3. Session Tracking (`tracking.md`)
+## 3. Research Tracking (`tracking.md`)
 
-Maintain `tracking.md` at the repo root. **Add a new entry at the start of every working session.** This is the running research log — it must make it possible to pick up exactly where you left off after any break.
+Maintain a single `tracking.md` at the repo root. **Update it in place — never append new dated entries.** It is a living document, not a chronological log.
 
-Each entry contains:
+Structure:
 
-- Date + time the session started
-- One-line focus summary
-- Status table covering all active and recently completed runs (columns below)
-- Findings, surprises, next steps
+```
+## Goal
+One sentence: the project's ultimate research question.
 
-**Required status-table columns:**
+---
 
-| experiment | method | task | epoch | stage | val acc | status | ETA |
-|---|---|---|---|---|---|---|---|
+## Subgoal N: <name> (<status>)
+One sentence: what this subgoal establishes toward the goal.
 
-| column | format | example |
-|---|---|---|
-| experiment | directory name | `01_small_superposition_reachability` |
-| method | model + key hyperparams | `Coconut (bs=128, lr=1e-4)` |
-| task | one-line description | `binary reachability` |
-| epoch | `current/total` | `167/300` |
-| stage | curriculum stage if any | `4/4` |
-| val acc | `correct/total = %` | `238/258 = 92.2%` |
-| status | running/complete/queued/crashed | `running (GPUs 0,1)` |
-| ETA | UTC finish time, from recent epoch timing | `Mar 27 ~18:30 UTC` |
+- **<experiment>**: <result or status>
+- **<experiment>**: <result or status>
 
-Update at the start of each session **and** whenever any status changes. Always include ETAs for running experiments.
+---
+(repeat for each subgoal)
+
+## Next steps
+- ...
+```
+
+Rules:
+- Every experiment must live under a subgoal. If it doesn't trace back to the goal, ask why we're running it.
+- When a run completes, update its entry under the relevant subgoal with the finding.
+- Keep active run status (job ID, ETA) inline with the experiment bullet.
 
 ---
 
