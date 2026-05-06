@@ -77,13 +77,63 @@ Rules:
 
 ---
 
-## 4. Git: Commit and Push
+## 4. Rigorous Claims
+
+`tracking.md`, slides, and paper drafts all argue for claims using evidence. Each claim must be calibrated to its evidence — not stronger, not weaker. The rules below catch the most common ways claims drift away from data.
+
+### Calibrate claim strength to evidence
+
+If the data supports the claim for 10/15 cases, write "for 10/15 cases" — not "the claim holds." If a finding is partial, say "partial." If a result depends on a single seed or a single setting, note the lack of robustness. If a claim depends on a deleted experiment whose data isn't currently in the repo, note that. Reviewers will find these gaps; flag them yourself.
+
+### Classify each piece of evidence
+
+For every entry in `tracking.md`'s **Evidence** section, classify it as one of:
+
+- **Central** — discriminates the hypotheses. If theory 1 and theory 2 predict different outcomes and the data picks one, it's central evidence.
+- **Sanity check** — confirms a basic phenomenon. Both hypotheses predict the same outcome here. The result tells us "the experimental setup is working" but not "which theory is right."
+- **Supporting** — consistent with the claim but not a discriminator. Includes methodological controls (e.g., that the metric is well-formed), generalization tests, robustness checks.
+
+State each piece's classification explicitly. Otherwise sanity checks get cited as if they were central evidence.
+
+### Articulate both hypotheses' predictions before running a control
+
+Before designing or running a control experiment, write down both hypotheses and what each predicts the result will be. If both predict the same thing, the control is a sanity check, not a discriminator — useful, but it doesn't push between hypotheses. Note this in the run.py docstring and in tracking.md.
+
+This catches the failure mode of running a control, getting a result, and only later realizing it was consistent with everything you were testing.
+
+### Caveats inline
+
+Each result statement includes its methodological caveats inline:
+
+- If a comparison is asymmetric (e.g., "max over 30 random seeds" vs "single concept extraction"), say so where you state the result.
+- If a test is single-seed or single-setting, say so.
+- If a finding depends on an exp that didn't fully complete (partial data, manual recovery from logs), say so.
+
+### Audit downstream when deleting an experiment
+
+When pruning an experiment from the repo, search `tracking.md`, slide decks, weekly updates, and paper drafts for downstream citations of its findings. Either:
+
+- remove those citations, or
+- demote them to a side-note that explicitly says "this finding lives in git history at commit `<hash>`, not in the current repo."
+
+Otherwise the live document keeps citing data that the reader can no longer reproduce.
+
+### Plain-language gloss
+
+Any technical claim in `tracking.md`, slides, or paper drafts has a plain-English gloss within one paragraph. If a non-specialist reader can't restate the claim in their own words, the gloss is missing. Examples:
+
+- "self-output prediction over a manipulated residual stream" → add: "the model is just running its normal next-token prediction on activations we tampered with — it doesn't notice the tampering, it just produces the output most consistent with whatever state we left it in."
+- "z-score above the same-random distribution" → add: "the concept's measured value is more than 2 standard deviations above the random-vector baseline — i.e., not explained by random chance."
+
+---
+
+## 5. Git: Commit and Push
 
 When adding a new experiment, updating tracking.md, or making any substantive change, **commit and push immediately** — don't wait for the user to ask. The user should never have to manually push.
 
 ---
 
-## 5. Surgical Changes
+## 6. Surgical Changes
 
 Touch only what you must. Clean up only your own mess.
 
@@ -103,7 +153,7 @@ The test: every changed line should trace directly to the user's request.
 
 ---
 
-## 6. Verify Each Step
+## 7. Verify Each Step
 
 Transform tasks into verifiable goals and loop until verified.
 

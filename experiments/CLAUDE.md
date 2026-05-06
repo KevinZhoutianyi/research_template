@@ -137,3 +137,33 @@ Any hyperparameter that affects results must be logged before the run begins.
 ### Job monitoring
 
 After submitting a SLURM job, **do not return control to the user and wait for them to ask about results**. Instead, sleep and poll `squeue` / log files periodically until the job finishes, then report the final results (val acc, train acc, probe figures, errors). The user should see the outcome without having to ask.
+
+---
+
+## 6. Smoke-test expensive jobs
+
+Before submitting any SLURM job that takes more than ~30 minutes, run a smoke-test pass that exercises the full code path on a tiny scale:
+
+- Load the model.
+- Run **one** iteration / one sample / one evaluation step.
+- Save a small `results.json` (or whatever the real run will save).
+
+If the smoke test passes, submit the full job. If it fails, fix the bug locally and re-smoke before requeuing.
+
+This catches the common failure modes that make a long job worthless: model offload bugs, meta-tensor errors, missing files, broken save paths, malformed configs. A 5-minute smoke test in front of a 4-hour run pays for itself the first time it catches anything.
+
+You can implement this by parameterizing the run script (`--smoke` flag that limits to N=1 iteration and exits after save) or by submitting with `--time=00:05:00` first.
+
+---
+
+## 7. Don't rename directories with running jobs
+
+Before any folder rename or file move that affects an experiment's `output_dir`, run `squeue -u $USER` and confirm no running job has captured that path. Otherwise, the job will run to completion in memory but crash at save time when the directory it expects to write to no longer exists at the original path.
+
+If a relevant job is running:
+
+- wait for it to finish, **or**
+- save its results to a different path and migrate after, **or**
+- defer the rename until the next clean state.
+
+Same rule for git operations (`git mv`, branch switches with uncommitted dir renames) — they look local but break running jobs that hold the old path string.
