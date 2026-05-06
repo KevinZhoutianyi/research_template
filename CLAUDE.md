@@ -31,37 +31,59 @@ For results, configs, comparisons, or any structured information, use a markdown
 
 ## 3. Research Tracking (`tracking.md`)
 
-Maintain a single `tracking.md` at the repo root. **Update it in place — never append new dated entries.** It is a living document, not a chronological log.
+Maintain a single `tracking.md` at the repo root. **Update it in place — never append new dated entries.** It is a living document, not a chronological log. It should read like a paper pitch — someone reading it top to bottom should understand the thesis, the claims, the evidence, and the gaps.
 
 Structure:
 
 ```
 ## Goal
-One sentence: the project's ultimate research question.
+One sentence: the project's thesis.
+Brief explanation: what theory predicts, why it fails in practice, what we show.
+
+---
+
+## Outline
+Paper outline mapping sections to subgoals. Keeps the document connected to the final deliverable.
 
 ---
 
 ## Subgoal N: <name> (<status>)
-One sentence: what this subgoal establishes toward the goal.
+**Claim:** One sentence stating what this subgoal proves.
 
-- **<experiment>**: <result or status>
-- **<experiment>**: <result or status>
+### Evidence: <experiment name>
+Results tables, key findings, probe figures.
+
+### Context: <external work>
+Brief note on related prior work that is context, not our contribution.
 
 ---
 (repeat for each subgoal)
+
+## Related Work
+Table of papers with columns: Paper | Relation to our work.
+Each entry explains how the paper supports or contrasts with our claims.
 
 ## Next steps
 - ...
 ```
 
 Rules:
+- Every subgoal states a **claim**, not just "test X." The claim is what we want the evidence to prove.
 - Every experiment must live under a subgoal. If it doesn't trace back to the goal, ask why we're running it.
 - When a run completes, update its entry under the relevant subgoal with the finding.
 - Keep active run status (job ID, ETA) inline with the experiment bullet.
+- External papers go in the **Related Work** table, not inline in subgoals. Subgoals contain our evidence; related work explains how others' results support or contrast with our claims.
+- Distinguish **context** (prior work already solved this) from **our contribution** (we show this).
 
 ---
 
-## 4. Surgical Changes
+## 4. Git: Commit and Push
+
+When adding a new experiment, updating tracking.md, or making any substantive change, **commit and push immediately** — don't wait for the user to ask. The user should never have to manually push.
+
+---
+
+## 5. Surgical Changes
 
 Touch only what you must. Clean up only your own mess.
 
@@ -81,7 +103,7 @@ The test: every changed line should trace directly to the user's request.
 
 ---
 
-## 5. Verify Each Step
+## 6. Verify Each Step
 
 Transform tasks into verifiable goals and loop until verified.
 

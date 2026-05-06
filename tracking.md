@@ -1,20 +1,55 @@
-# Research Tracking Log
+# Research Tracking
+
+## Goal
+
+One sentence: the project's thesis.
+
+Brief explanation: what theory predicts, why it fails/holds in practice, what we show.
 
 ---
 
-<!-- Add new entries at the top, newest first. -->
-<!-- Template for each entry:
+## Outline
 
-## YYYY-MM-DD HH:MM
+<!-- Map paper sections to subgoals. Update as the story evolves. -->
 
-**Focus:** <one-line summary of this session's goal>
+| Section | Content | Subgoal |
+|---|---|---|
+| Introduction | Thesis + motivation | Goal |
+| Section 2 | ... | Subgoal 1 |
+| Section 3 | ... | Subgoal 2 |
+| Section N | ... | Subgoal N |
+| Related Work | Position vs. prior work | Related Work |
 
-**Active runs:**
+---
 
-| experiment | method | task | epoch | stage | val acc | status | ETA |
-|---|---|---|---|---|---|---|---|
-| | | | | | | | |
+## Subgoal 1: <name> (<status>)
 
-**Next:** <what to do next session>
+**Claim:** One sentence stating what this subgoal proves.
 
--->
+### Evidence: <experiment name>
+
+<!-- Results tables, key findings, probe figures. -->
+
+### Context: <prior work if relevant>
+
+<!-- Brief note on related prior work that is context, not our contribution. -->
+
+---
+
+## Subgoal 2: <name> (<status>)
+
+**Claim:** ...
+
+---
+
+## Related Work
+
+| Paper | Relation to our work |
+|---|---|
+| **Name** (Author, Year) | How it supports or contrasts with our claims. |
+
+---
+
+## Next steps
+
+- ...
