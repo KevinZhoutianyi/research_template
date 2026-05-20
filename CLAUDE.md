@@ -196,9 +196,19 @@ State each piece's classification explicitly. Otherwise sanity checks get cited 
 
 ### Articulate both hypotheses' predictions before running a control
 
-Before designing or running a control experiment, write down both hypotheses and what each predicts the result will be. If both predict the same thing, the control is a sanity check, not a discriminator — useful, but it doesn't push between hypotheses. Note this in the run.py docstring and in tracking.md.
+Before designing or running a control experiment, write down both hypotheses and what each predicts the result will be. If both predict the same thing, the control is a sanity check, not a discriminator — useful, but it doesn't push between hypotheses. Note this in the run.py docstring and in `paper.md`.
 
 This catches the failure mode of running a control, getting a result, and only later realizing it was consistent with everything you were testing.
+
+### State an explicit Falsifier for every prediction
+
+Every experiment plan (in `run.py` docstring, in `paper.md`'s Evidence section, and in any pre-experiment plan document) must include an explicit **Falsifier** clause: *the observation that would knock down the predicted result*. Phrase it as concretely as the prediction: "If X reaches Y under condition Z, the cascade-essential claim is challenged." Treat the Falsifier as a non-optional companion to the Predicted-Outcome.
+
+Why this matters:
+
+- Without a stated falsifier, any result drifts into being "consistent with the existing theory" post-hoc. The falsifier locks in ex ante what would force a re-read.
+- It also disciplines the prediction: if you can't write a concrete falsifier, the prediction is too vague to test.
+- When the data lands, the falsifier is what you check first — if it triggered, the section's claim must be weakened or rewritten before the result is integrated.
 
 ### Caveats inline
 
