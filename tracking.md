@@ -52,16 +52,27 @@ the alternative interpretation prior work did not rule out.]
 
 ## Outline — N subgoals and how we achieve each
 
-<!-- The Outline is a *table*, not prose. Each row pairs a subgoal with
-the concrete experiment(s) that establish it. This keeps every experiment
-traceable to the goal. -->
+<!-- KEY PATTERN: the Outline is the paper's argument in compressed form.
+Each row reads left-to-right as a self-contained chain:
+  Question we asked → What we did to answer it → What we showed →
+  Therefore (what it implies + where it leads next).
 
-| § | Subgoal | How we achieve it |
-|---|---|---|
-| §1 | **Phenomenon** — replicate prior work under a fair measurement | [Exp A/01] under counterbalanced labels + cross-model check |
-| §2 | **Controls** — discriminate theory 1 vs theory 2 | [Exp B/01] matched random + [Exp B/02] z-score test |
-| §3 | **Mechanism** — where in the system does the effect form? | [Exp C/01] localization + [Exp C/02] direct test + ... |
-| §4 | **Origin** (planned) — when in training does this form? | [Exp D/01] training-checkpoint sweep |
+Rules for cells:
+  - Plain language only. No symbol-only shorthand (no L=63, cos(δ, v),
+    etc.). If you must use a technical term, define it elsewhere and
+    refer by name.
+  - Each cell is 1–3 short sentences. Detailed numbers stay in the
+    section below; the Outline is the abstract.
+  - "Therefore" must point at the *next* section (→ §N) or at the
+    headline implication. This is what makes the Outline read as an arc
+    instead of a list. -->
+
+| § | Question | What we did | What we showed | Therefore → |
+|---|---|---|---|---|
+| **§1 Phenomenon** | [Does the observation prior work claims actually hold under a fair measurement?] | [Re-ran the canonical experiment with the obvious confounds removed; tested at small scale for robustness.] | [The phenomenon is real but [varies with X]; not explained by [confound A or B].] | [The phenomenon exists, but the variation is what needs explaining. → §2] |
+| **§2 Controls** | [What's actually causing the observed effect — theory 1 (concept-specific) or theory 2 (alternative)?] | [First tried the naive control X. When that failed, noticed property Y in the data. Built a refined control matching property Y. Stress-tested.] | [The naive control failed; the refined control reproduced the effect *without* the property theory 1 requires. Theory 1 falsified for the majority of cases.] | [The trigger is [property Y], not [theory 1's mechanism]. Open question: how does property Y produce the output? → §3] |
+| **§3 Mechanism** | [N mechanistic questions in order: (1) where? (2) one feature or many? (3) is step A alone enough? (4) feature 1 or feature 2? (5) ...] | [Localization probe; single-axis predictor test; direct injection of the candidate feature; falsification test of a candidate alternative.] | [(1) Localized to [region X]. (2) Multi-dimensional. (3) [Step A] alone is *not* enough — the cascade through [steps B] is essential. (4) [feature 2], not [feature 1].] | [The effect is the system's normal output behavior conditioned on a perturbed state, not a dedicated detector. → §4] |
+| **§4 Origin** *(planned)* | [When during training does the [readout-layer geometry / capability / mechanism] form? Is it [post-training-specific] or [already present in pretraining]?] | [(planned) Run §1 + §2 measurements across intermediate training checkpoints; compare emergence trajectory to other capabilities.] | *(predicted)* [The mechanism emerges with general-output capability during pretraining, not as a separate post-training milestone.] | [If predicted: the phenomenon is a side-effect of general capability geometry. If falsified: it's genuinely [post-training-specific]. Either way, sharpens the headline claim.] |
 
 ---
 

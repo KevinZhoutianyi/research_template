@@ -93,7 +93,16 @@ Canonical structure (see `tracking.md` for fully-fleshed-out examples of each):
 
 - The Goal section opens with a **plain-language setup** (3–6 sentences a non-specialist can follow) before any technical claim. Then states the **thesis** in one sentence. Then a "**prior work and what makes the question hard**" subsection that names the competing theories.
 - When the project has competing theories (the typical case), include an explicit **theory-1 vs theory-2 table** showing what each predicts in the standard experiment and what a discriminating test would look like. This sets up §1 phenomenon and §2 controls; without it, the document reads as a list of results with no through-line.
-- The Outline is a **subgoal-to-experiment table**, not a section list. Every subgoal row names the concrete experiment(s) that achieve it. If a subgoal has no concrete experiment, that's a planning bug, not a documentation choice.
+
+**Outline rules.**
+
+- The Outline is the **paper's argument in compressed form**, not a list of section names. Each row reads left-to-right as a self-contained chain: **Question we asked → What we did to answer it → What we showed → Therefore (what it implies + where it leads).**
+- Use a four-column table: `§ | Question | What we did | What we showed | Therefore →`.
+- **Plain language only in Outline cells.** No symbol-only shorthand (no `L=63`, no `cos(δ, v)`, no compact equations). If a term is unavoidable, define it elsewhere and refer to it by name. The Outline is what a non-specialist reads to understand the paper; if they can't follow it, the technical detail in the sections below is wasted on them.
+- Each cell is 1–3 short sentences. Detailed numbers and per-experiment evidence stay in §1–§N below; the Outline is the abstract.
+- The "Therefore" column must point at the *next* section (→ §N) or at the headline implication. This is what makes the Outline read as an *arc* instead of a *list*.
+- For planned sections, mark the row `(planned)` and write "What we showed" as `(predicted)`. The "Therefore" column should state both the prediction and what would falsify it, so reviewers can see the discriminator before any data lands.
+- Every subgoal still names the concrete experiment(s) that achieve it — usually in "What we did". If a subgoal has no concrete experiment, that's a planning bug, not a documentation choice.
 
 **§2 (controls / discriminators) rules.**
 
