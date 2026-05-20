@@ -74,6 +74,7 @@ Rules:
 - Keep active run status (job ID, ETA) inline with the experiment bullet.
 - External papers go in the **Related Work** table, not inline in subgoals. Subgoals contain our evidence; related work explains how others' results support or contrast with our claims.
 - Distinguish **context** (prior work already solved this) from **our contribution** (we show this).
+- **Mechanism sections should be Q&A, not lists of facts.** When a section explains a mechanism, structure the opener as explicit questions ("Q1. Where in the system does the effect form? A: ..."). Each Q maps to one subsection and gets a one-sentence answer with citation. A reader scanning the section should be able to extract the mechanism claims from the Q&A alone — the experiments answer them, they don't replace them. See the §3 Mechanism block in the `tracking.md` template.
 
 ---
 
