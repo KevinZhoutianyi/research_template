@@ -33,38 +33,49 @@ For results, configs, comparisons, or any structured information, use a markdown
 
 Maintain a single `tracking.md` at the repo root. **Update it in place — never append new dated entries.** It is a living document, not a chronological log. It should read like a paper pitch — someone reading it top to bottom should understand the thesis, the claims, the evidence, and the gaps.
 
-Structure:
+**The `tracking.md` at the repo root is the canonical template.** Read it before starting, and copy its section structure and patterns into the live document for your project. The rules below describe *why* it's structured that way; the template shows *how* to apply them concretely. When you modify `tracking.md` for a real project, the patterns in the template (Q&A mechanism sections, evidence classification, discovery-arc narration, "what we do NOT claim" calibration, appendices) are not optional decorations — they are the rules in action.
+
+Canonical structure (see `tracking.md` for fully-fleshed-out examples of each):
 
 ```
 ## Goal
-One sentence: the project's thesis.
-Brief explanation: what theory predicts, why it fails in practice, what we show.
-
----
+  - Plain-language setup (3–6 sentences a non-specialist can follow)
+  - Thesis (one sentence)
+  - Prior work and what makes the question hard (with a theory-1 vs theory-2 table)
 
 ## Outline
-Paper outline mapping sections to subgoals. Keeps the document connected to the final deliverable.
+  Subgoal-to-experiment table. Every subgoal names the concrete experiment(s) that achieve it.
 
----
+## §N Subgoal: <name> (<status>)
+  - **Claim:** one sentence stating what this subgoal proves.
+  - **Evidence:** experiments under this subgoal, each tagged Central / Sanity check / Supporting.
+  - **Context:** prior work positioning.
 
-## Subgoal N: <name> (<status>)
-**Claim:** One sentence stating what this subgoal proves.
+  Special pattern for §2 controls: include a "discovery arc" narrating how the
+  controls developed (observation → naive control → loophole → refined control →
+  discriminator), so readers see *why* the naive version wasn't enough.
 
-### Evidence: <experiment name>
-Results tables, key findings, probe figures.
-
-### Context: <external work>
-Brief note on related prior work that is context, not our contribution.
-
----
-(repeat for each subgoal)
+  Special pattern for §3 mechanism: structure as explicit Q&A.
+  Each Q maps to a subsection; each gets a one-sentence answer with citation.
+  Synthesis recaps Q&A in a single table + names what we explicitly do NOT claim.
 
 ## Related Work
-Table of papers with columns: Paper | Relation to our work.
-Each entry explains how the paper supports or contrasts with our claims.
+  Table of papers with columns: Paper | Relation to our work.
 
-## Next steps
-- ...
+## Status (live)
+  - Active runs (job ID, ETA, purpose)
+  - Recently completed (finding, where integrated)
+  - Recently failed jobs (failure mode, resolution) — so failures aren't re-attempted blindly
+  - Next steps
+
+## Reframing for slides
+  Terse one-phrase-per-subgoal list; checks that slide story matches document story.
+
+## Appendix A — Key terms
+  Definitions of technical terms, so the body links here instead of defining inline.
+
+## Appendix B — How to read the metrics
+  Primary metric definition, common-confusion pre-empt, z-score formula.
 ```
 
 Rules:
@@ -74,7 +85,9 @@ Rules:
 - Keep active run status (job ID, ETA) inline with the experiment bullet.
 - External papers go in the **Related Work** table, not inline in subgoals. Subgoals contain our evidence; related work explains how others' results support or contrast with our claims.
 - Distinguish **context** (prior work already solved this) from **our contribution** (we show this).
-- **Mechanism sections should be Q&A, not lists of facts.** When a section explains a mechanism, structure the opener as explicit questions ("Q1. Where in the system does the effect form? A: ..."). Each Q maps to one subsection and gets a one-sentence answer with citation. A reader scanning the section should be able to extract the mechanism claims from the Q&A alone — the experiments answer them, they don't replace them. See the §3 Mechanism block in the `tracking.md` template.
+- **Mechanism sections should be Q&A, not lists of facts.** Each Q maps to one subsection and gets a one-sentence answer with citation. A reader scanning the section should be able to extract the mechanism claims from the Q&A alone.
+- **Technical terms go in an appendix and are linked from the body.** Keeps the main narrative readable. Do not define terms inline more than once.
+- **Document failures.** A failed-jobs table prevents the same broken approach from being re-attempted.
 
 ---
 
