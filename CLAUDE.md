@@ -29,13 +29,22 @@ For results, configs, comparisons, or any structured information, use a markdown
 
 ---
 
-## 3. Research Tracking (`tracking.md`)
+## 3. Research Tracking — two files: `paper.md` + `tracking.md`
 
-Maintain a single `tracking.md` at the repo root. **Update it in place — never append new dated entries.** It is a living document, not a chronological log. It should read like a paper pitch — someone reading it top to bottom should understand the thesis, the claims, the evidence, and the gaps.
+The repo root holds **two living documents**, with a strict split:
 
-**The `tracking.md` at the repo root is the canonical template.** Read it before starting, and copy its section structure and patterns into the live document for your project. The rules below describe *why* it's structured that way; the template shows *how* to apply them concretely. When you modify `tracking.md` for a real project, the patterns in the template (Q&A mechanism sections, evidence classification, discovery-arc narration, "what we do NOT claim" calibration, appendices) are not optional decorations — they are the rules in action.
+| File | Holds | Reader question it answers |
+|---|---|---|
+| `paper.md` | The **argument** — goal, thesis, outline, per-section evidence, related work, slide reframing, detail appendices. | "What are we claiming and what's the evidence?" |
+| `tracking.md` | The **status** — active runs, recently completed jobs (with one-line result), recently failed jobs (with diagnostic + resolution), next steps. Each row cross-references the `paper.md` section it serves. | "What's running, what just landed, what failed?" |
 
-Canonical structure (see `tracking.md` for fully-fleshed-out examples of each):
+**Both are updated in place — never append dated entries.** They are living documents, not chronological logs.
+
+The split exists so the argument doesn't get cluttered with job IDs and the status doesn't get cluttered with theory. When in doubt: anything an outside reader of the paper would care about → `paper.md`; anything only the project team cares about → `tracking.md`.
+
+**Both files at the repo root are canonical templates.** Read them before starting, and copy their section structure and patterns into the live documents for your project. The rules below describe *why* they're structured that way; the templates show *how* to apply them concretely. The patterns (Q&A mechanism sections, evidence classification, discovery-arc narration, "what we do NOT claim" calibration, plain-language Outline, narrative-vs-appendix split, mandatory failed-jobs table) are not optional decorations — they are the rules in action.
+
+### `paper.md` structure (the argument)
 
 ```
 ## Goal
@@ -44,11 +53,13 @@ Canonical structure (see `tracking.md` for fully-fleshed-out examples of each):
   - Prior work and what makes the question hard (with a theory-1 vs theory-2 table)
 
 ## Outline
-  Subgoal-to-experiment table. Every subgoal names the concrete experiment(s) that achieve it.
+  Four-column table per section: Question | What we did | What we showed | Therefore →
+  Plain language only — no symbol-only shorthand. Detailed numbers live in §N below.
 
 ## §N Subgoal: <name> (<status>)
   - **Claim:** one sentence stating what this subgoal proves.
   - **Evidence:** experiments under this subgoal, each tagged Central / Sanity check / Supporting.
+    Body keeps only headline + plain-language reading + caveat + pointer; detail tables go in Appendix C+.
   - **Context:** prior work positioning.
 
   Special pattern for §2 controls: include a "discovery arc" narrating how the
@@ -59,14 +70,10 @@ Canonical structure (see `tracking.md` for fully-fleshed-out examples of each):
   Each Q maps to a subsection; each gets a one-sentence answer with citation.
   Synthesis recaps Q&A in a single table + names what we explicitly do NOT claim.
 
+  Planned sections (§4 origin, etc.): frame as prediction-to-test, not a result.
+
 ## Related Work
   Table of papers with columns: Paper | Relation to our work.
-
-## Status (live)
-  - Active runs (job ID, ETA, purpose)
-  - Recently completed (finding, where integrated)
-  - Recently failed jobs (failure mode, resolution) — so failures aren't re-attempted blindly
-  - Next steps
 
 ## Reframing for slides
   Terse one-phrase-per-subgoal list; checks that slide story matches document story.
@@ -76,18 +83,46 @@ Canonical structure (see `tracking.md` for fully-fleshed-out examples of each):
 
 ## Appendix B — How to read the metrics
   Primary metric definition, common-confusion pre-empt, z-score formula.
+
+## Appendix C, D, ... — Per-experiment detail dumps
+  Large tables (per-bucket pass-rates, top-N rankings, counter-example tables,
+  off-distribution diagnostics, full sweeps) live in their own appendix.
+  The §N body carries a pointer "→ See Appendix X" instead of inlining the data.
 ```
+
+### `tracking.md` structure (the status)
+
+```
+## Active runs
+  Table: job | exp | status | serves paper.md § | note
+
+## Recently completed jobs
+  Table: job | exp | serves paper.md § | result (one-line)
+
+## Recently failed jobs
+  Table: job | exp | failure mode | resolution
+  MANDATORY — failures aren't re-attempted blindly.
+
+## Next steps
+  Numbered list, each step naming which paper.md § it serves.
+```
+
+### When a job completes (cross-document workflow)
+
+1. Move its row in `tracking.md` from **Active runs** → **Recently completed jobs** (keep the row; it's the historical record).
+2. Integrate the finding into the relevant `paper.md` § evidence section: update the headline number, the plain-language reading, and any new caveat. If the finding produces a wall of numbers (per-bucket, top-N, sweep), put those in an appendix and link from §N.
+3. If the job *failed*, instead move it to **Recently failed jobs** with the diagnostic and the resolution (or "blocked on X"). Do not silently delete failed-job rows — they prevent re-attempting the same broken approach.
 
 ### Rules
 
-**Per-subgoal rules.**
+**Per-subgoal rules (paper.md).**
 
-- Every subgoal states a **claim**, not just "test X." The claim is what we want the evidence to prove.
-- Every experiment must live under a subgoal. If it doesn't trace back to the goal, ask why we're running it.
-- When a run completes, update its entry under the relevant subgoal with the finding.
-- Keep active run status (job ID, ETA) inline with the experiment bullet.
+- Every subgoal in `paper.md` states a **claim**, not just "test X." The claim is what we want the evidence to prove.
+- Every experiment in `tracking.md` must cross-reference the `paper.md` § it serves. If it doesn't trace back to the paper, ask why we're running it.
+- Job IDs and ETAs do NOT belong inline in `paper.md` subgoals — they live in `tracking.md`'s Active runs table.
+- When a run completes, follow the cross-document workflow above: move the `tracking.md` row to Recently completed, then integrate the finding into the relevant `paper.md` § evidence section.
 - Distinguish **context** (prior work already solved this) from **our contribution** (we show this).
-- External papers go in the **Related Work** table, not inline in subgoals. Subgoals contain our evidence; related work explains how others' results support or contrast with our claims.
+- External papers go in `paper.md`'s **Related Work** table, not inline in subgoals. Subgoals contain our evidence; related work explains how others' results support or contrast with our claims.
 
 **Goal-section rules.**
 
@@ -121,16 +156,19 @@ Canonical structure (see `tracking.md` for fully-fleshed-out examples of each):
 
 - Frame planned sections as a **prediction to test**, not a result. State what each theory predicts the experiment will show. The status of the section should be `(planned)` or `(in progress)`, not omitted.
 
-**Status and history rules.**
+**Status and history rules (tracking.md).**
 
-- Maintain three live tables at the bottom: **Active runs** (job ID, ETA, purpose), **Recently completed** (finding + where integrated above), **Recently failed jobs** (failure mode + resolution).
-- The **failed-jobs table is mandatory.** Document each failure with the diagnostic and the workaround (or "blocked on X"). Otherwise future attempts re-hit the same wall blindly.
+- Maintain three live tables in `tracking.md`: **Active runs** (job ID, ETA, purpose, serves paper.md §), **Recently completed jobs** (serves paper.md §, one-line result), **Recently failed jobs** (failure mode + resolution).
+- **Every row in tracking.md must cross-reference the paper.md § it serves.** Without that link, tracking.md drifts back into being a chronological log disconnected from the argument.
+- The **failed-jobs table is mandatory.** Document each failure with the diagnostic and the resolution (or "blocked on X"). Otherwise future attempts re-hit the same wall blindly.
+- Status tables go in `tracking.md`, NOT in `paper.md`. The argument document stays clean of job IDs and queue state.
 
 **Appendix rules.**
 
 - Technical terms go in **Appendix A**; the body links to them on first use. Do not redefine inline.
 - Metric definitions, common-confusion pre-empts, and statistical formulas (z-score, effect size, etc.) go in **Appendix B**. The body cites the metric by name and links to Appendix B for the formula.
-- These appendices are not optional. They are what makes the main body read top-to-bottom; without them, technical definitions clutter the narrative.
+- **Per-experiment detail tables go in their own appendix** (Appendix C, D, …, one per major experiment). This includes: per-bucket / per-condition pass-rate tables, top-N rankings, counter-example tables, off-distribution diagnostics, full hyperparameter sweeps. The body keeps only: (a) one **headline** sentence with the bottom-line number, (b) the **plain-language reading** of the result, (c) any single caveat that changes the interpretation (e.g., "concrete-bucket failures are off-distribution, not 'no' "), and (d) a pointer "→ See Appendix X". The principle: a reader scanning the body sees the *argument*; a reader who wants the data follows the link.
+- These appendices are not optional. They are what makes the main body read top-to-bottom; without them, technical definitions and detail dumps clutter the narrative.
 
 **Slide-deck sanity-check rule.**
 
