@@ -78,16 +78,54 @@ Canonical structure (see `tracking.md` for fully-fleshed-out examples of each):
   Primary metric definition, common-confusion pre-empt, z-score formula.
 ```
 
-Rules:
+### Rules
+
+**Per-subgoal rules.**
+
 - Every subgoal states a **claim**, not just "test X." The claim is what we want the evidence to prove.
 - Every experiment must live under a subgoal. If it doesn't trace back to the goal, ask why we're running it.
 - When a run completes, update its entry under the relevant subgoal with the finding.
 - Keep active run status (job ID, ETA) inline with the experiment bullet.
-- External papers go in the **Related Work** table, not inline in subgoals. Subgoals contain our evidence; related work explains how others' results support or contrast with our claims.
 - Distinguish **context** (prior work already solved this) from **our contribution** (we show this).
-- **Mechanism sections should be Q&A, not lists of facts.** Each Q maps to one subsection and gets a one-sentence answer with citation. A reader scanning the section should be able to extract the mechanism claims from the Q&A alone.
-- **Technical terms go in an appendix and are linked from the body.** Keeps the main narrative readable. Do not define terms inline more than once.
-- **Document failures.** A failed-jobs table prevents the same broken approach from being re-attempted.
+- External papers go in the **Related Work** table, not inline in subgoals. Subgoals contain our evidence; related work explains how others' results support or contrast with our claims.
+
+**Goal-section rules.**
+
+- The Goal section opens with a **plain-language setup** (3–6 sentences a non-specialist can follow) before any technical claim. Then states the **thesis** in one sentence. Then a "**prior work and what makes the question hard**" subsection that names the competing theories.
+- When the project has competing theories (the typical case), include an explicit **theory-1 vs theory-2 table** showing what each predicts in the standard experiment and what a discriminating test would look like. This sets up §1 phenomenon and §2 controls; without it, the document reads as a list of results with no through-line.
+- The Outline is a **subgoal-to-experiment table**, not a section list. Every subgoal row names the concrete experiment(s) that achieve it. If a subgoal has no concrete experiment, that's a planning bug, not a documentation choice.
+
+**§2 (controls / discriminators) rules.**
+
+- §2 must include a **discovery arc**: observation → theory 1 prediction → theory 2 prediction → naive control → why it was unfair/inconclusive → refined control → final discriminator. Readers who see only the final result cannot tell why the naive version wasn't enough; the arc is what makes the controls intelligible.
+- For each control: state **what theory 1 predicts and what theory 2 predicts** before stating the result. If both predict the same thing, the control is a sanity check, not a discriminator (cross-reference §4 of this guide).
+- Tag each piece of evidence in the section as **Central / Sanity check / Supporting** (cross-reference §4 of this guide).
+
+**§3 (mechanism) rules.**
+
+- **Mechanism sections are Q&A, not lists of facts.** Open the section with explicit numbered questions ("Q1. Where in the system does the effect form?"). Each Q maps to one subsection and gets a one-sentence answer with citation. A reader scanning the section should be able to extract the mechanism claims from the Q&A alone.
+- Include a **subsection map** table (Q → subsection → evidence) so the reader can jump to the experiment that answers each question.
+- The synthesis subsection recaps the Q&A in a single table, then has one combined-picture paragraph.
+- The synthesis must include an explicit **"what we do NOT claim"** list — name each natural over-reading of the data and cite what falsifies it. This is the calibration that lets the document survive review. Examples: "Not 'X is sufficient' — falsified by Q3's answer."
+
+**Forward-looking / planned sections (§4 origin, etc.) rules.**
+
+- Frame planned sections as a **prediction to test**, not a result. State what each theory predicts the experiment will show. The status of the section should be `(planned)` or `(in progress)`, not omitted.
+
+**Status and history rules.**
+
+- Maintain three live tables at the bottom: **Active runs** (job ID, ETA, purpose), **Recently completed** (finding + where integrated above), **Recently failed jobs** (failure mode + resolution).
+- The **failed-jobs table is mandatory.** Document each failure with the diagnostic and the workaround (or "blocked on X"). Otherwise future attempts re-hit the same wall blindly.
+
+**Appendix rules.**
+
+- Technical terms go in **Appendix A**; the body links to them on first use. Do not redefine inline.
+- Metric definitions, common-confusion pre-empts, and statistical formulas (z-score, effect size, etc.) go in **Appendix B**. The body cites the metric by name and links to Appendix B for the formula.
+- These appendices are not optional. They are what makes the main body read top-to-bottom; without them, technical definitions clutter the narrative.
+
+**Slide-deck sanity-check rule.**
+
+- Maintain a **"Reframing for slides"** subsection — a terse one-phrase-per-subgoal list. Use it as the source of slide headlines and as a check that the slide story matches the document story. If you cannot reduce a subgoal to one phrase, the subgoal is not yet clear enough.
 
 ---
 
