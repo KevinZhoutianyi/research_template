@@ -10,7 +10,7 @@ This file contains **universal project rules**. Context-specific rules live in s
 | `doc/weekly_updates/CLAUDE.md` | slide formatting and presentation rules. |
 | `experiments/CLAUDE.md` | code style, correctness, compute, experiment logging. |
 
-The `paper/` directory (when present) holds the LaTeX version of the paper for Overleaf; see `paper/README.md`.
+The LaTeX version of the paper lives at `doc/paper/`; see `doc/paper/README.md`.
 
 ---
 

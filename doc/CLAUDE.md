@@ -310,7 +310,7 @@ Each result statement includes its methodological caveats inline:
 
 ### Audit downstream when deleting an experiment
 
-When pruning an experiment from the repo, search `tracking.md`, `paper.md`, slide decks (`weekly_updates/`), and the LaTeX `paper/` folder for downstream citations of its findings. Either:
+When pruning an experiment from the repo, search `tracking.md`, `paper.md`, slide decks (`weekly_updates/`), and the LaTeX folder (`doc/paper/`) for downstream citations of its findings. Either:
 
 - remove those citations, or
 - demote them to a side-note that explicitly says "this finding lives in git history at commit `<hash>`, not in the current repo."

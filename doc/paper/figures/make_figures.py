@@ -2,12 +2,12 @@
 Generate paper figures from experiments/*/results.json files.
 
 Run from the repo root:
-    uv run python paper/figures/make_figures.py
+    uv run python doc/paper/figures/make_figures.py
 
-Outputs PDF figures into paper/figures/ for the LaTeX project.
+Outputs PDF figures into doc/paper/figures/ for the LaTeX project.
 
 This is a starter template. Add one function per figure; each reads the
-relevant results.json file(s), plots, and saves into paper/figures/.
+relevant results.json file(s), plots, and saves into doc/paper/figures/.
 """
 
 import json
@@ -16,7 +16,7 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 
 
-REPO = Path(__file__).resolve().parents[2]
+REPO = Path(__file__).resolve().parents[3]   # doc/paper/figures/X.py → repo
 OUT_DIR = Path(__file__).resolve().parent
 
 
