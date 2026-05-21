@@ -25,6 +25,7 @@
 \usepackage{natbib}
 \usepackage{lmodern}   % scalable fonts (required by microtype font expansion)
 \usepackage[textwidth=2.5cm, textsize=footnotesize]{todonotes}
+\usepackage{placeins}  % \FloatBarrier — keep figures from floating past section boundaries
 
 \titleformat{\section}{\large\bfseries}{\thesection.}{0.5em}{}
 \titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{0.5em}{}
@@ -198,6 +199,12 @@ Include here if relevant to the project.]
 away, what's open.]
 
 % =============================================================================
+\FloatBarrier   % flush any remaining body-section figures before references.
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+% =============================================================================
 \appendix
 \newpage
 \section{Key terms}
@@ -214,8 +221,5 @@ away, what's open.]
 \section{Per-experiment detail tables}
 \label{app:detail}
 [Large tables that would clutter §3--§4. Cited as ``→ See Appendix C'' from the body.]
-
-\bibliographystyle{plainnat}
-\bibliography{references}
 
 \end{document}

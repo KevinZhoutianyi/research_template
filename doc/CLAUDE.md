@@ -97,6 +97,14 @@ The body prose should read like the papers in `related_papers/`, not like an int
 - **Section openings carry the motivation** — the first sentence states what question the section answers and *why we're asking it now*, given what the previous section established. See the "motivation, not lists" rule at the top of this file.
 - **No implementation details in the body.** Library names, exact file paths, `--smoke` flags, CLI commands, package versions, internal experiment IDs belong in `tracking.md`, `experiments/*/run.py` docstrings, or a Methods appendix — not in the paper body. A reader of the paper should learn *what we did and what it shows*, not *which package we typed `pip install` for*. If a library is essential to the methodology, name the method, not the package.
 
+### Float placement & document order
+
+LaTeX figures will silently float past section boundaries onto later pages, including into references or appendix sections, if you let them. That breaks the reading flow ("why is a §5 figure appearing in Appendix B?"). Three rules:
+
+- **`\FloatBarrier` before the bibliography.** Load `\usepackage{placeins}` in the preamble. Place `\FloatBarrier` immediately after the Conclusion (just before `\bibliography{references}`) so every body-section figure has been emitted before references start. This is the single most important float-placement rule.
+- **Document order at the end: `\section{Conclusion}` → `\FloatBarrier` → `\bibliography{references}` → `\appendix` → appendix sections → `\end{document}`.** References come immediately after the body; appendices come *after* the references. This matches the layout used in many ML conferences (NeurIPS, ICLR) and keeps the bibliography in its conventional position relative to a reviewer's reading order.
+- Use `[t]` (top of page) for most figures; reserve `[!ht]` for figures that absolutely must appear right after their introducing paragraph (e.g., a flow diagram embedded in a method explanation). Don't use `[h]` alone — LaTeX often ignores it.
+
 ### Coauthor comment macros
 
 `paper/main.tex` defines four comment macros so coauthors can leave reviewable feedback in the LaTeX source:
