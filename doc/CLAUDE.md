@@ -226,9 +226,29 @@ The split exists so the argument doesn't get cluttered with job IDs and the stat
 
 ## 4. Cross-document workflow when a job completes
 
+### Three-way consistency invariant
+
+**Experiments, paper claims, and tracking must always be consistent with each other.** Three artifacts carry the project state, and a change to any one of them is incomplete until the other two reflect it:
+
+1. **Experiments** — `experiments/<exp>/run.py` (what was actually done), `experiments/<exp>/results.json` (what was actually measured).
+2. **Paper claims** — `doc/paper.md` (the argument and evidence sections) and `doc/paper/main.tex` (the polished version).
+3. **Tracking** — `doc/tracking.md` (Active / Recently completed / Recently failed / Next steps).
+
+Whenever any one of these changes, audit the other two:
+
+- A new experiment runs → add a row in `tracking.md` *and* update the paper's evidence section. A `run.py` that's never cited in `paper.md` is a planning bug.
+- A paper claim is added or modified → it must point at an experiment whose `results.json` supports it. If no experiment supports it yet, mark the section `(planned)` and add a row in `tracking.md` Next steps.
+- A `tracking.md` row says a job landed with a finding → that finding must appear in the relevant `paper.md` §. If `tracking.md` says "result: 15/39 pass z=2" but the paper still says "model passes the introspection test", the paper is stale.
+- A finding's interpretation in the paper is sharpened or weakened → the corresponding `tracking.md` row's one-line result should match the new framing, and the experiment's `run.py` docstring's Predicted-Outcome / Falsifier blocks should be revisited.
+
+Falsification mode: when an experiment falsifies a hypothesis, the falsified hypothesis must come out of the paper body (or be explicitly marked as ruled out), the `tracking.md` row gets the verdict, and the `run.py` docstring's Falsifier clause records that it triggered. Three matching updates, not one.
+
+### Per-job workflow
+
 1. Move its row in `tracking.md` from **Active runs** → **Recently completed jobs** (keep the row; it's the historical record).
 2. Integrate the finding into the relevant `paper.md` § evidence section: update the headline number, the plain-language reading, and any new caveat. If the finding produces a wall of numbers (per-bucket, top-N, sweep), put those in an appendix and link from §N.
 3. If the job *failed*, instead move it to **Recently failed jobs** with the diagnostic and the resolution (or "blocked on X"). Do not silently delete failed-job rows — they prevent re-attempting the same broken approach.
+4. **Audit consistency.** Before declaring the round done, grep `paper.md` and `paper/main.tex` for any claim or hypothesis the experiment touches; reconcile.
 
 ---
 
