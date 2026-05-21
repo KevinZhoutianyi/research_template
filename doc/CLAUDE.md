@@ -105,11 +105,11 @@ LaTeX figures will silently float past section boundaries onto later pages, incl
 - **Document order at the end: `\section{Conclusion}` → `\FloatBarrier` → `\bibliography{references}` → `\appendix` → appendix sections → `\end{document}`.** References come immediately after the body; appendices come *after* the references. This matches the layout used in many ML conferences (NeurIPS, ICLR) and keeps the bibliography in its conventional position relative to a reviewer's reading order.
 - Use `[t]` (top of page) for most figures; reserve `[!ht]` for figures that absolutely must appear right after their introducing paragraph (e.g., a flow diagram embedded in a method explanation). Don't use `[h]` alone — LaTeX often ignores it.
 
-### Bibliography — never fabricate author lists
+### Bibliography — every entry uses `author = {TBD}`; never fabricate
 
-When adding a new entry to `paper/references.bib` (or `doc/related_papers/<citekey>.md`), **never invent author names**. Even if you remember the first author, do not guess co-author lists or order. The risk of plausible-but-wrong attribution is high and the cost (a citation with a hallucinated coauthor making it into a draft circulated to advisors) is unacceptable.
+**Hard rule: every entry in `paper/references.bib` must have `author = {TBD}`. No exceptions.** Do not invent, guess, or partially-recall author names — even the first author. Even if you've seen the paper and remember a name, do not type it. The risk of plausible-but-wrong attribution is high; the cost (a hallucinated coauthor in a draft circulated to advisors) is unacceptable.
 
-The correct pattern for a new bib entry is **title + arXiv link + year only**, with `TBD` as the author placeholder. Square brackets and long placeholder text confuse natbib's citation rendering, so keep the placeholder short:
+The canonical bib entry shape is **title + url + year + `author = {TBD}`**. Nothing else (no `journal`, no `volume`, no `booktitle`):
 
 ```bibtex
 @article{example2025,
@@ -120,7 +120,11 @@ The correct pattern for a new bib entry is **title + arXiv link + year only**, w
 }
 ```
 
-The same rule applies to `\citet{...}` / `\citep{...}` use in the body — cite by the BibTeX citekey, which renders as "TBD (2025)" until the author list is filled in. The "TBD" is visible in the compiled draft, so coauthors see what still needs source-checking; don't write out "(Smith, Jones, Brown, 2025)" inline if you didn't get the names from a source you can cite.
+The `TBD` placeholder is short on purpose. Longer placeholders or square-bracketed text (e.g., `[fill in authors from arXiv ...]`) confuse natbib and break inline citation rendering.
+
+When the human author fills in the real author list later, they replace `TBD` by hand using arXiv / publisher metadata they can verify. Until then, all in-text citations render as "TBD (2025)" — visible in every compiled draft, so coauthors immediately see which entries still need source-checking.
+
+The same rule applies to inline citation prose: cite via `\citet{citekey}` / `\citep{citekey}`, never by typing names. Don't write "(Smith, Jones, Brown, 2025)" inline if you didn't pull the names from a source you can cite.
 
 ### Coauthor comment macros
 
