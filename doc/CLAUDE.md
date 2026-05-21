@@ -4,12 +4,24 @@ Rules for writing the **research-tracking documents** in this folder:
 
 | file / folder | what it holds |
 |---|---|
-| `paper.md` | The **argument** — goal, thesis, outline, per-section evidence, related work, slide reframing, detail appendices. |
+| `paper.md` | The **argument** as a markdown working draft — goal, thesis, outline, per-section evidence, related work, slide reframing, detail appendices. Changes go here *first*. |
+| `paper/` | The **same argument as polished LaTeX** for Overleaf / submission. Mirrors `paper.md`'s sections; lags it. See sync rule below. |
 | `tracking.md` | The **status** — active runs, recently completed, recently failed, next steps. Each row cross-references the `paper.md` section it serves. |
 | `weekly_updates/` | Slide decks for weekly updates (see `weekly_updates/CLAUDE.md` for slide-specific rules). |
 | `related_papers/` | PDFs and notes on cited papers; one note per paper. The `paper.md` Related Work table references each by short citekey. |
 
-The two main documents are **living** — update them in place, never append dated entries. They are not chronological logs.
+The main documents are **living** — update them in place, never append dated entries. They are not chronological logs.
+
+### `paper.md` ↔ `paper/` sync rule
+
+`paper.md` is the **single source of truth** for the argument. `paper/main.tex` is its polished form for publication. They are kept loosely synchronized:
+
+- When a new finding lands, update `paper.md` first. Always.
+- Promote a section to `paper/main.tex` only when its content has stabilized (no expected re-runs / re-interpretations in the next week or two). Until then, the LaTeX version may lag.
+- Section structure in `paper/main.tex` must mirror `paper.md`'s top-level sections (§1, §2, …). If they drift, the working draft wins — update LaTeX to match, not the other way around.
+- `paper/references.bib` citekeys must match the per-paper notes in `related_papers/` (one `<citekey>.md` per `@article{<citekey>}` entry).
+- `paper/figures/` PDFs are regenerated from `experiments/*/results.json` by `paper/figures/make_figures.py`. When the underlying experiment results change, re-run that script and commit the updated PDFs. Don't hand-edit the figures.
+- The `paper/README.md` maintains a mapping table (paper.md § → main.tex §). Update it when section numbering diverges.
 
 ---
 
