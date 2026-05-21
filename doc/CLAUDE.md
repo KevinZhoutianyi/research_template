@@ -299,6 +299,8 @@ The split exists so the argument doesn't get cluttered with job IDs and the stat
 
 If the data supports the claim for 10/15 cases, write "for 10/15 cases" — not "the claim holds." If a finding is partial, say "partial." If a result depends on a single seed or a single setting, note the lack of robustness. If a claim depends on a deleted experiment whose data isn't currently in the repo, note that. Reviewers will find these gaps; flag them yourself.
 
+**Don't frame a partial result as binary.** When the data shows X for some cases and Y for others, the paper's title, abstract, headline claims, and figure titles must reflect *both*. Saying "the model is X, not Y" when the data is "X for 24/39, Y for 15/39" is overclaiming — even if the 24 is the larger group, the 15 is real signal that a reviewer will catch. Concrete failure mode caught in introspection commit d361726: a paper title read "is Residual-Position Readout, Not Concept Recognition" while the data showed partial concept-direction signal for 15 of 39 concepts. The corrected title was "Partial Concept-Direction Signal over a Strong Residual-Position Baseline." The same rule applies to figure titles: a chart showing "N pass / M fail" should name both numbers, not just the favourable one.
+
 ### Classify each piece of evidence
 
 For every entry in `paper.md`'s **Evidence** section, classify it as one of:
