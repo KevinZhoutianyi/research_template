@@ -105,6 +105,23 @@ LaTeX figures will silently float past section boundaries onto later pages, incl
 - **Document order at the end: `\section{Conclusion}` → `\FloatBarrier` → `\bibliography{references}` → `\appendix` → appendix sections → `\end{document}`.** References come immediately after the body; appendices come *after* the references. This matches the layout used in many ML conferences (NeurIPS, ICLR) and keeps the bibliography in its conventional position relative to a reviewer's reading order.
 - Use `[t]` (top of page) for most figures; reserve `[!ht]` for figures that absolutely must appear right after their introducing paragraph (e.g., a flow diagram embedded in a method explanation). Don't use `[h]` alone — LaTeX often ignores it.
 
+### Bibliography — never fabricate author lists
+
+When adding a new entry to `paper/references.bib` (or `doc/related_papers/<citekey>.md`), **never invent author names**. Even if you remember the first author, do not guess co-author lists or order. The risk of plausible-but-wrong attribution is high and the cost (a citation with a hallucinated coauthor making it into a draft circulated to advisors) is unacceptable.
+
+The correct pattern for a new bib entry is **title + arXiv link + year only**, with `TBD` as the author placeholder. Square brackets and long placeholder text confuse natbib's citation rendering, so keep the placeholder short:
+
+```bibtex
+@article{example2025,
+  title  = {The exact title from arXiv, preserving capitalization},
+  author = {TBD},
+  year   = {2025},
+  url    = {https://arxiv.org/abs/2501.XXXXX},
+}
+```
+
+The same rule applies to `\citet{...}` / `\citep{...}` use in the body — cite by the BibTeX citekey, which renders as "TBD (2025)" until the author list is filled in. The "TBD" is visible in the compiled draft, so coauthors see what still needs source-checking; don't write out "(Smith, Jones, Brown, 2025)" inline if you didn't get the names from a source you can cite.
+
 ### Coauthor comment macros
 
 `paper/main.tex` defines four comment macros so coauthors can leave reviewable feedback in the LaTeX source:
