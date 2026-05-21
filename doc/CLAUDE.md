@@ -12,6 +12,33 @@ Rules for writing the **research-tracking documents** in this folder:
 
 The main documents are **living** — update them in place, never append dated entries. They are not chronological logs.
 
+### Motivation, not lists (highest-priority writing rule)
+
+**Every paragraph, section, table row, and experiment description must lead with a *motivation* — why this exists, what question it answers, what gap it closes. Never just list a bunch of things.**
+
+A reader scanning the doc should be able to ask "why am I reading this?" at any sentence and find the answer in the surrounding prose. If the answer is missing, the writing has degenerated into a fact-dump.
+
+Concretely:
+
+- **A new subsection in `paper.md`** opens with one sentence stating what question it answers (or what gap from the previous section it closes), *before* presenting the experiment or numbers. Example: "The naive control favored theory 1, but the comparison was unfair: ..." is good. "We ran B/abl/03 ..." is bad.
+- **A new experiment in `tracking.md` Active runs** has a `note` column that says *why* we're running it, not just *what* it does. "tests whether cascade-essential extends to random vectors (extends C/abl/10)" is good. "B/abl/14 single-layer late random" is bad.
+- **A new figure** has a caption that names the question it answers, not just what's plotted. "Same-random shifts $P(\text{yes})$ but not generation; creativity shifts both" is good. "P(yes) under various conditions" is bad.
+- **A new table row** — same rule. The first column or the header should make clear why this row exists.
+- **A new bullet in a list** — if all the bullets read like sibling facts with no through-line, replace the list with prose that connects them. Prose is the default; bullets are for cases where the reader genuinely needs a scannable enumeration (e.g., a checklist, a contributions list at the end of an intro).
+
+This rule is the inverse of the failure mode "the writing has become tedious." Tedious writing is writing that lists facts without explaining why each fact is here. Every claim earns its place by answering a question.
+
+When in doubt: prepend each new piece of content with "Because [previous claim raised question X], we did [new thing], which shows [new claim]." If that sentence doesn't write itself, the new content doesn't belong in the doc yet.
+
+### Audience for `paper.md` and `paper/main.tex`
+
+The audience is **coauthors and the advisor**, *not* an external venue's peer reviewers. The paper exists so collaborators can read the full argument, understand the project state, and **leave comments** — flag claims that look weak, push back on framing, suggest experiments. Optimize for that reader:
+
+- Keep the full argument visible. Don't compress evidence for a page limit; coauthors need the detail to comment on.
+- **Motivation > polish.** A coauthor opening §3 needs to know *why this section exists* in the first sentence. Reviewer-style hedging ("we report") helps less than "We tried X. It failed for reason Y. So we did Z."
+- Make open questions / weak spots visible. The point is to surface them for discussion, not hide them.
+- The LaTeX source includes coauthor-comment macros for inline review feedback (see "Coauthor comment macros" below).
+
 ### `paper.md` ↔ `paper/` sync rule
 
 `paper.md` is the **single source of truth** for the argument. `paper/main.tex` is its polished form for publication. They are kept loosely synchronized:
@@ -22,6 +49,66 @@ The main documents are **living** — update them in place, never append dated e
 - `paper/references.bib` citekeys must match the per-paper notes in `related_papers/` (one `<citekey>.md` per `@article{<citekey>}` entry).
 - `paper/figures/` PDFs are regenerated from `experiments/*/results.json` by `paper/figures/make_figures.py`. When the underlying experiment results change, re-run that script and commit the updated PDFs. Don't hand-edit the figures.
 - The `paper/README.md` maintains a mapping table (paper.md § → main.tex §). Update it when section numbering diverges.
+
+### Render-and-read workflow for `paper/main.tex`
+
+After every non-trivial edit to `paper/main.tex` (or to the figures it includes), **render the PDF and read it visually** before declaring the edit done. LaTeX issues that are invisible in source (figure too tall for the page, empty scatter plot, broken placeholder glyphs, undefined references, awkward section breaks) only show up in the rendered output.
+
+Workflow:
+
+1. **Build** the PDF from `doc/paper/`:
+   ```bash
+   cd doc/paper
+   pdflatex main.tex && bibtex main && pdflatex main.tex && pdflatex main.tex
+   ```
+2. **Render each page to PNG** so the Read tool can see them (the Read tool can't open PDFs directly without `poppler-utils` / `pymupdf`):
+   ```bash
+   uv run python -c "
+   import fitz, os
+   doc = fitz.open('doc/paper/main.pdf')
+   os.makedirs('/tmp/paper_pages', exist_ok=True)
+   for i, page in enumerate(doc):
+       page.get_pixmap(dpi=110).save(f'/tmp/paper_pages/page_{i+1:02d}.png')
+   print(f'rendered {len(doc)} pages')"
+   ```
+3. **Read each rendered page** with the Read tool. Audit for: figures that are too tall / too wide / cut off; empty plots (data shape changed and `make_figures.py` silently skipped it); broken glyphs (□ placeholders from non-ASCII text, missing math symbols); awkward page breaks; undefined `??` references in citations or `\ref{}` targets.
+4. **Fix** issues in `main.tex` or `figures/make_figures.py`, re-build, re-read until the PDF reads cleanly.
+
+This is mandatory after any LaTeX change that touches structure, figures, or citations — *not* needed for tiny prose tweaks. The PDF file itself is gitignored (it's regenerable); the source `.tex`, `.bib`, and figure PDFs are the tracked artifacts.
+
+### Overleaf zip (for sharing with coauthors)
+
+When sharing the LaTeX project with coauthors via Overleaf, bundle only the minimum required for compilation. From the repo root:
+
+```bash
+cd doc/paper
+zip <project>_overleaf.zip main.tex references.bib README.md figures/*.pdf
+```
+
+The zip name should mirror the project title (e.g., `myproject_overleaf.zip`). Place it inside `doc/paper/` (not at the repo root). Don't include `main.pdf`, `main.aux`, `main.bbl`, `main.blg`, `main.log`, or `figures/make_figures.py` — those are either regenerable by Overleaf or unrelated to compilation. The zip itself is gitignored.
+
+### Writing style — match the reference papers in `related_papers/`
+
+The body prose should read like the papers in `related_papers/`, not like an internal tracking doc. Concretely:
+
+- **Flowing prose over bullet lists** in the body. Bullets are for explicit "Contributions" enumerations at the end of an intro and for procedural steps inside Methods; not for general claims.
+- **Italicized claim-style paragraph leads** (`\emph{Claim sentence.}`) work well for the contributions paragraph at the end of §1.
+- **First-person plural** consistently ("We test", "We find").
+- **Section openings carry the motivation** — the first sentence states what question the section answers and *why we're asking it now*, given what the previous section established. See the "motivation, not lists" rule at the top of this file.
+- **No implementation details in the body.** Library names, exact file paths, `--smoke` flags, CLI commands, package versions, internal experiment IDs belong in `tracking.md`, `experiments/*/run.py` docstrings, or a Methods appendix — not in the paper body. A reader of the paper should learn *what we did and what it shows*, not *which package we typed `pip install` for*. If a library is essential to the methodology, name the method, not the package.
+
+### Coauthor comment macros
+
+`paper/main.tex` defines four comment macros so coauthors can leave reviewable feedback in the LaTeX source:
+
+```latex
+\tynote{...}       % blue margin note (primary author)
+\robinnote{...}    % red margin note (advisor)
+\coauthornote{Name}{...}  % green margin note (any coauthor; first arg is initials)
+\inlinecomment{TY}{...}   % purple inline annotation (when sentence-level)
+```
+
+To strip all comments for a clean draft, change the `todonotes` import in the preamble to `\usepackage[disable]{todonotes}`. The macros expand to nothing in that mode.
 
 ---
 

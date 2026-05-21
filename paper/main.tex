@@ -23,9 +23,30 @@
 \usepackage{caption}
 \usepackage{authblk}
 \usepackage{natbib}
+\usepackage{lmodern}   % scalable fonts (required by microtype font expansion)
+\usepackage[textwidth=2.5cm, textsize=footnotesize]{todonotes}
 
 \titleformat{\section}{\large\bfseries}{\thesection.}{0.5em}{}
 \titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{0.5em}{}
+
+% =============================================================================
+% Coauthor comment macros (for review markup; visible in margin)
+%
+% Usage in the body:
+%   \tynote{question or note from the primary author}
+%   \robinnote{advisor's comment}
+%   \coauthornote{Initials}{generic coauthor's comment}
+%
+% Inline form (no margin) — when sentence-level annotation is more natural:
+%   \inlinecomment{Init}{sentence-level remark}
+%
+% To strip all comments for a clean draft, replace the todonotes import with
+%   \usepackage[disable]{todonotes}
+% =============================================================================
+\newcommand{\tynote}[1]{\todo[color=blue!25, inline=false]{\textbf{TY:} #1}}
+\newcommand{\robinnote}[1]{\todo[color=red!25, inline=false]{\textbf{Robin:} #1}}
+\newcommand{\coauthornote}[2]{\todo[color=green!25, inline=false]{\textbf{#1:} #2}}
+\newcommand{\inlinecomment}[2]{\textcolor{purple}{\textbf{[#1: }#2\textbf{]}}}
 
 \title{[PROJECT TITLE]\\
   [Subtitle: the one-sentence thesis]}
