@@ -9,6 +9,7 @@ This file contains **universal project rules**. Context-specific rules live in s
 | `doc/CLAUDE.md` | how to write `paper.md`, `tracking.md`, weekly-update slides, and the related-papers section. Contains the two-file split rules, paper.md structure, tracking.md structure, rigorous-claims rules. |
 | `doc/weekly_updates/CLAUDE.md` | slide formatting and presentation rules. |
 | `experiments/CLAUDE.md` | code style, correctness, compute, experiment logging. |
+| `theory/CLAUDE.md` | theory writing rules: no obvious theorems, justify assumptions, concrete takeaways, tightness, necessity, proof intuition. |
 
 The LaTeX version of the paper lives at `doc/paper/`; see `doc/paper/README.md`.
 
