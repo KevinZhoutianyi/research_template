@@ -46,7 +46,32 @@ Prefer simple control flow. Keep print statements / logging hooks easy to add la
 
 ---
 
-## 3. Experiment Visualization
+## 3. Figure Code Style — Research Template
+
+All paper figures in `doc/paper/figures/make_figures.py` must follow this template. **Verify before committing.**
+
+**Global rcParams** are set once at the top of `make_figures.py` (sans-serif font, `#E0E0E0` grid, white background, no top/right spines). Do **not** override them inside individual figure functions — no `ax.grid(True, alpha=...)`, no `font.*` resets.
+
+**Okabe–Ito colors** — always use the named constants defined at the top of `make_figures.py`, never raw hex:
+
+```python
+C_BLUE="#0072B2"  C_ORANGE="#E69F00"  C_GREEN="#009E73"  C_RED="#D55E00"
+C_LBLUE="#56B4E9" C_YELLOW="#F0E442" C_GRAY="#999999"   C_BLACK="#000000"
+```
+
+**Variance bands** — if `results.json` stores per-element stds, include a shaded band:
+
+```python
+ax.fill_between(x, means - stds, means + stds, alpha=0.15, color=color)
+```
+
+A line-only plot with no variance hides uncertainty. Always plot it when the data is there.
+
+**Before committing a figure:** (1) named color constants used; (2) no rcParams overrides inside the function; (3) variance band present if stds available; (4) caption in `main.tex` opens with the question the figure answers; (5) figure readable at its actual size in the rendered PDF.
+
+---
+
+## 4. Experiment Visualization
 
 Every experiment must have a `visualize.py` that generates figures a reader can understand **without reading code or configs**. The figures must show:
 

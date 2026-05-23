@@ -81,3 +81,15 @@ Examples:
 - "Refactor X" → ensure tests pass before and after.
 
 Strong success criteria let you loop independently. Weak criteria ("make it work") require clarification — ask before starting.
+
+**Always verify your output against the relevant subdirectory CLAUDE.md before declaring any task done.** The subdirectory rules are not optional checklists — they are the definition of "done" for that domain:
+
+| task type | verify against |
+|---|---|
+| Paper edits (`paper.md`, `main.tex`) | `doc/CLAUDE.md` — body-structure rules + self-verification checklist + render-and-read workflow |
+| Experiment code or analysis | `experiments/CLAUDE.md` — code style, correctness, smoke-test, logging |
+| Figure code (`make_figures.py`) | `experiments/CLAUDE.md` §3 — research template: Okabe-Ito colors, no inline rcParams overrides, variance bands mandatory |
+| Slide decks (`weekly_updates/`) | `doc/weekly_updates/CLAUDE.md` — slide formatting rules |
+| `tracking.md` updates | `doc/CLAUDE.md` — three-way consistency invariant (experiments ↔ paper claims ↔ tracking) |
+
+If you edit a paper section and do not run the body-structure checklist, you have not finished the task. If you write experiment code and do not smoke-test it, you have not finished the task. Verification is part of the work, not a separate optional step.

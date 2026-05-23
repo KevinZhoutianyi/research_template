@@ -30,6 +30,25 @@ This rule is the inverse of the failure mode "the writing has become tedious." T
 
 When in doubt: prepend each new piece of content with "Because [previous claim raised question X], we did [new thing], which shows [new claim]." If that sentence doesn't write itself, the new content doesn't belong in the doc yet.
 
+### Figure quality — useful, readable, motivated
+
+A figure earns its place in the paper only if (a) it answers a question the prose has set up, (b) it is readable at the paper's aspect ratio, and (c) it carries information the prose cannot deliver as efficiently. Apply these checks before including any figure:
+
+- **Readability check.** Render the PDF and look at the figure at the size it occupies in the paper. If labels collapse into an overlapping stack, bars are too thin to compare, or the data shape forces a layout the figure can't accommodate, the figure is failing the reader. Either redesign it or **drop it**. A short prose sentence is better than an unreadable plot.
+- **Information check.** If the figure shows a single number already stated in the surrounding prose, it is redundant. Figures should show *distributional* structure (histogram shape, condition comparison, sweep gradient) that prose summarises lossily.
+- **Motivation check.** Caption must lead with the question the figure answers, not just describe what's plotted. If you can't write that opening sentence, the figure doesn't belong.
+- **When you remove a figure.** Comment out the call in `make_figures.py` with a one-line reason. Keep the function definition for git history. Remove the `\ref{}` / figure reference from both `main.tex` and `paper.md`.
+
+### Redundancy — every claim serves the goal or a subgoal
+
+Every paragraph, claim, and table row in the paper body must trace back to the main thesis or a named subgoal. When the same claim appears in multiple places, keep the strongest version and demote the rest to a pointer or move detail to an appendix:
+
+- **Body keeps:** (a) headline result in one sentence, (b) plain-language reading, (c) one caveat that changes the interpretation, (d) pointer to appendix for full numbers.
+- **Appendix keeps:** per-bucket tables, top-N rankings, counter-example lists, full sweeps, per-condition diagnostics.
+- **A short prose summary beats a long table in the body.** If a table has more than ~5 rows or repeats numbers in the surrounding prose, move it to the appendix.
+
+If you can't explain in one sentence which goal or subgoal a paragraph serves, it belongs in the appendix or shouldn't exist.
+
 ### Audience for `paper.md` and `paper/main.tex`
 
 The audience is **coauthors and the advisor**, *not* an external venue's peer reviewers. The paper exists so collaborators can read the full argument, understand the project state, and **leave comments** — flag claims that look weak, push back on framing, suggest experiments. Optimize for that reader:
@@ -75,6 +94,33 @@ Workflow:
 4. **Fix** issues in `main.tex` or `figures/make_figures.py`, re-build, re-read until the PDF reads cleanly.
 
 This is mandatory after any LaTeX change that touches structure, figures, or citations — *not* needed for tiny prose tweaks. The PDF file itself is gitignored (it's regenerable); the source `.tex`, `.bib`, and figure PDFs are the tracked artifacts.
+
+Render-and-read audit list: tables overflowing the text column (`Overfull \hbox` in the log; fix with `p{width}` column specs); abstract > 10 lines in the rendered PDF (trim to ≤200 words); broken `??` references.
+
+### Paper body structure — what belongs where
+
+**Main body = positive story only.** Every section, subsection, paragraph, figure, and table in the main body must state or support a positive claim. The following always go to the appendix:
+- Ablation results and falsified hypotheses
+- Validation results ("no single linear readout")
+- "What we do NOT claim" lists
+- Internal framing headers (`\paragraph{Why this section exists.}` — weave motivation into the opening sentence instead)
+
+**Mechanism sections use declarative subsection titles, not Q-format.** Write "Detection forms in the last seven layers" not "Q1: Where does detection form?" Each title states the finding; the body gives evidence.
+
+**Dense 2D evidence → tables, not prose.** N interventions × M outcomes → show a table.
+
+**No mechanistic claims in the body that contradict your appendix data.** Check `results.json` before writing causal explanations.
+
+**Abstract ≤ 200 words / ≤ 10 lines in the rendered PDF.**
+
+### Self-verification checklist — run before declaring any paper edit done
+
+1. **Body = positive?** Every new sentence states or supports a positive claim? If not → appendix.
+2. **Subsection titles declarative?** No "Q..." or "Why..." titles → rewrite.
+3. **2D results as tables?** Multi-condition result in prose when a table would show it → make it a table.
+4. **Mechanistic claims supported?** Any new causal claim has `results.json` backing? → verify or soften.
+5. **`\ref{}` targets correct?** Every cross-reference points to the intended element? → grep the label.
+6. **Rendered PDF clean?** Re-render and read: table overflow, figure legibility, abstract length, broken references.
 
 ### Overleaf zip (for sharing with coauthors)
 
