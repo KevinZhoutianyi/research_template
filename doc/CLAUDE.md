@@ -135,13 +135,25 @@ The zip name should mirror the project title (e.g., `myproject_overleaf.zip`). P
 
 ### Writing style — match the reference papers in `related_papers/`
 
-The body prose should read like the papers in `related_papers/`, not like an internal tracking doc. Concretely:
+The body prose should read like the papers in `related_papers/`, not like an internal tracking doc or a GPT-generated blog post.
 
+**Structure rules (follow the reference papers exactly):**
+
+- **Introduction has NO subsections.** Flowing prose paragraphs, ending with a numbered contributions list ("Our contributions are as follows:"). No "Plain-language setup", no "Headline claims" subsections.
+- **Section titles are noun phrases**, not sentences. Good: "Supervision and the Learned Algorithm", "Depth Generalization". Bad: "Supervision determines the algorithm", "Pretrained models struggle with parallel computation".
+- **Subsection titles are capitalized noun phrases.** Good: "Star Graph Experiments", "BFS Probe Analysis". Bad: "Star graph scaling", "The discovery arc".
+- **Related Work uses flowing prose paragraphs**, one per paper or group. Not bullet lists.
+- **Caveats go inline** after the result they qualify. Do not create standalone "What we do NOT claim" or "Limitations" subsections within experiment sections.
+
+**Tone and language rules:**
+
+- **No em dashes (`---`).** Use commas, semicolons, colons, or restructure the sentence. Em dashes are not standard academic style.
+- **No contractions.** Write "do not" instead of "don't", "cannot" instead of "can't".
+- **First-person plural** consistently ("We test", "We find", "We observe").
+- **Direct and factual.** State what was done and what was observed. No informal asides, no rhetorical questions, no "the model has literally never seen X".
 - **Flowing prose over bullet lists** in the body. Bullets are for explicit "Contributions" enumerations at the end of an intro and for procedural steps inside Methods; not for general claims.
-- **Italicized claim-style paragraph leads** (`\emph{Claim sentence.}`) work well for the contributions paragraph at the end of §1.
-- **First-person plural** consistently ("We test", "We find").
-- **Section openings carry the motivation** — the first sentence states what question the section answers and *why we're asking it now*, given what the previous section established. See the "motivation, not lists" rule at the top of this file.
-- **No implementation details in the body.** Library names, exact file paths, `--smoke` flags, CLI commands, package versions, internal experiment IDs belong in `tracking.md`, `experiments/*/run.py` docstrings, or a Methods appendix — not in the paper body. A reader of the paper should learn *what we did and what it shows*, not *which package we typed `pip install` for*. If a library is essential to the methodology, name the method, not the package.
+- **Section openings carry the motivation.** The first sentence states what question the section answers and *why we are asking it now*, given what the previous section established. See the "motivation, not lists" rule at the top of this file.
+- **No implementation details in the body.** Library names, exact file paths, `--smoke` flags, CLI commands, package versions, internal experiment IDs belong in `tracking.md`, `experiments/*/run.py` docstrings, or a Methods appendix. A reader of the paper should learn *what we did and what it shows*, not *which package we typed `pip install` for*.
 
 ### Float placement & document order
 
