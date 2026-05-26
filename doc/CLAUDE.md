@@ -120,7 +120,9 @@ Render-and-read audit list: tables overflowing the text column (`Overfull \hbox`
 3. **2D results as tables?** Multi-condition result in prose when a table would show it → make it a table.
 4. **Mechanistic claims supported?** Any new causal claim has `results.json` backing? → verify or soften.
 5. **`\ref{}` targets correct?** Every cross-reference points to the intended element? → grep the label.
-6. **Rendered PDF clean?** Re-render and read: table overflow, figure legibility, abstract length, broken references.
+6. **No implementation details?** Grep the diff for library names, file paths, CLI flags, internal experiment IDs, package versions. Every hit → move to `tracking.md` or `run.py` docstring.
+7. **No em dashes or banned words?** Grep the diff for `—` and for the banned-word list (delve, crucial, pivotal, robust, leverage, utilize, showcase, comprehensive, notably, importantly, interestingly, it is worth noting, this allows us to, in summary, in conclusion). Every hit → rewrite.
+8. **Rendered PDF clean?** Re-render and read: table overflow, figure legibility, abstract length, broken references.
 
 ### Overleaf zip (for sharing with coauthors)
 
