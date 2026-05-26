@@ -21,7 +21,7 @@ A weekly update's goal is usually *"convince the advisor we made progress on X t
 - Save Beamer source at `doc/weekly_updates/YYYY-MM-DD/slides.tex`.
 - Copy every image used into the same folder so the entire folder uploads to Overleaf as-is.
 - After the talk, record audience feedback + resulting plan in `doc/weekly_updates/YYYY-MM-DD/post_talk_notes.md`.
-  *(Distinct from `doc/feedback.md`, the persistent cross-session feedback file for paper and experiment edits.)*
+  *(Distinct from `doc/paper/feedback.md`, the persistent cross-session feedback file for paper and experiment edits.)*
 
 `post_talk_notes.md` contents:
 - **Feedback from presentation:** what was flagged, suggested, or pushed back on (with enough context to be useful weeks later).
