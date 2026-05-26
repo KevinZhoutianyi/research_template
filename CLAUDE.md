@@ -17,10 +17,10 @@ The LaTeX version of the paper lives at `doc/paper/`; see `doc/paper/README.md`.
 
 ## 0. Feedback File
 
-**At the start of every session, read `doc/feedback.md`.** Act on every bullet before doing anything else. After acting on a bullet, delete it from the file. If a bullet is ambiguous, ask before acting.
+**The user writes feedback into `doc/feedback.md` after reading the paper or experiments.** At the start of every session, read that file and act on every bullet before doing anything else. After acting on a bullet, delete it from the file. If a bullet is ambiguous, ask before acting.
 
-The file is for paper edits, experiment changes, and tracking.md fixes. It is not a to-do list for the current conversation — it is persistent feedback that survives across sessions.
-*(This is distinct from `doc/weekly_updates/YYYY-MM-DD/post_talk_notes.md`, which is for post-talk notes specific to one meeting.)*
+Typical content: paper paragraph too long, wrong framing in a section, experiment result misrepresented, tracking.md entry stale. The user does not write this file during a conversation — they write it after reading on their own. Do not add bullets to it yourself.
+*(This is distinct from `doc/weekly_updates/YYYY-MM-DD/post_talk_notes.md`, which records advisor feedback after a talk.)*
 
 ---
 

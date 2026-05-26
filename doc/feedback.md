@@ -1,13 +1,7 @@
 # Feedback
 
-Write feedback here and I will act on it at the start of each session.
+I write feedback here after reading the paper or experiments. Claude acts on every bullet at the start of the next session, then deletes it.
 
-Format: one item per bullet. I will delete the bullet after acting on it.
+Format: one item per bullet. Be specific about the location (section, line, figure).
 
 ---
-
-<!-- Example (delete this when adding real items):
-- paper §2: the paragraph on X is too long — cut to 2 sentences
-- experiments/foo/run.py: add a --concepts flag to test a subset without smoke mode
-- tracking.md: the bar experiment row is missing its "serves paper.md §" column entry
--->
