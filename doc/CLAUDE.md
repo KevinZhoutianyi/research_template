@@ -147,7 +147,7 @@ The body prose should read like the papers in `related_papers/`, not like an int
 
 **Tone and language rules:**
 
-- **No em dashes (`---`).** Use commas, semicolons, colons, or restructure the sentence. Em dashes are not standard academic style.
+- **No em dashes.** This means both the LaTeX `---` and the Unicode character `—`. Use commas, parentheses, colons, or restructure the sentence. Grep for `—` before any commit to the paper.
 - **No contractions.** Write "do not" instead of "don't", "cannot" instead of "can't".
 - **First-person plural** consistently ("We test", "We find", "We observe").
 - **Direct and factual.** State what was done and what was observed. No filler phrases, no informal asides, no rhetorical questions. Specifically avoid these AI-ish patterns:
@@ -157,6 +157,22 @@ The body prose should read like the papers in `related_papers/`, not like an int
   - Unnecessary narration: "We observe that" (just state the observation), "Table X shows that" (just say what it shows)
   - Wordy constructions: "the kind of computation that X requires" → "what X requires"
   - Instead: short declarative sentences. "X reaches 99.7\%. Y fails at 63.3\%." Not "We observe that X consistently reaches..."
+- **Banned words — rewrite every instance before committing:**
+
+  | Banned | Replace with |
+  |---|---|
+  | delve, delve into | examine, study, investigate |
+  | crucial, pivotal | important, key, central (or cut — often filler) |
+  | robust | strong, reliable, consistent (be specific) |
+  | leverage (verb) | use, apply, exploit |
+  | utilize | use |
+  | showcase | show, demonstrate |
+  | comprehensive | thorough, full (or cut) |
+  | notably, importantly | cut, or restructure so the sentence conveys the emphasis |
+  | it is worth noting | cut — just note it |
+  | in summary, in conclusion | cut from body prose |
+  | this allows us to | we can (or restructure) |
+  | interestingly | cut — let the result speak |
 - **Flowing prose over bullet lists** in the body. Bullets are for explicit "Contributions" enumerations at the end of an intro and for procedural steps inside Methods; not for general claims.
 - **Section openings carry the motivation.** The first sentence states what question the section answers and *why we are asking it now*, given what the previous section established. See the "motivation, not lists" rule at the top of this file.
 - **No implementation details in the body.** Library names, exact file paths, `--smoke` flags, CLI commands, package versions, internal experiment IDs belong in `tracking.md`, `experiments/*/run.py` docstrings, or a Methods appendix. A reader of the paper should learn *what we did and what it shows*, not *which package we typed `pip install` for*.
