@@ -150,7 +150,13 @@ The body prose should read like the papers in `related_papers/`, not like an int
 - **No em dashes (`---`).** Use commas, semicolons, colons, or restructure the sentence. Em dashes are not standard academic style.
 - **No contractions.** Write "do not" instead of "don't", "cannot" instead of "can't".
 - **First-person plural** consistently ("We test", "We find", "We observe").
-- **Direct and factual.** State what was done and what was observed. No informal asides, no rhetorical questions, no "the model has literally never seen X".
+- **Direct and factual.** State what was done and what was observed. No filler phrases, no informal asides, no rhetorical questions. Specifically avoid these AI-ish patterns:
+  - Filler openers: "The theoretical appeal is that", "It is worth noting that", "We emphasize that"
+  - Defensive hedging: "We emphasize that these results do not imply", "consistent with our findings in §X"
+  - Grandiose framing: "realizing the theoretical promise of", "fundamental changes beyond"
+  - Unnecessary narration: "We observe that" (just state the observation), "Table X shows that" (just say what it shows)
+  - Wordy constructions: "the kind of computation that X requires" → "what X requires"
+  - Instead: short declarative sentences. "X reaches 99.7\%. Y fails at 63.3\%." Not "We observe that X consistently reaches..."
 - **Flowing prose over bullet lists** in the body. Bullets are for explicit "Contributions" enumerations at the end of an intro and for procedural steps inside Methods; not for general claims.
 - **Section openings carry the motivation.** The first sentence states what question the section answers and *why we are asking it now*, given what the previous section established. See the "motivation, not lists" rule at the top of this file.
 - **No implementation details in the body.** Library names, exact file paths, `--smoke` flags, CLI commands, package versions, internal experiment IDs belong in `tracking.md`, `experiments/*/run.py` docstrings, or a Methods appendix. A reader of the paper should learn *what we did and what it shows*, not *which package we typed `pip install` for*.
