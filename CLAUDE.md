@@ -15,13 +15,22 @@ The LaTeX version of the paper lives at `doc/paper/`; see `doc/paper/README.md`.
 
 ---
 
+## 0. Feedback File
+
+**At the start of every session, read `doc/feedback.md`.** Act on every bullet before doing anything else. After acting on a bullet, delete it from the file. If a bullet is ambiguous, ask before acting.
+
+The file is for paper edits, experiment changes, and tracking.md fixes. It is not a to-do list for the current conversation — it is persistent feedback that survives across sessions.
+*(This is distinct from `doc/weekly_updates/YYYY-MM-DD/post_talk_notes.md`, which is for post-talk notes specific to one meeting.)*
+
+---
+
 ## 1. Goal-Driven Work
 
 **Whenever you design an experiment or build a slide deck, start by identifying the goal (or subgoal). Every piece of content must visibly serve that goal — if a slide, paragraph, table, plot, or experimental knob does not advance it, remove it.**
 
 Workflow:
 
-1. **State the goal in one sentence.** ("Show that superposition CoCoNut still works at depth 12.") If you cannot state it in one sentence, the goal is not yet clear enough — clarify before producing content.
+1. **State the goal in one sentence.** ("Show that method X outperforms baseline Y on benchmark Z under condition W.") If you cannot state it in one sentence, the goal is not yet clear enough — clarify before producing content.
 2. **List the subgoals.** Each subgoal is something the audience or experiment must establish on the way to the goal.
 3. **For every slide / experiment knob / paragraph, name which subgoal it serves.** If you cannot name one, cut it.
 4. **Re-check at the end:** does the deck / experiment, read top to bottom, straight to the goal? Anything that detours, defends, or self-justifies should be cut.

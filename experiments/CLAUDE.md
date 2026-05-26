@@ -83,7 +83,7 @@ The goal: someone looking only at the figures should fully understand the task, 
 
 ---
 
-## 4. Compute & Storage
+## 5. Compute & Storage
 
 ### Clusters
 
@@ -127,7 +127,7 @@ Suggested layout (same on both clusters, under the cluster's base path above):
 
 ---
 
-## 5. Experiment Logging
+## 6. Experiment Logging
 
 Always include structured logging so runs are reproducible and inspectable from logs alone.
 
@@ -165,7 +165,7 @@ After submitting a SLURM job, **do not return control to the user and wait for t
 
 ---
 
-## 6. Smoke-test expensive jobs
+## 7. Smoke-test expensive jobs
 
 Before submitting any SLURM job that takes more than ~30 minutes, run a smoke-test pass that exercises the full code path on a tiny scale:
 
@@ -181,7 +181,7 @@ You can implement this by parameterizing the run script (`--smoke` flag that lim
 
 ---
 
-## 7. Don't rename directories with running jobs
+## 8. Don't rename directories with running jobs
 
 Before any folder rename or file move that affects an experiment's `output_dir`, run `squeue -u $USER` and confirm no running job has captured that path. Otherwise, the job will run to completion in memory but crash at save time when the directory it expects to write to no longer exists at the original path.
 

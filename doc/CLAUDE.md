@@ -131,7 +131,7 @@ cd doc/paper
 zip <project>_overleaf.zip main.tex references.bib README.md figures/*.pdf
 ```
 
-The zip name should mirror the project title (e.g., `myproject_overleaf.zip`). Place it inside `doc/paper/` (not at the repo root). Don't include `main.pdf`, `main.aux`, `main.bbl`, `main.blg`, `main.log`, or `figures/make_figures.py` — those are either regenerable by Overleaf or unrelated to compilation. The zip itself is gitignored.
+The zip name should mirror the project title (e.g., `myproject_overleaf.zip`). Place it at the repo root for easy access; it is gitignored there. Don't include `main.pdf`, `main.aux`, `main.bbl`, `main.blg`, `main.log`, or `figures/make_figures.py` — those are either regenerable by Overleaf or unrelated to compilation. The zip itself is gitignored.
 
 ### Writing style — match the reference papers in `related_papers/`
 
