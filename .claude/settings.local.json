@@ -1,40 +1,25 @@
 {
   "permissions": {
     "allow": [
-      "Bash(python:*)",
-      "Bash(python3:*)",
-      "Bash(uv run python:*)",
-      "Bash(uv run:*)",
-
-      "Bash(ls:*)",
-      "Bash(cat:*)",
-      "Bash(find:*)",
-      "Bash(head:*)",
-      "Bash(tail:*)",
-      "Bash(wc:*)",
-      "Bash(du:*)",
-      "Bash(echo:*)",
-      "Bash(mkdir:*)",
-
-      "Bash(git:*)",
-
-      "Bash(module:*)",
-      "Bash(nvidia-smi:*)",
-
-      "Bash(sbatch:*)",
-      "Bash(scancel:*)",
-      "Bash(sinfo:*)",
-      "Bash(squeue:*)",
-
-      "Bash(ssh:*)",
-
-      "WebFetch(domain:github.com)",
-      "WebFetch(domain:arxiv.org)"
+      "Bash(*)",
+      "Skill(update-config)",
+      "Skill(update-config:*)",
+      "WebFetch(domain:arxiv.org)",
+      "WebFetch(domain:github.com)"
     ],
     "deny": [
-      "Bash(rm -rf:*)",
-      "Bash(rm -fr:*)",
-      "Bash(sudo rm:*)"
+      "Bash(rm:*)",
+      "Bash(rm *)",
+      "Bash(rmdir:*)",
+      "Bash(git push --force:*)",
+      "Bash(git push -f:*)",
+      "Bash(git reset --hard:*)",
+      "Bash(git clean -f:*)",
+      "Bash(git clean -fd:*)",
+      "Bash(git checkout -- *)",
+      "Bash(git branch -D:*)",
+      "Bash(find * -delete*)",
+      "Bash(find * -exec rm*)"
     ]
   },
   "hooks": {
@@ -42,14 +27,14 @@
       {
         "matcher": "Write|Edit|MultiEdit|NotebookEdit",
         "hooks": [
-          { "type": "command", "command": "curl -s -d 'Claude needs permission to edit a file' ntfy.sh/tzhou4-claude-x7k9z2 > /dev/null" }
+          { "type": "command", "command": "curl -s -d 'Claude needs permission to edit a file' ntfy.sh/TOPIC > /dev/null" }
         ]
       }
     ],
     "Stop": [
       {
         "hooks": [
-          { "type": "command", "command": "curl -s -d 'Claude finished a task' ntfy.sh/tzhou4-claude-x7k9z2 > /dev/null" }
+          { "type": "command", "command": "curl -s -d 'Claude finished a task' ntfy.sh/TOPIC > /dev/null" }
         ]
       }
     ]
