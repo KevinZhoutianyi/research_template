@@ -40,33 +40,16 @@
   "hooks": {
     "PreToolUse": [
       {
-        "matcher": "Bash",
+        "matcher": "Write|Edit|MultiEdit|NotebookEdit",
         "hooks": [
-          {
-            "type": "command",
-            "command": "python3 ~/.claude/hooks/check_rm.py"
-          }
-        ]
-      }
-    ],
-    "Notification": [
-      {
-        "matcher": "permission_prompt|idle_prompt",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "printf '\\033]9;Claude needs your input\\007'"
-          }
+          { "type": "command", "command": "curl -s -d 'Claude needs permission to edit a file' ntfy.sh/tzhou4-claude-x7k9z2 > /dev/null" }
         ]
       }
     ],
     "Stop": [
       {
         "hooks": [
-          {
-            "type": "command",
-            "command": "printf '\\033]9;Claude finished a task\\007'"
-          }
+          { "type": "command", "command": "curl -s -d 'Claude finished a task' ntfy.sh/tzhou4-claude-x7k9z2 > /dev/null" }
         ]
       }
     ]
