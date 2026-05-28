@@ -102,9 +102,3 @@ Strong success criteria let you loop independently. Weak criteria ("make it work
 | `tracking.md` updates | `doc/CLAUDE.md` — three-way consistency invariant (experiments ↔ paper claims ↔ tracking) |
 
 If you edit a paper section and do not run the body-structure checklist, you have not finished the task. If you write experiment code and do not smoke-test it, you have not finished the task. Verification is part of the work, not a separate optional step.
-
----
-
-## 6. New Projects: New ntfy.sh Topic
-
-When setting up a new project, generate a new unique ntfy.sh topic name and set it in `.claude/settings.local.json` in the hook commands (both the `PreToolUse` edit-notification hook and the `Stop` hook). Do not reuse the topic from another project. The topic name should follow the pattern `tzhou4-claude-<random6>` (6 random alphanumeric characters).
