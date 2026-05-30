@@ -27,14 +27,14 @@
       {
         "matcher": "Write|Edit|MultiEdit|NotebookEdit",
         "hooks": [
-          { "type": "command", "command": "curl -s -d 'Claude needs permission to edit a file' ntfy.sh/TOPIC > /dev/null" }
+          { "type": "command", "command": "curl -s -d 'Claude needs permission to edit a file' ntfy.sh/tzhou4-claude-x7k9z2 > /dev/null" }
         ]
       }
     ],
     "Stop": [
       {
         "hooks": [
-          { "type": "command", "command": "curl -s -d 'Claude finished a task' ntfy.sh/TOPIC > /dev/null" }
+          { "type": "command", "command": "curl -s -d 'Claude finished a task' ntfy.sh/tzhou4-claude-x7k9z2 > /dev/null" }
         ]
       }
     ]
