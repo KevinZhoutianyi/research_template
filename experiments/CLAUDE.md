@@ -91,6 +91,7 @@ The goal: someone looking only at the figures should fully understand the task, 
 |---|---|---|
 | **Delta (NCSA)** | `delta.ncsa.illinois.edu` | `/data/latent_space_reasoning/` |
 | **Endeavour (USC CARC)** | `ssh tzhou029@endeavour.usc.edu` (USC VPN) | `/project2/robinjia_875/tzhou029/` |
+| **Local A100 node (AWS)** | the current working box (no scheduler, no VPN) | `/home/ubuntu/memory_module/` (node-local; no shared FS, no `/data` mount) |
 
 On Endeavour, redirect HF cache (home quota is small):
 `export HF_HOME=/project2/robinjia_875/tzhou029/.cache/huggingface`
@@ -111,6 +112,31 @@ Lab allocation `robinjia_875`: ~60 A6000 GPUs, 20 A100 GPUs.
 
 Default resource request: `--cpus-per-task=8 --mem=32G`.
 Check availability: `noderes -f -g -p nlp`.
+
+### Local GPU node (no scheduler)
+
+The current working box is a single AWS node with **8x A100-SXM4-40GB**, 96 CPUs, ~1 TB RAM, CUDA-13 driver. There is **no SLURM here**: do not write `sbatch`/`srun`/`squeue` commands for this node. Launch jobs directly on the GPUs and background them yourself. Note the 40 GB cap (not 80 GB) when sizing batch/sequence length.
+
+**Environment.** The repo declares deps in `pyproject.toml` but no env is pre-built on this node. Set one up once with `uv` (`uv venv && uv pip install -e .`) and run jobs as `uv run python ...`. If `uv` is absent, fall back to a dedicated conda env (`conda create -n mem python=3.11 && pip install -e .`); do not install into `base`. Always confirm `python -c "import torch; print(torch.cuda.is_available(), torch.cuda.device_count())"` prints `True 8` before launching anything long.
+
+**Pick GPUs explicitly.** Never assume a free GPU. Before launching, run `nvidia-smi --query-gpu=index,memory.used,utilization.gpu --format=csv` and choose idle ones. Pin the job with `CUDA_VISIBLE_DEVICES`:
+
+```bash
+CUDA_VISIBLE_DEVICES=0 uv run python train_capability.py        # one GPU
+CUDA_VISIBLE_DEVICES=2,3 uv run python train.py                 # two GPUs (multi-GPU code only)
+```
+
+With 8 GPUs free, run independent experiments concurrently by pinning each to a different index, rather than one job hogging the box.
+
+**Launch detached so the job survives the session.** Use the Bash tool's `run_in_background: true` for jobs you will poll within the same session. For jobs that must outlive the session (hours-long training), use `nohup` (or a named `tmux` session) and tee a log:
+
+```bash
+mkdir -p logs
+CUDA_VISIBLE_DEVICES=0 nohup uv run python train_capability.py > logs/m1_$(date +%m%d_%H%M).log 2>&1 &
+echo "PID $!"   # record the PID so you can poll / kill it
+```
+
+**Smoke-test first (§7 still applies).** Run `--smoke` on one GPU and confirm it saves `results.json` before launching the full run. The 5-minute smoke in front of a multi-hour run is cheaper here than on the cluster, not more expensive.
 
 ### File storage
 
@@ -162,6 +188,8 @@ Any hyperparameter that affects results must be logged before the run begins.
 ### Job monitoring
 
 After submitting a SLURM job, **do not return control to the user and wait for them to ask about results**. Instead, sleep and poll `squeue` / log files periodically until the job finishes, then report the final results (val acc, train acc, probe figures, errors). The user should see the outcome without having to ask.
+
+On the **local GPU node** (no `squeue`), the same rule holds: after launching a detached job, poll the log file and the process until it exits, then report the outcome. Check liveness with `kill -0 <PID>` (or `tail logs/<file>.log`) and confirm GPU activity with `nvidia-smi`. Do not hand control back with a job still mid-run and unreported.
 
 ---
 
