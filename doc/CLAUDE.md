@@ -208,6 +208,16 @@ When the human author fills in the real author list later, they replace `TBD` by
 
 The same rule applies to inline citation prose: cite via `\citet{citekey}` / `\citep{citekey}`, never by typing names. Don't write "(Smith, Jones, Brown, 2025)" inline if you didn't pull the names from a source you can cite.
 
+### Never declare a cited paper fabricated on an arXiv search alone
+
+When verifying whether a paper a human cited actually exists, **a negative arXiv result is not proof of non-existence.** Many real papers never go on arXiv: OpenReview submissions (ICLR/NeurIPS/ACL anonymous preprints), ACL Anthology / ACiteX venue PDFs, workshop papers, and recent submissions under double-blind review. Before flagging any human-supplied citation as fabricated or hallucinated:
+
+1. Search beyond arXiv: OpenReview, ACL Anthology, Semantic Scholar, Google Scholar, the venue's own program page, and a plain web search of the exact title in quotes.
+2. If the human gave a URL, **fetch and read the source directly** before judging it. A PDF that WebFetch cannot decode is not absent — extract its text (`uv run --with pymupdf python -c "import fitz; ..."`) and read the title/abstract.
+3. Only call a citation unverifiable after those steps, and phrase it as "could not confirm via X, Y, Z" — never as "fabricated" unless you have positive evidence of confabulation (e.g., the title blends two real papers).
+
+Why this matters: falsely accusing a human's real citation of being hallucinated is a high-cost error. It erodes trust, and it can delete a legitimately relevant paper from the related-work pile. The asymmetry favors over-verifying: the cost of one extra search is trivial; the cost of telling a researcher their real citation is fake is not.
+
 ### Coauthor comment macros
 
 `paper/main.tex` defines four comment macros so coauthors can leave reviewable feedback in the LaTeX source:
