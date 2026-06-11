@@ -1,482 +1,185 @@
 # Doc Folder Rules
 
-Rules for writing the **research-tracking documents** in this folder:
-
 | file / folder | what it holds |
 |---|---|
-| `paper.md` | The **argument** as a markdown working draft — goal, thesis, outline, per-section evidence, related work, slide reframing, detail appendices. Changes go here *first*. |
-| `paper/` | The **same argument as polished LaTeX** for Overleaf / submission. Mirrors `paper.md`'s sections; lags it. See sync rule below. |
-| `tracking.md` | The **status** — active runs, recently completed, recently failed, next steps. Each row cross-references the `paper.md` section it serves. |
-| `weekly_updates/` | Slide decks for weekly updates (see `weekly_updates/CLAUDE.md` for slide-specific rules). |
-| `related_papers/` | PDFs and notes on cited papers; one note per paper. The `paper.md` Related Work table references each by short citekey. |
-
-The main documents are **living** — update them in place, never append dated entries. They are not chronological logs.
-
-### Motivation, not lists (highest-priority writing rule)
-
-**Every paragraph, section, table row, and experiment description must lead with a *motivation* — why this exists, what question it answers, what gap it closes. Never just list a bunch of things.**
-
-A reader scanning the doc should be able to ask "why am I reading this?" at any sentence and find the answer in the surrounding prose. If the answer is missing, the writing has degenerated into a fact-dump.
-
-Concretely:
-
-- **A new subsection in `paper.md`** opens with one sentence stating what question it answers (or what gap from the previous section it closes), *before* presenting the experiment or numbers. Example: "The naive control favored theory 1, but the comparison was unfair: ..." is good. "We ran B/abl/03 ..." is bad.
-- **A new experiment in `tracking.md` Active runs** has a `note` column that says *why* we're running it, not just *what* it does. "tests whether cascade-essential extends to random vectors (extends C/abl/10)" is good. "B/abl/14 single-layer late random" is bad.
-- **A new figure** has a caption that names the question it answers, not just what's plotted. "Same-random shifts $P(\text{yes})$ but not generation; creativity shifts both" is good. "P(yes) under various conditions" is bad.
-- **A new table row** — same rule. The first column or the header should make clear why this row exists.
-- **A new bullet in a list** — if all the bullets read like sibling facts with no through-line, replace the list with prose that connects them. Prose is the default; bullets are for cases where the reader genuinely needs a scannable enumeration (e.g., a checklist, a contributions list at the end of an intro).
-
-This rule is the inverse of the failure mode "the writing has become tedious." Tedious writing is writing that lists facts without explaining why each fact is here. Every claim earns its place by answering a question.
-
-When in doubt: prepend each new piece of content with "Because [previous claim raised question X], we did [new thing], which shows [new claim]." If that sentence doesn't write itself, the new content doesn't belong in the doc yet.
-
-### Figure quality — useful, readable, motivated
-
-A figure earns its place in the paper only if (a) it answers a question the prose has set up, (b) it is readable at the paper's aspect ratio, and (c) it carries information the prose cannot deliver as efficiently. Apply these checks before including any figure:
-
-- **Readability check.** Render the PDF and look at the figure at the size it occupies in the paper. If labels collapse into an overlapping stack, bars are too thin to compare, or the data shape forces a layout the figure can't accommodate, the figure is failing the reader. Either redesign it or **drop it**. A short prose sentence is better than an unreadable plot.
-- **Information check.** If the figure shows a single number already stated in the surrounding prose, it is redundant. Figures should show *distributional* structure (histogram shape, condition comparison, sweep gradient) that prose summarises lossily.
-- **Motivation check.** Caption must lead with the question the figure answers, not just describe what's plotted. If you can't write that opening sentence, the figure doesn't belong.
-- **When you remove a figure.** Comment out the call in `make_figures.py` with a one-line reason. Keep the function definition for git history. Remove the `\ref{}` / figure reference from both `main.tex` and `paper.md`.
-
-### Redundancy — every claim serves the goal or a subgoal
-
-Every paragraph, claim, and table row in the paper body must trace back to the main thesis or a named subgoal. When the same claim appears in multiple places, keep the strongest version and demote the rest to a pointer or move detail to an appendix:
-
-- **Body keeps:** (a) headline result in one sentence, (b) plain-language reading, (c) one caveat that changes the interpretation, (d) pointer to appendix for full numbers.
-- **Appendix keeps:** per-bucket tables, top-N rankings, counter-example lists, full sweeps, per-condition diagnostics.
-- **A short prose summary beats a long table in the body.** If a table has more than ~5 rows or repeats numbers in the surrounding prose, move it to the appendix.
-
-If you can't explain in one sentence which goal or subgoal a paragraph serves, it belongs in the appendix or shouldn't exist.
-
-### Audience for `paper.md` and `paper/main.tex`
-
-The audience is **coauthors and the advisor**, *not* an external venue's peer reviewers. The paper exists so collaborators can read the full argument, understand the project state, and **leave comments** — flag claims that look weak, push back on framing, suggest experiments. Optimize for that reader:
-
-- Keep the full argument visible. Don't compress evidence for a page limit; coauthors need the detail to comment on.
-- **Motivation > polish.** A coauthor opening §3 needs to know *why this section exists* in the first sentence. Reviewer-style hedging ("we report") helps less than "We tried X. It failed for reason Y. So we did Z."
-- Make open questions / weak spots visible. The point is to surface them for discussion, not hide them.
-- The LaTeX source includes coauthor-comment macros for inline review feedback (see "Coauthor comment macros" below).
-
-### `paper.md` ↔ `paper/` sync rule
-
-`paper.md` is the **single source of truth** for the argument. `paper/main.tex` is its polished form for publication. They are kept loosely synchronized:
-
-- When a new finding lands, update `paper.md` first. Always.
-- Promote a section to `paper/main.tex` only when its content has stabilized (no expected re-runs / re-interpretations in the next week or two). Until then, the LaTeX version may lag.
-- Section structure in `paper/main.tex` must mirror `paper.md`'s top-level sections (§1, §2, …). If they drift, the working draft wins — update LaTeX to match, not the other way around.
-- `paper/references.bib` citekeys must match the per-paper notes in `related_papers/` (one `<citekey>.md` per `@article{<citekey>}` entry).
-- `paper/figures/` PDFs are regenerated from `experiments/*/results.json` by `paper/figures/make_figures.py`. When the underlying experiment results change, re-run that script and commit the updated PDFs. Don't hand-edit the figures.
-- The `paper/README.md` maintains a mapping table (paper.md § → main.tex §). Update it when section numbering diverges.
-
-### Render-and-read workflow for `paper/main.tex`
-
-After every non-trivial edit to `paper/main.tex` (or to the figures it includes), **render the PDF and read it visually** before declaring the edit done. LaTeX issues that are invisible in source (figure too tall for the page, empty scatter plot, broken placeholder glyphs, undefined references, awkward section breaks) only show up in the rendered output.
-
-Workflow:
-
-1. **Build** the PDF from `doc/paper/`:
-   ```bash
-   cd doc/paper
-   pdflatex main.tex && bibtex main && pdflatex main.tex && pdflatex main.tex
-   ```
-2. **Render each page to PNG** so the Read tool can see them (the Read tool can't open PDFs directly without `poppler-utils` / `pymupdf`):
-   ```bash
-   uv run python -c "
-   import fitz, os
-   doc = fitz.open('doc/paper/main.pdf')
-   os.makedirs('/tmp/paper_pages', exist_ok=True)
-   for i, page in enumerate(doc):
-       page.get_pixmap(dpi=110).save(f'/tmp/paper_pages/page_{i+1:02d}.png')
-   print(f'rendered {len(doc)} pages')"
-   ```
-3. **Read each rendered page** with the Read tool. Audit for: figures that are too tall / too wide / cut off; empty plots (data shape changed and `make_figures.py` silently skipped it); broken glyphs (□ placeholders from non-ASCII text, missing math symbols); awkward page breaks; undefined `??` references in citations or `\ref{}` targets.
-4. **Fix** issues in `main.tex` or `figures/make_figures.py`, re-build, re-read until the PDF reads cleanly.
-
-This is mandatory after any LaTeX change that touches structure, figures, or citations — *not* needed for tiny prose tweaks. The PDF file itself is gitignored (it's regenerable); the source `.tex`, `.bib`, and figure PDFs are the tracked artifacts.
-
-Render-and-read audit list: tables overflowing the text column (`Overfull \hbox` in the log; fix with `p{width}` column specs); abstract > 10 lines in the rendered PDF (trim to ≤200 words); broken `??` references.
-
-### Paper body structure — what belongs where
-
-**Main body = positive story only.** Every section, subsection, paragraph, figure, and table in the main body must state or support a positive claim. The following always go to the appendix:
-- Ablation results and falsified hypotheses
-- Validation results ("no single linear readout")
-- "What we do NOT claim" lists
-- Internal framing headers (`\paragraph{Why this section exists.}` — weave motivation into the opening sentence instead)
-
-**Mechanism sections use declarative subsection titles, not Q-format.** Write "Detection forms in the last seven layers" not "Q1: Where does detection form?" Each title states the finding; the body gives evidence.
-
-**Dense 2D evidence → tables, not prose.** N interventions × M outcomes → show a table.
-
-**No mechanistic claims in the body that contradict your appendix data.** Check `results.json` before writing causal explanations.
-
-**Abstract ≤ 200 words / ≤ 10 lines in the rendered PDF.**
-
-### Self-verification checklist — run before declaring any paper edit done
-
-1. **Body = positive?** Every new sentence states or supports a positive claim? If not → appendix.
-2. **Subsection titles declarative?** No "Q..." or "Why..." titles → rewrite.
-3. **2D results as tables?** Multi-condition result in prose when a table would show it → make it a table.
-4. **Mechanistic claims supported?** Any new causal claim has `results.json` backing? → verify or soften.
-5. **`\ref{}` targets correct?** Every cross-reference points to the intended element? → grep the label.
-6. **No implementation details?** Grep the diff for library names, file paths, CLI flags, internal experiment IDs, package versions. Every hit → move to `tracking.md` or `run.py` docstring.
-7. **No em dashes or banned words?** Grep the diff for `—` and for the banned-word list (delve, crucial, pivotal, robust, leverage, utilize, showcase, comprehensive, notably, importantly, interestingly, it is worth noting, this allows us to, in summary, in conclusion). Every hit → rewrite.
-8. **Rendered PDF clean?** Re-render and read: table overflow, figure legibility, abstract length, broken references.
-
-### Overleaf zip (for sharing with coauthors)
-
-When sharing the LaTeX project with coauthors via Overleaf, bundle only the minimum required for compilation. From the repo root:
-
-```bash
-cd doc/paper
-zip <project>_overleaf.zip main.tex references.bib README.md figures/*.pdf
-```
-
-The zip name should mirror the project title (e.g., `myproject_overleaf.zip`). Place it at the repo root for easy access; it is gitignored there. Don't include `main.pdf`, `main.aux`, `main.bbl`, `main.blg`, `main.log`, or `figures/make_figures.py` — those are either regenerable by Overleaf or unrelated to compilation. The zip itself is gitignored.
-
-### Writing style — match the reference papers in `related_papers/`
-
-The body prose should read like the papers in `related_papers/`, not like an internal tracking doc or a GPT-generated blog post.
-
-**Structure rules (follow the reference papers exactly):**
-
-- **Introduction has NO subsections.** Flowing prose paragraphs, ending with a numbered contributions list ("Our contributions are as follows:"). No "Plain-language setup", no "Headline claims" subsections.
-- **Section titles are noun phrases**, not sentences. Good: "Supervision and the Learned Algorithm", "Depth Generalization". Bad: "Supervision determines the algorithm", "Pretrained models struggle with parallel computation".
-- **Subsection titles are capitalized noun phrases.** Good: "Star Graph Experiments", "BFS Probe Analysis". Bad: "Star graph scaling", "The discovery arc".
-- **Related Work uses flowing prose paragraphs**, one per paper or group. Not bullet lists.
-- **Caveats go inline** after the result they qualify. Do not create standalone "What we do NOT claim" or "Limitations" subsections within experiment sections.
-
-**Tone and language rules:**
-
-- **No em dashes.** This means both the LaTeX `---` and the Unicode character `—`. Use commas, parentheses, colons, or restructure the sentence. Grep for `—` before any commit to the paper.
-- **No contractions.** Write "do not" instead of "don't", "cannot" instead of "can't".
-- **First-person plural** consistently ("We test", "We find", "We observe").
-- **Direct and factual.** State what was done and what was observed. No filler phrases, no informal asides, no rhetorical questions. Specifically avoid these AI-ish patterns:
-  - Filler openers: "The theoretical appeal is that", "It is worth noting that", "We emphasize that"
-  - Defensive hedging: "We emphasize that these results do not imply", "consistent with our findings in §X"
-  - Grandiose framing: "realizing the theoretical promise of", "fundamental changes beyond"
-  - Unnecessary narration: "We observe that" (just state the observation), "Table X shows that" (just say what it shows)
-  - Wordy constructions: "the kind of computation that X requires" → "what X requires"
-  - Instead: short declarative sentences. "X reaches 99.7\%. Y fails at 63.3\%." Not "We observe that X consistently reaches..."
-- **Banned words — rewrite every instance before committing:**
-
-  | Banned | Replace with |
-  |---|---|
-  | delve, delve into | examine, study, investigate |
-  | crucial, pivotal | important, key, central (or cut — often filler) |
-  | robust | strong, reliable, consistent (be specific) |
-  | leverage (verb) | use, apply, exploit |
-  | utilize | use |
-  | showcase | show, demonstrate |
-  | comprehensive | thorough, full (or cut) |
-  | notably, importantly | cut, or restructure so the sentence conveys the emphasis |
-  | it is worth noting | cut — just note it |
-  | in summary, in conclusion | cut from body prose |
-  | this allows us to | we can (or restructure) |
-  | interestingly | cut — let the result speak |
-- **Flowing prose over bullet lists** in the body. Bullets are for explicit "Contributions" enumerations at the end of an intro and for procedural steps inside Methods; not for general claims.
-- **Section openings carry the motivation.** The first sentence states what question the section answers and *why we are asking it now*, given what the previous section established. See the "motivation, not lists" rule at the top of this file.
-- **No implementation details in the body.** Library names, exact file paths, `--smoke` flags, CLI commands, package versions, internal experiment IDs belong in `tracking.md`, `experiments/*/run.py` docstrings, or a Methods appendix. A reader of the paper should learn *what we did and what it shows*, not *which package we typed `pip install` for*.
-
-### Float placement & document order
-
-LaTeX figures will silently float past section boundaries onto later pages, including into references or appendix sections, if you let them. That breaks the reading flow ("why is a §5 figure appearing in Appendix B?"). Three rules:
-
-- **`\FloatBarrier` before the bibliography.** Load `\usepackage{placeins}` in the preamble. Place `\FloatBarrier` immediately after the Conclusion (just before `\bibliography{references}`) so every body-section figure has been emitted before references start. This is the single most important float-placement rule.
-- **Document order at the end: `\section{Conclusion}` → `\FloatBarrier` → `\bibliography{references}` → `\appendix` → appendix sections → `\end{document}`.** References come immediately after the body; appendices come *after* the references. This matches the layout used in many ML conferences (NeurIPS, ICLR) and keeps the bibliography in its conventional position relative to a reviewer's reading order.
-- Use `[t]` (top of page) for most figures; reserve `[!ht]` for figures that absolutely must appear right after their introducing paragraph (e.g., a flow diagram embedded in a method explanation). Don't use `[h]` alone — LaTeX often ignores it.
-
-### Bibliography — every entry uses `author = {TBD}`; never fabricate
-
-**Hard rule: every entry in `paper/references.bib` must have `author = {TBD}`. No exceptions.** Do not invent, guess, or partially-recall author names — even the first author. Even if you've seen the paper and remember a name, do not type it. The risk of plausible-but-wrong attribution is high; the cost (a hallucinated coauthor in a draft circulated to advisors) is unacceptable.
-
-The canonical bib entry shape is **title + url + year + `author = {TBD}`**. Nothing else (no `journal`, no `volume`, no `booktitle`):
-
-```bibtex
-@article{example2025,
-  title  = {The exact title from arXiv, preserving capitalization},
-  author = {TBD},
-  year   = {2025},
-  url    = {https://arxiv.org/abs/2501.XXXXX},
-}
-```
-
-The `TBD` placeholder is short on purpose. Longer placeholders or square-bracketed text (e.g., `[fill in authors from arXiv ...]`) confuse natbib and break inline citation rendering.
-
-When the human author fills in the real author list later, they replace `TBD` by hand using arXiv / publisher metadata they can verify. Until then, all in-text citations render as "TBD (2025)" — visible in every compiled draft, so coauthors immediately see which entries still need source-checking.
-
-The same rule applies to inline citation prose: cite via `\citet{citekey}` / `\citep{citekey}`, never by typing names. Don't write "(Smith, Jones, Brown, 2025)" inline if you didn't pull the names from a source you can cite.
-
-### Never declare a cited paper fabricated on an arXiv search alone
-
-When verifying whether a paper a human cited actually exists, **a negative arXiv result is not proof of non-existence.** Many real papers never go on arXiv: OpenReview submissions (ICLR/NeurIPS/ACL anonymous preprints), ACL Anthology / ACiteX venue PDFs, workshop papers, and recent submissions under double-blind review. Before flagging any human-supplied citation as fabricated or hallucinated:
-
-1. Search beyond arXiv: OpenReview, ACL Anthology, Semantic Scholar, Google Scholar, the venue's own program page, and a plain web search of the exact title in quotes.
-2. If the human gave a URL, **fetch and read the source directly** before judging it. A PDF that WebFetch cannot decode is not absent — extract its text (`uv run --with pymupdf python -c "import fitz; ..."`) and read the title/abstract.
-3. Only call a citation unverifiable after those steps, and phrase it as "could not confirm via X, Y, Z" — never as "fabricated" unless you have positive evidence of confabulation (e.g., the title blends two real papers).
-
-Why this matters: falsely accusing a human's real citation of being hallucinated is a high-cost error. It erodes trust, and it can delete a legitimately relevant paper from the related-work pile. The asymmetry favors over-verifying: the cost of one extra search is trivial; the cost of telling a researcher their real citation is fake is not.
-
-### Coauthor comment macros
-
-`paper/main.tex` defines four comment macros so coauthors can leave reviewable feedback in the LaTeX source:
-
-```latex
-\tynote{...}       % blue margin note (primary author)
-\robinnote{...}    % red margin note (advisor)
-\coauthornote{Name}{...}  % green margin note (any coauthor; first arg is initials)
-\inlinecomment{TY}{...}   % purple inline annotation (when sentence-level)
-```
-
-To strip all comments for a clean draft, change the `todonotes` import in the preamble to `\usepackage[disable]{todonotes}`. The macros expand to nothing in that mode.
+| `paper.md` | The argument: goal, thesis, outline, per-section evidence, related work, appendices. Changes land here first. |
+| `proposal.md` | The research proposal: method, baselines, risks, plan. Same writing rules as `paper.md`; numbers in it must match `tracking.md`. |
+| `paper/` | The same argument as LaTeX for Overleaf. Mirrors `paper.md`; lags it. |
+| `tracking.md` | The status: active runs, completed, failed, next steps. Each row names the `paper.md` section it serves. |
+| `weekly_updates/` | Slide decks. Rules in `weekly_updates/CLAUDE.md`. |
+| `related_papers/` | One note per cited paper. |
+
+These are living documents. Update in place; never append dated entries.
+
+`paper.md` and `tracking.md` are canonical templates: copy their section structure into new projects instead of inventing parallel structures.
 
 ---
 
-## 1. The two-file split (paper.md + tracking.md)
+## 1. Writing rules (every file in this folder)
 
-The two documents have a strict split:
+### Motivation first
 
-| file | reader question it answers |
-|---|---|
-| `paper.md` | "What are we claiming and what's the evidence?" |
-| `tracking.md` | "What's running, what just landed, what failed?" |
+Every paragraph, section, table row, and figure caption leads with why it exists: what question it answers or what gap it closes. A reader asking "why am I reading this?" at any sentence finds the answer in the surrounding prose.
 
-The split exists so the argument doesn't get cluttered with job IDs and the status doesn't get cluttered with theory. When in doubt: anything an outside reader of the paper would care about → `paper.md`; anything only the project team cares about → `tracking.md`.
+Test for new content: write "Because [previous claim raised question X], we did [new thing], which shows [new claim]." If that sentence does not write itself, the content does not belong yet.
 
-**Both files at the root of `doc/` are canonical templates.** Read them before starting, and copy their section structure and patterns into the live documents for your project. The rules below describe *why* they're structured that way; the templates show *how* to apply them concretely. The patterns (Q&A mechanism sections, evidence classification, discovery-arc narration, "what we do NOT claim" calibration, plain-language Outline, narrative-vs-appendix split, mandatory failed-jobs table) are not optional decorations — they are the rules in action.
+The same rule kills redundancy. Every claim traces to the thesis or a named subgoal. When a claim appears twice, keep the strongest version and demote the other to a pointer. A body table with more than ~5 rows, or one that repeats numbers from the prose, moves to an appendix.
+
+### The stranger-read pass
+
+Run this on every doc and figure before delivering. It exists because repeated review rounds traced to one root cause: text was checked for correctness but never re-read with zero context. Typical failures: a paragraph labeled "Training:" when no training had happened; metric abbreviations used before definition; an abstract category where one concrete instance was needed; figure labels colliding with arrows.
+
+1. No dangling referents. Every label, abbreviation, metric, and run name is defined before first use. Every number says what it counts or what it is a percentage of.
+2. Facts as sentences, not labels. "We have not trained anything yet", never a section opener like "Training:".
+3. Instance before category. Open an abstract claim with one worked example from the project's own data, then state the general point once.
+4. One point per sentence. A qualifier either earns its own sentence or is cut. Emphasizing everything emphasizes nothing.
+5. Figures get the same pass: render, then read the render. Trace every arrow tail to head. Check every label for collisions. Ask what each icon looks like at actual size.
+
+### Style
+
+Match the reference papers in `related_papers/`, not an internal tracking doc or a blog post.
+
+Structure:
+- Introduction has no subsections. Flowing prose, ending with a numbered contributions list.
+- Section titles are noun phrases ("Depth Generalization"), not sentences. Same for subsections.
+- Related Work is flowing prose, one paragraph per paper or group.
+- Mechanism subsection titles state the finding ("Detection forms in the last seven layers"), not a question.
+- Caveats go inline after the result they qualify. No standalone "Limitations" subsections inside experiment sections.
+- Prose over bullets in the body. Bullets are for contributions lists and procedural steps only.
+- Dense 2D evidence (N conditions x M outcomes) goes in a table, not prose.
+
+Language:
+- No em dashes, in either `---` or Unicode form. Use commas, colons, parentheses, or split the sentence. Grep before committing.
+- No contractions. First-person plural throughout.
+- Short declarative sentences. "X reaches 99.7%. Y fails at 63.3%." Not "We observe that X consistently reaches...".
+- Cut filler openers ("It is worth noting that"), defensive hedging, grandiose framing, and narration ("Table X shows that").
+- Banned words, rewrite every instance: delve, crucial, pivotal, robust, leverage, utilize, showcase, comprehensive, notably, importantly, interestingly, it is worth noting, this allows us to, in summary, in conclusion.
+- No implementation details in the body. Library names, file paths, CLI flags, experiment IDs go to `tracking.md` or a run script docstring.
+- Every technical claim gets a plain-English gloss within one paragraph. If a non-specialist cannot restate the claim, the gloss is missing.
 
 ---
 
-## 2. `paper.md` structure (the argument)
+## 2. Claims and evidence
+
+Calibrate claim strength to the data. If 10/15 cases support it, write "10/15", not "the claim holds". Partial results stay partial in the title, abstract, and figure titles: a chart showing N pass and M fail names both numbers. (Caught failure: a title claiming "is X, not Y" over data that was X for 24/39 and Y for 15/39; the fix was "Partial X over a strong Y baseline".)
+
+Classify each piece of evidence as one of:
+- Central: theories predict different outcomes and the data picks one.
+- Sanity check: all theories predict the same outcome; confirms the setup works.
+- Supporting: consistent with the claim but not a discriminator.
+
+Write both theories' predictions down before running a control. If they predict the same thing, it is a sanity check, not a discriminator.
+
+Every prediction carries an explicit falsifier, stated as concretely as the prediction ("if X reaches Y under Z, the claim is challenged"). When data lands, check the falsifier first.
+
+Caveats sit inline next to the result: asymmetric comparisons, single-seed runs, partially completed experiments.
+
+When deleting an experiment, search `tracking.md`, `paper.md`, slides, and `paper/` for citations of its findings. Remove them or demote to "lives in git history at commit `<hash>`".
+
+---
+
+## 3. `paper.md`
+
+Audience: coauthors and the advisor, not venue reviewers. Keep the full argument visible, surface weak spots for discussion, and prefer "We tried X. It failed because Y. So we did Z." over reviewer-style hedging.
+
+Structure:
 
 ```
 ## Goal
-  - Plain-language setup (3–6 sentences a non-specialist can follow)
-  - Thesis (one sentence)
-  - Prior work and what makes the question hard (with a theory-1 vs theory-2 table)
+  Plain-language setup (3-6 sentences a non-specialist can follow).
+  Thesis in one sentence.
+  Prior work and what makes the question hard, with a theory-1 vs theory-2 table.
 
 ## Outline
-  Four-column table per section: Question | What we did | What we showed | Therefore →
-  Plain language only — no symbol-only shorthand. Detailed numbers live in §N below.
+  Four-column table per section: Question | What we did | What we showed | Therefore ->
+  Plain language only. Each "Therefore" points at the next section or the headline implication.
+  Planned rows are marked (planned) with predictions and falsifiers.
 
 ## §N Subgoal: <name> (<status>)
-  - **Claim:** one sentence stating what this subgoal proves.
-  - **Evidence:** experiments under this subgoal, each tagged Central / Sanity check / Supporting.
-    Body keeps only headline + plain-language reading + caveat + pointer; detail tables go in Appendix C+.
-  - **Context:** prior work positioning.
+  Claim: one sentence stating what this subgoal proves.
+  Evidence: experiments tagged Central / Sanity check / Supporting.
+  Body keeps headline + plain-language reading + one caveat + appendix pointer.
 
-  Special pattern for §2 controls: include a "discovery arc" narrating how the
-  controls developed (observation → naive control → loophole → refined control →
-  discriminator), so readers see *why* the naive version wasn't enough.
-
-  Special pattern for §3 mechanism: structure as explicit Q&A.
-  Each Q maps to a subsection; each gets a one-sentence answer with citation.
-  Synthesis recaps Q&A in a single table + names what we explicitly do NOT claim.
-
-  Planned sections (§4 origin, etc.): frame as prediction-to-test, not a result.
-
-## Related Work
-  Table of papers with columns: Paper | Relation to our work.
-  Each paper's full notes / PDF live in `related_papers/`.
-
-## Reframing for slides
-  Terse one-phrase-per-subgoal list; checks that slide story matches document story.
-
-## Appendix A — Key terms
-  Definitions of technical terms, so the body links here instead of defining inline.
-
-## Appendix B — How to read the metrics
-  Primary metric definition, common-confusion pre-empt, z-score formula.
-
-## Appendix C, D, ... — Per-experiment detail dumps
-  Large tables (per-bucket pass-rates, top-N rankings, counter-example tables,
-  off-distribution diagnostics, full sweeps) live in their own appendix.
-  The §N body carries a pointer "→ See Appendix X" instead of inlining the data.
+## Related Work        (table: Paper | Relation to our work; notes live in related_papers/)
+## Reframing for slides (one phrase per subgoal; the source of slide headlines)
+## Appendix A  Key terms
+## Appendix B  How to read the metrics
+## Appendix C+ Per-experiment detail dumps (per-bucket tables, top-N lists, sweeps)
 ```
+
+Section rules the template cannot show:
+- The main body tells the positive story only. Ablations, falsified hypotheses, and "what we do NOT claim" lists go to the appendix.
+- §2 (controls) includes a discovery arc: observation, naive control, why it was not enough, refined control, discriminator. State what each theory predicts before each result.
+- §3 (mechanism) opens with numbered questions, one subsection per question, a one-sentence answer each, then a synthesis table and an explicit what-we-do-NOT-claim list citing what falsifies each over-reading.
+- Planned sections are framed as predictions to test, never as results.
+
+Self-verification before declaring a paper edit done:
+1. Every new sentence supports a positive claim (else: appendix).
+2. Subsection titles are declarative.
+3. Multi-condition results are tables.
+4. Causal claims have `results.json` backing.
+5. `\ref{}` targets are correct.
+6. No implementation details in the diff.
+7. No em dashes or banned words in the diff.
+8. The rendered PDF reads cleanly (overflow, figures, abstract length, references).
 
 ---
 
-## 3. `tracking.md` structure (the status)
+## 4. `paper/` (LaTeX)
 
+Sync: `paper.md` is the source of truth. Promote a section to `main.tex` only when stable. Structure mirrors `paper.md`; if they drift, the working draft wins. `paper/README.md` maintains the section mapping.
+
+Render and read after every non-trivial edit:
+
+```bash
+cd doc/paper
+pdflatex main.tex && bibtex main && pdflatex main.tex && pdflatex main.tex
+# render pages for the Read tool:
+uv run python -c "
+import fitz, os
+doc = fitz.open('doc/paper/main.pdf')
+os.makedirs('/tmp/paper_pages', exist_ok=True)
+for i, page in enumerate(doc):
+    page.get_pixmap(dpi=110).save(f'/tmp/paper_pages/page_{i+1:02d}.png')"
 ```
-## Active runs
-  Table: job | exp | status | serves paper.md § | note
 
-## Recently completed jobs
-  Table: job | exp | serves paper.md § | result (one-line)
+Read each page. Audit: figures cut off or unreadable at print size, empty plots, broken glyphs, `??` references, table overflow (`Overfull \hbox`: fix with `p{width}` columns), abstract over 10 lines (trim to 200 words).
 
-## Recently failed jobs
-  Table: job | exp | failure mode | resolution
-  MANDATORY — failures aren't re-attempted blindly.
+Figures earn their place by answering a question the prose set up, being readable at final size, and carrying structure prose cannot (distributions, comparisons, sweeps). A figure showing one number already in the prose is redundant. Captions open with the question the figure answers. When removing a figure: comment out its call in `make_figures.py` with a one-line reason, keep the function, remove the `\ref{}`s from both `main.tex` and `paper.md`. Figure PDFs are regenerated by `paper/figures/make_figures.py` from `results.json`; never hand-edit them.
 
-## Next steps
-  Numbered list, each step naming which paper.md § it serves.
-```
+Floats: load `placeins`; put `\FloatBarrier` after the Conclusion, before the bibliography. Document order: Conclusion, `\FloatBarrier`, bibliography, `\appendix`, appendices. Use `[t]` placement; never bare `[h]`.
+
+Bibliography: every entry is title + url + year + `author = {TBD}`. Never type author names, even partially remembered ones; the human fills them in from verified metadata. Inline citations go through `\citet`/`\citep` only. "TBD (2025)" rendering in drafts is intentional: it marks unverified entries.
+
+Never declare a human-supplied citation fabricated from an arXiv miss alone. Search OpenReview, ACL Anthology, Semantic Scholar, Google Scholar, and the venue page; fetch any URL the human gave (extract PDF text if needed). After all that, say "could not confirm via X, Y, Z", not "fabricated".
+
+Coauthor comments: `\tynote{}` (blue, author), `\robinnote{}` (red, advisor), `\coauthornote{Name}{}` (green), `\inlinecomment{TY}{}` (purple). Disable all via `\usepackage[disable]{todonotes}`.
+
+Overleaf zip, from `doc/paper/`: `zip <project>_overleaf.zip main.tex references.bib README.md figures/*.pdf`. Place at the repo root (gitignored). Exclude `main.pdf`, aux files, and `make_figures.py`.
 
 ---
 
-## 4. Cross-document workflow when a job completes
+## 5. `tracking.md`
 
-### Three-way consistency invariant
-
-**Experiments, paper claims, and tracking must always be consistent with each other.** Three artifacts carry the project state, and a change to any one of them is incomplete until the other two reflect it:
-
-1. **Experiments** — `experiments/<exp>/run.py` (what was actually done), `experiments/<exp>/results.json` (what was actually measured).
-2. **Paper claims** — `doc/paper.md` (the argument and evidence sections) and `doc/paper/main.tex` (the polished version).
-3. **Tracking** — `doc/tracking.md` (Active / Recently completed / Recently failed / Next steps).
-
-Whenever any one of these changes, audit the other two:
-
-- A new experiment runs → add a row in `tracking.md` *and* update the paper's evidence section. A `run.py` that's never cited in `paper.md` is a planning bug.
-- A paper claim is added or modified → it must point at an experiment whose `results.json` supports it. If no experiment supports it yet, mark the section `(planned)` and add a row in `tracking.md` Next steps.
-- A `tracking.md` row says a job landed with a finding → that finding must appear in the relevant `paper.md` §. If `tracking.md` says "result: 15/39 pass z=2" but the paper still says "model passes the introspection test", the paper is stale.
-- A finding's interpretation in the paper is sharpened or weakened → the corresponding `tracking.md` row's one-line result should match the new framing, and the experiment's `run.py` docstring's Predicted-Outcome / Falsifier blocks should be revisited.
-
-Falsification mode: when an experiment falsifies a hypothesis, the falsified hypothesis must come out of the paper body (or be explicitly marked as ruled out), the `tracking.md` row gets the verdict, and the `run.py` docstring's Falsifier clause records that it triggered. Three matching updates, not one.
-
-### Per-job workflow
-
-1. Move its row in `tracking.md` from **Active runs** → **Recently completed jobs** (keep the row; it's the historical record).
-2. Integrate the finding into the relevant `paper.md` § evidence section: update the headline number, the plain-language reading, and any new caveat. If the finding produces a wall of numbers (per-bucket, top-N, sweep), put those in an appendix and link from §N.
-3. If the job *failed*, instead move it to **Recently failed jobs** with the diagnostic and the resolution (or "blocked on X"). Do not silently delete failed-job rows — they prevent re-attempting the same broken approach.
-4. **Audit consistency.** Before declaring the round done, grep `paper.md` and `paper/main.tex` for any claim or hypothesis the experiment touches; reconcile.
-
----
-
-## 5. Rules for paper.md content
-
-**Per-subgoal rules.**
-
-- Every subgoal in `paper.md` states a **claim**, not just "test X." The claim is what we want the evidence to prove.
-- Every experiment in `tracking.md` must cross-reference the `paper.md` § it serves. If it doesn't trace back to the paper, ask why we're running it.
-- Job IDs and ETAs do NOT belong inline in `paper.md` subgoals — they live in `tracking.md`'s Active runs table.
-- When a run completes, follow the cross-document workflow above.
-- Distinguish **context** (prior work already solved this) from **our contribution** (we show this).
-- External papers go in `paper.md`'s **Related Work** table, not inline in subgoals. Per-paper notes live in `related_papers/`.
-
-**Goal-section rules.**
-
-- The Goal section opens with a **plain-language setup** (3–6 sentences a non-specialist can follow) before any technical claim. Then states the **thesis** in one sentence. Then a "**prior work and what makes the question hard**" subsection that names the competing theories.
-- When the project has competing theories (the typical case), include an explicit **theory-1 vs theory-2 table** showing what each predicts in the standard experiment and what a discriminating test would look like. Without it, the document reads as a list of results with no through-line.
-
-**Outline rules.**
-
-- The Outline is the **paper's argument in compressed form**, not a list of section names. Each row reads left-to-right as a self-contained chain: **Question we asked → What we did to answer it → What we showed → Therefore (what it implies + where it leads).**
-- Use a four-column table: `§ | Question | What we did | What we showed | Therefore →`.
-- **Plain language only in Outline cells.** No symbol-only shorthand (no `L=63`, no `cos(δ, v)`, no compact equations). If a term is unavoidable, define it elsewhere and refer to it by name. The Outline is what a non-specialist reads to understand the paper; if they can't follow it, the technical detail in the sections below is wasted on them.
-- Each cell is 1–3 short sentences. Detailed numbers and per-experiment evidence stay in §1–§N below; the Outline is the abstract.
-- The "Therefore" column must point at the *next* section (→ §N) or at the headline implication. This is what makes the Outline read as an *arc* instead of a *list*.
-- For planned sections, mark the row `(planned)` and write "What we showed" as `(predicted)`. The "Therefore" column should state both the prediction and what would falsify it, so reviewers can see the discriminator before any data lands.
-- Every subgoal still names the concrete experiment(s) that achieve it — usually in "What we did". If a subgoal has no concrete experiment, that's a planning bug, not a documentation choice.
-
-**§2 (controls / discriminators) rules.**
-
-- §2 must include a **discovery arc**: observation → theory 1 prediction → theory 2 prediction → naive control → why it was unfair/inconclusive → refined control → final discriminator. Readers who see only the final result cannot tell why the naive version wasn't enough; the arc is what makes the controls intelligible.
-- For each control: state **what theory 1 predicts and what theory 2 predicts** before stating the result. If both predict the same thing, the control is a sanity check, not a discriminator.
-- Tag each piece of evidence in the section as **Central / Sanity check / Supporting**.
-
-**§3 (mechanism) rules.**
-
-- **Mechanism sections are Q&A, not lists of facts.** Open the section with explicit numbered questions ("Q1. Where in the system does the effect form?"). Each Q maps to one subsection and gets a one-sentence answer with citation. A reader scanning the section should be able to extract the mechanism claims from the Q&A alone.
-- Include a **subsection map** table (Q → subsection → evidence) so the reader can jump to the experiment that answers each question.
-- The synthesis subsection recaps the Q&A in a single table, then has one combined-picture paragraph.
-- The synthesis must include an explicit **"what we do NOT claim"** list — name each natural over-reading of the data and cite what falsifies it. Examples: "Not 'X is sufficient' — falsified by Q3's answer."
-
-**Forward-looking / planned sections rules.**
-
-- Frame planned sections as a **prediction to test**, not a result. State what each theory predicts the experiment will show. The status of the section should be `(planned)` or `(in progress)`, not omitted.
-
-**Status and history rules (tracking.md).**
-
-- Maintain three live tables in `tracking.md`: **Active runs**, **Recently completed jobs**, **Recently failed jobs**.
-- **Every row in tracking.md must cross-reference the paper.md § it serves.** Without that link, tracking.md drifts back into being a chronological log disconnected from the argument.
-- The **failed-jobs table is mandatory.** Document each failure with the diagnostic and the resolution (or "blocked on X"). Otherwise future attempts re-hit the same wall blindly.
-- Status tables go in `tracking.md`, NOT in `paper.md`. The argument document stays clean of job IDs and queue state.
-
-**Appendix rules.**
-
-- Technical terms go in **Appendix A**; the body links to them on first use. Do not redefine inline.
-- Metric definitions, common-confusion pre-empts, and statistical formulas (z-score, effect size, etc.) go in **Appendix B**.
-- **Per-experiment detail tables go in their own appendix** (C, D, …, one per major experiment). This includes: per-bucket / per-condition pass-rate tables, top-N rankings, counter-example tables, off-distribution diagnostics, full hyperparameter sweeps. The body keeps only: (a) a **headline** sentence with the bottom-line number, (b) the **plain-language reading**, (c) any single caveat that changes the interpretation, (d) a pointer "→ See Appendix X".
-- These appendices are not optional. They are what makes the main body read top-to-bottom; without them, technical definitions and detail dumps clutter the narrative.
-
-**Slide-deck sanity-check rule.**
-
-- Maintain a **"Reframing for slides"** subsection — a terse one-phrase-per-subgoal list. Use it as the source of slide headlines (built in `weekly_updates/`) and as a check that the slide story matches the document story. If you cannot reduce a subgoal to one phrase, the subgoal is not yet clear enough.
-
----
-
-## 6. Rigorous Claims
-
-`tracking.md`, slides, and paper drafts all argue for claims using evidence. Each claim must be calibrated to its evidence — not stronger, not weaker. The rules below catch the most common ways claims drift away from data.
-
-### Calibrate claim strength to evidence
-
-If the data supports the claim for 10/15 cases, write "for 10/15 cases" — not "the claim holds." If a finding is partial, say "partial." If a result depends on a single seed or a single setting, note the lack of robustness. If a claim depends on a deleted experiment whose data isn't currently in the repo, note that. Reviewers will find these gaps; flag them yourself.
-
-**Don't frame a partial result as binary.** When the data shows X for some cases and Y for others, the paper's title, abstract, headline claims, and figure titles must reflect *both*. Saying "the model is X, not Y" when the data is "X for 24/39, Y for 15/39" is overclaiming — even if the 24 is the larger group, the 15 is real signal that a reviewer will catch. Concrete failure mode caught in introspection commit d361726: a paper title read "is Residual-Position Readout, Not Concept Recognition" while the data showed partial concept-direction signal for 15 of 39 concepts. The corrected title was "Partial Concept-Direction Signal over a Strong Residual-Position Baseline." The same rule applies to figure titles: a chart showing "N pass / M fail" should name both numbers, not just the favourable one.
-
-### Classify each piece of evidence
-
-For every entry in `paper.md`'s **Evidence** section, classify it as one of:
-
-- **Central** — discriminates the hypotheses. If theory 1 and theory 2 predict different outcomes and the data picks one, it's central evidence.
-- **Sanity check** — confirms a basic phenomenon. Both hypotheses predict the same outcome here. The result tells us "the experimental setup is working" but not "which theory is right."
-- **Supporting** — consistent with the claim but not a discriminator. Includes methodological controls (e.g., that the metric is well-formed), generalization tests, robustness checks.
-
-State each piece's classification explicitly. Otherwise sanity checks get cited as if they were central evidence.
-
-### Articulate both hypotheses' predictions before running a control
-
-Before designing or running a control experiment, write down both hypotheses and what each predicts the result will be. If both predict the same thing, the control is a sanity check, not a discriminator — useful, but it doesn't push between hypotheses. Note this in the run.py docstring and in `paper.md`.
-
-This catches the failure mode of running a control, getting a result, and only later realizing it was consistent with everything you were testing.
-
-### State an explicit Falsifier for every prediction
-
-Every experiment plan (in `run.py` docstring, in `paper.md`'s Evidence section, and in any pre-experiment plan document) must include an explicit **Falsifier** clause: *the observation that would knock down the predicted result*. Phrase it as concretely as the prediction: "If X reaches Y under condition Z, the cascade-essential claim is challenged." Treat the Falsifier as a non-optional companion to the Predicted-Outcome.
-
-Why this matters:
-
-- Without a stated falsifier, any result drifts into being "consistent with the existing theory" post-hoc. The falsifier locks in ex ante what would force a re-read.
-- It also disciplines the prediction: if you can't write a concrete falsifier, the prediction is too vague to test.
-- When the data lands, the falsifier is what you check first — if it triggered, the section's claim must be weakened or rewritten before the result is integrated.
-
-### Caveats inline
-
-Each result statement includes its methodological caveats inline:
-
-- If a comparison is asymmetric (e.g., "max over 30 random seeds" vs "single concept extraction"), say so where you state the result.
-- If a test is single-seed or single-setting, say so.
-- If a finding depends on an exp that didn't fully complete (partial data, manual recovery from logs), say so.
-
-### Audit downstream when deleting an experiment
-
-When pruning an experiment from the repo, search `tracking.md`, `paper.md`, slide decks (`weekly_updates/`), and the LaTeX folder (`doc/paper/`) for downstream citations of its findings. Either:
-
-- remove those citations, or
-- demote them to a side-note that explicitly says "this finding lives in git history at commit `<hash>`, not in the current repo."
-
-Otherwise the live document keeps citing data that the reader can no longer reproduce.
-
-### Plain-language gloss
-
-Any technical claim in `tracking.md`, slides, or paper drafts has a plain-English gloss within one paragraph. If a non-specialist reader can't restate the claim in their own words, the gloss is missing. Examples:
-
-- "self-output prediction over a manipulated residual stream" → add: "the model is just running its normal next-token prediction on activations we tampered with — it doesn't notice the tampering, it just produces the output most consistent with whatever state we left it in."
-- "z-score above the same-random distribution" → add: "the concept's measured value is more than 2 standard deviations above the random-vector baseline — i.e., not explained by random chance."
-
----
-
-## 7. `related_papers/`
-
-When a paper is cited in `paper.md`'s Related Work table, save a corresponding note in `related_papers/`:
+Four tables, every row cross-referencing the `paper.md` section it serves:
 
 ```
-related_papers/
-├── <short_citekey>.md     ← one-paragraph summary + relation-to-our-work + key numbers
-├── <short_citekey>.pdf    ← the paper itself (optional; gitignored if large)
+## Active runs                job | exp | status | serves paper.md § | note (the note says WHY)
+## Recently completed jobs    job | exp | serves paper.md § | result (one line)
+## Recently failed jobs       job | exp | failure mode | resolution    <- mandatory; prevents blind re-attempts
+## Next steps                 numbered, each naming the paper.md § it serves
 ```
 
-The `paper.md` Related Work table is the *summary*; the `related_papers/` folder is the *reading-pile detail*. Don't inline long-form reading notes into `paper.md`.
+Three artifacts carry project state: experiment code/results, paper claims, tracking rows. A change to one is incomplete until the other two match:
+- New experiment: add a tracking row and update the paper's evidence section.
+- New paper claim: point it at a supporting `results.json`, or mark the section (planned) and add a next step.
+- Landed result: move the tracking row to completed; update the paper's headline number, reading, and caveat. If `tracking.md` says "15/39 pass" while the paper says "passes the test", the paper is stale.
+- Falsified hypothesis: remove it from the paper body (or mark it ruled out), record the verdict in tracking, note the triggered falsifier in the run script docstring.
+
+Job IDs and ETAs never appear in `paper.md`.
+
+---
+
+## 6. `related_papers/`
+
+One `<citekey>.md` per cited paper: a one-paragraph summary, the relation to our work, key numbers. Citekeys match `paper/references.bib`. The `paper.md` Related Work table stays a summary; long notes live here.

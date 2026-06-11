@@ -2,107 +2,47 @@
 
 Re-read this before writing any slides.
 
----
+## 1. Goal first
 
-## 1. Goal first (always)
+Run the goal-driven workflow from the root CLAUDE.md: state the deck's goal in one sentence, list subgoals, and name the subgoal every slide serves. No subgoal, no slide.
 
-Before writing any slide, run the Goal-Driven Work workflow from the root CLAUDE.md:
+A weekly update's goal is usually "convince the advisor we made progress on X this week". Slides about config bumps, file formats, or setup details almost never serve that goal.
 
-1. State the deck's goal in one sentence.
-2. List subgoals.
-3. For each slide, name the subgoal it serves — if none, do not write the slide.
+## 2. Files
 
-A weekly update's goal is usually *"convince the advisor we made progress on X this week"*. Slides that explain config bumps, file formats, or any setup detail almost never serve that goal — drop them.
-
----
-
-## 2. File organization
-
-- Save Beamer source at `doc/weekly_updates/YYYY-MM-DD/slides.tex`.
-- Copy every image used into the same folder so the entire folder uploads to Overleaf as-is.
-- After the talk, record audience feedback + resulting plan in `doc/weekly_updates/YYYY-MM-DD/post_talk_notes.md`.
-  *(Distinct from `doc/paper/feedback.md`, the persistent cross-session feedback file for paper and experiment edits.)*
-
-`post_talk_notes.md` contents:
-- **Feedback from presentation:** what was flagged, suggested, or pushed back on (with enough context to be useful weeks later).
-- **Plan going forward:** a table of planned experiments (model × dataset × task × prediction).
-
----
+- Beamer source at `doc/weekly_updates/YYYY-MM-DD/slides.tex`; copy every image into the same folder so it uploads to Overleaf as-is.
+- After the talk, write `post_talk_notes.md` in the same folder: what was flagged or pushed back on (with enough context to be useful weeks later), and the plan going forward as a table (model x dataset x task x prediction). Distinct from `doc/paper/feedback.md`.
 
 ## 3. Audience and tone
 
-The audience is the **advisor and collaborators** — they know the project and prior work.
-
-- **Keep it minimal.** Only what the advisor needs to follow the result. Cut anything implementation-detail, defensive, or self-justifying.
-- **Don't over-explain technical infrastructure.** Tokenizer vocab sizes, BOS-token IDs, file formats, exact CLI flags → at most one inline phrase ("bumped node-ID cap from 31 to 100"). **Never dedicate a slide to a config change.**
-- **Don't pad.** No "open questions" slide unless there are real questions. No "next steps" slide unless next steps aren't obvious from the results. No protocol slide unless the protocol is the contribution.
-- When the user says *"do not over-complicate"*, read it as: drop everything except (1) what the dataset is, (2) what the experiments are, (3) what the results are.
-
----
+The advisor and collaborators already know the project. Keep it minimal: only what they need to follow the result. No infrastructure detail beyond an inline phrase. No padding slides ("open questions", "next steps") unless there is real content for them. When the user says "do not over-complicate", read it as: the dataset, the experiments, the results, nothing else.
 
 ## 4. Structure
 
-- **No title slide** — audience already knows the project and presenter.
-- **Start with a framing slide** that states the question the deck answers and previews the argument structure. The audience should know after slide 1 what claim you are building toward and what evidence you will show.
-- **The narrative thread must be visible to the audience, not just internally tracked.** Slide titles, framing sentences, and transition text ("Evidence 1:", "But does this scale?") should make it obvious how each slide advances the argument. A deck where every slide passes the subgoal check but reads like a disconnected list of experiments has failed this rule.
-- Cover topics in this order, skipping anything the audience already knows:
-  1. Framing slide: the question + argument preview
-  2. Dataset / setup context (what data, what model, how it differs from prior work)
-  3. Core theoretical claim
-  4. Current experimental results
-  5. Open questions to discuss with collaborators
-  6. Next steps as a table (model × dataset × task × prediction)
+- No title slide.
+- Slide 1 frames the deck: the question it answers and the argument it will build. After slide 1 the audience knows what claim is coming and what evidence will support it.
+- The narrative thread stays visible in slide titles and transitions ("Evidence 1:", "But does this scale?"). A deck that reads as a disconnected list of experiments has failed even if every slide passes the subgoal check.
+- Order: framing, setup context, core claim, results, real open questions, next steps as a table. Skip anything the audience already knows.
 
----
+## 5. Claims, not categories
 
-## 5. Claim-driven slides, not data dumps
+Every slide title is a one-sentence conclusion, not a label. "Moderate Memorizes, Easy Truly Generalizes", not "Experiment 1 Results".
 
-**Every slide is a claim, not a category.** The slide title is a one-sentence conclusion. The body is the minimal evidence supporting that claim.
+No result dumps: state the insight as the title, show the one or two numbers that support it, move detail tables to backup. Exception: when the user explicitly asks for a full per-task table or a verbatim prompt on a slide, render it cleanly (scriptsize, green/red markup) instead of arguing it down to a summary.
 
-Bad titles (category labels):
-- "Experiment 1 Results"
-- "Probe Accuracy Across Layers"
-- "Attention Ablation Results"
+Minimal text: more than 4-5 lines on a slide is too much. The presenter's voice fills in context.
 
-Good titles (claims):
-- "Moderate Memorizes, Easy Truly Generalizes"
-- "Full-BFS Targets Fix Held-Out Generalization"
-- "CoCoNut Has a Short Program, CoT Does Not"
+One idea per slide. A definition + an example + a conclusion is three slides.
 
-**No result dumps.** Do not fill slides with tables of numbers, accuracy columns, or statistical summaries and expect the audience to extract the insight. Instead:
-1. State the insight as the slide title.
-2. Show only the 1--2 numbers, figures, or comparisons that support it.
-3. Move detailed tables to backup slides.
+## 6. Figures
 
-**Tell a story, not a report.** The deck should read as:
-1. What problem are we studying?
-2. Why do existing methods/understanding fall short?
-3. What is our hypothesis?
-4. What evidence supports it?
-5. What broader insight follows?
+- Readable when projected: one large example per slide, never a 4-up grid of small panels.
+- `\includegraphics[width=\linewidth,height=0.78\textheight,keepaspectratio]{...}`.
+- Too small in the rendered PDF means regenerate at higher resolution or with fewer panels, never cram.
+- Slides and their figures get the stranger-read pass from `doc/CLAUDE.md`: render the PDF, read every page as the audience, trace arrows and check label collisions before committing.
 
-Each slide advances this narrative. If a slide only makes sense as "here's more data," it belongs in backup.
+## 7. LaTeX
 
-**Minimal text.** If a slide has more than 4--5 lines of text, it has too much. Cut to the one sentence that matters and let the figure or table carry the rest. The presenter's voice fills in context --- the slide is not a script.
-
----
-
-## 6. Slide density
-
-**One idea per slide.** A definition + an example + a conclusion is three slides, not one. When in doubt, more slides with less on each.
-
----
-
-## 7. Figures
-
-- Figures must be **readable when projected**. A 4-up grid of small example graphs is unreadable on a slide — use one large example per slide, or split into multiple slides.
-- Use `\includegraphics[width=\linewidth,height=0.78\textheight,keepaspectratio]{...}` so figures fill the slide while preserving aspect ratio.
-- If a figure looks too small in the rendered PDF, regenerate it at higher resolution or with fewer panels — never cram more onto the slide.
-
----
-
-## 8. LaTeX style
-
-- Tables over prose for all structured comparisons.
-- Works/Fails predictions in tables: `\color{green!60!black}` / `\color{red!70!black}`.
-- No `\titlepage`, no author/institute slide.
+- Tables over prose for structured comparisons.
+- Works/Fails predictions: `\color{green!60!black}` / `\color{red!70!black}`.
+- No `\titlepage`, no author slide.

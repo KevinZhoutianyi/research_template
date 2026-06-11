@@ -2,164 +2,97 @@
 
 Re-read this before writing experiment code, training scripts, or analysis.
 
----
+## 1. Code style
 
-## 1. Code Style
+Logic is minimal: every function, branch, and helper serves the core idea. No defensive type checks, input sanitization, or edge-case handling unless required (exception: Pydantic type annotations, which Pydantic needs).
 
-### Focus on the core idea
-
-All **code** must clearly contribute to the core idea of the program. Exclude code that is tangential or orthogonal — input sanitization, defensive type checks, edge-case handling — unless explicitly required. The exception is type annotations in Pydantic classes, which Pydantic itself relies on.
-
-### Explanation is not code
-
-The "minimalism" rule applies to **logic**, not to readability aids. Comments, docstrings, illustrative prints, and small example invocations help me understand what was written and why — keep them generously.
+Explanation is generous: comments, docstrings, illustrative prints, and example invocations teach what the code does. Keep them.
 
 | What | Default |
 |---|---|
-| Logic (functions, branches, helpers, error handling) | minimal — must serve the goal |
-| Explanation (comments, docstrings, example calls, log lines) | generous — they teach me what the code does |
+| Logic (functions, branches, helpers, error handling) | minimal, must serve the goal |
+| Explanation (comments, docstrings, example calls, log lines) | generous |
 
-### Section comments
-
-Use sparingly to label major blocks (`=== Training ===`, `=== Evaluation ===`, `=== Main ===`):
-
-- Format exactly as `=== <section> ===` with three equals signs on each side.
-- No blank line after the section comment.
-
----
+Section comments label major blocks only, formatted exactly `=== <section> ===`, no blank line after.
 
 ## 2. Correctness
 
-Final code has zero tolerance for bugs. The solution is rigorous testing and verification, not just careful writing.
+Final code has zero tolerance for bugs; the cure is testing, not careful writing. Use Pydantic models over tuples (`output.loss`, not `output[0]`); prefer frozen models. Anything unit-testable should get pytest coverage, but wait until asked before writing tests; meanwhile flag untested code. Prefer simple control flow that takes instrumentation (prints, log hooks) without restructuring.
 
-### Pydantic
+## 3. Figure code (research template)
 
-Use Pydantic models instead of vanilla tuples for runtime type checking and clarity (`output.loss` over `output[0]`). Prefer frozen (immutable) models when possible.
+All paper figures in `doc/paper/figures/make_figures.py` follow this template. Verify before committing.
 
-### Pytest
-
-Any code that can be unit-tested should be unit-tested with pytest. **Wait until I ask before writing tests**, but warn me about untested code — a project is not complete without rigorous testing.
-
-### Code structure for instrumentation
-
-Prefer simple control flow. Keep print statements / logging hooks easy to add later. Choose layouts that make instrumentation natural rather than awkward.
-
----
-
-## 3. Figure Code Style — Research Template
-
-All paper figures in `doc/paper/figures/make_figures.py` must follow this template. **Verify before committing.**
-
-**Global rcParams** are set once at the top of `make_figures.py` (sans-serif font, `#E0E0E0` grid, white background, no top/right spines). Do **not** override them inside individual figure functions — no `ax.grid(True, alpha=...)`, no `font.*` resets.
-
-**Okabe–Ito colors** — always use the named constants defined at the top of `make_figures.py`, never raw hex:
+- Global rcParams are set once at the top (sans-serif, `#E0E0E0` grid, white background, no top/right spines). Never override inside figure functions.
+- Okabe-Ito colors via the named constants only, never raw hex:
 
 ```python
 C_BLUE="#0072B2"  C_ORANGE="#E69F00"  C_GREEN="#009E73"  C_RED="#D55E00"
 C_LBLUE="#56B4E9" C_YELLOW="#F0E442" C_GRAY="#999999"   C_BLACK="#000000"
 ```
 
-**Variance bands** — if `results.json` stores per-element stds, include a shaded band:
+- If `results.json` has per-element stds, plot the variance band; a line-only plot hides uncertainty:
 
 ```python
 ax.fill_between(x, means - stds, means + stds, alpha=0.15, color=color)
 ```
 
-A line-only plot with no variance hides uncertainty. Always plot it when the data is there.
+Pre-commit check: named constants used; no rcParams overrides; variance band present when stds exist; the `main.tex` caption opens with the question the figure answers; the figure is readable at print size in the rendered PDF.
 
-**Before committing a figure:** (1) named color constants used; (2) no rcParams overrides inside the function; (3) variance band present if stds available; (4) caption in `main.tex` opens with the question the figure answers; (5) figure readable at its actual size in the rendered PDF.
+## 4. Experiment visualization
 
----
+Every experiment has a `visualize.py` whose figures a reader can understand without reading code or configs: the task as an input-output contract, one fully concrete example (input, key intermediate steps, output or failure), and dataset/run stats (split sizes, trajectory lengths, pass/fail split, key knobs). Figures pass the stranger-read pass in `doc/CLAUDE.md`: render, then read the render.
 
-## 4. Experiment Visualization
-
-Every experiment must have a `visualize.py` that generates figures a reader can understand **without reading code or configs**. The figures must show:
-
-1. **Task description** — what the model is asked to do (e.g., "Which candidate is reachable from root?").
-2. **Example inputs/outputs** — a concrete example with the graph, root, candidates, answer, and any intermediate reasoning targets (e.g., neighbor_k / latent token targets).
-3. **Dataset stats** — split sizes, graph size, BFS depth, and any key structural parameters.
-
-The goal: someone looking only at the figures should fully understand the task, the data, and what makes this experiment different from others.
-
----
-
-## 5. Compute & Storage
+## 5. Compute and storage
 
 ### Clusters
 
-| cluster | login | lab/personal storage |
+| cluster | login | storage |
 |---|---|---|
-| **Delta (NCSA)** | `delta.ncsa.illinois.edu` | `/data/latent_space_reasoning/` |
-| **Endeavour (USC CARC)** | `ssh tzhou029@endeavour.usc.edu` (USC VPN) | `/project2/robinjia_875/tzhou029/` |
-| **Local A100 node (AWS)** | the current working box (no scheduler, no VPN) | `/home/ubuntu/memory_module/` (node-local; no shared FS, no `/data` mount) |
+| Delta (NCSA) | `delta.ncsa.illinois.edu` | `/data/<project>/` |
+| Endeavour (USC CARC) | `ssh tzhou029@endeavour.usc.edu` (USC VPN) | `/project2/robinjia_875/tzhou029/` |
+| Local A100 node (AWS) | the current working box (no scheduler, no VPN) | `/home/ubuntu/<project>_ext/` (node-local) |
 
-On Endeavour, redirect HF cache (home quota is small):
-`export HF_HOME=/project2/robinjia_875/tzhou029/.cache/huggingface`
+On Endeavour redirect the HF cache (home quota is small): `export HF_HOME=/project2/robinjia_875/tzhou029/.cache/huggingface`.
 
 ### Endeavour SLURM
 
-Lab allocation `robinjia_875`: ~60 A6000 GPUs, 20 A100 GPUs.
+Lab allocation `robinjia_875`: ~60 A6000, 20 A100.
 
-| partition | use | GPU limit | notes |
-|---|---|---|---|
-| `nlp_hiprio` | default | 8 GPUs/student | priority on condo nodes |
-| `nlp` | overflow | — | preemptible; checkpoint frequently |
-
-| GPU | flag | when |
+| partition | use | limit |
 |---|---|---|
-| A6000 (48 GB) | `--gres=gpu:a6000:1` | default |
-| A100 (80 GB) | `--gres=gpu:a100:1` | only if model won't fit on A6000 |
+| `nlp_hiprio` | default | 8 GPUs/student, priority on condo nodes |
+| `nlp` | overflow | preemptible; checkpoint frequently |
 
-Default resource request: `--cpus-per-task=8 --mem=32G`.
-Check availability: `noderes -f -g -p nlp`.
+A6000 48GB is the default (`--gres=gpu:a6000:1`); A100 80GB only when the model does not fit. Default request `--cpus-per-task=8 --mem=32G`. Availability: `noderes -f -g -p nlp`.
 
-### Local GPU node (no scheduler)
+### Local GPU node
 
-The current working box is a single AWS node with **8x A100-SXM4-40GB**, 96 CPUs, ~1 TB RAM, CUDA-13 driver. There is **no SLURM here**: do not write `sbatch`/`srun`/`squeue` commands for this node. Launch jobs directly on the GPUs and background them yourself. Note the 40 GB cap (not 80 GB) when sizing batch/sequence length.
+8x A100-SXM4-40GB (note: 40 GB, not 80), 96 CPUs, ~1 TB RAM. No SLURM: never write `sbatch`/`srun`/`squeue` here; launch directly and background.
 
-**Environment.** The repo declares deps in `pyproject.toml` but no env is pre-built on this node. Set one up once with `uv` (`uv venv && uv pip install -e .`) and run jobs as `uv run python ...`. If `uv` is absent, fall back to a dedicated conda env (`conda create -n mem python=3.11 && pip install -e .`); do not install into `base`. Always confirm `python -c "import torch; print(torch.cuda.is_available(), torch.cuda.device_count())"` prints `True 8` before launching anything long.
-
-**Pick GPUs explicitly.** Never assume a free GPU. Before launching, run `nvidia-smi --query-gpu=index,memory.used,utilization.gpu --format=csv` and choose idle ones. Pin the job with `CUDA_VISIBLE_DEVICES`:
-
-```bash
-CUDA_VISIBLE_DEVICES=0 uv run python train_capability.py        # one GPU
-CUDA_VISIBLE_DEVICES=2,3 uv run python train.py                 # two GPUs (multi-GPU code only)
-```
-
-With 8 GPUs free, run independent experiments concurrently by pinning each to a different index, rather than one job hogging the box.
-
-**Launch detached so the job survives the session.** Use the Bash tool's `run_in_background: true` for jobs you will poll within the same session. For jobs that must outlive the session (hours-long training), use `nohup` (or a named `tmux` session) and tee a log:
+- Environment: build once with `uv venv && uv pip install -e .`, run as `uv run python ...`. Confirm `torch.cuda.device_count()` prints 8 before anything long.
+- Pick GPUs explicitly: check `nvidia-smi --query-gpu=index,memory.used,utilization.gpu --format=csv`, then pin with `CUDA_VISIBLE_DEVICES=0 ...`. Run independent experiments on different indices instead of one job hogging the box.
+- Detach jobs that must survive the session:
 
 ```bash
 mkdir -p logs
-CUDA_VISIBLE_DEVICES=0 nohup uv run python train_capability.py > logs/m1_$(date +%m%d_%H%M).log 2>&1 &
-echo "PID $!"   # record the PID so you can poll / kill it
+CUDA_VISIBLE_DEVICES=0 nohup uv run python train.py > logs/m1_$(date +%m%d_%H%M).log 2>&1 &
+echo "PID $!"
 ```
-
-**Smoke-test first (§7 still applies).** Run `--smoke` on one GPU and confirm it saves `results.json` before launching the full run. The 5-minute smoke in front of a multi-hour run is cheaper here than on the cluster, not more expensive.
 
 ### File storage
 
-All large files (checkpoints, datasets, generated outputs, anything not committed to git) **must live outside the repo**. The repo is for code, configs, and small artifacts only (figures, summary CSVs).
+Large files (checkpoints, datasets, generated outputs) live outside the repo; the repo holds code, configs, and small artifacts (figures, summary JSON). Regenerable per-run outputs may stay in the experiment dir, gitignored. Layout under the cluster base path: `<project>/checkpoints/`, `datasets/`, `outputs/`.
 
-Suggested layout (same on both clusters, under the cluster's base path above):
+### If the project routes API models through a LiteLLM proxy
 
-```
-<base_path>/latent_space_reasoning/
-  checkpoints/   # model weights saved during training
-  datasets/      # raw and preprocessed data
-  outputs/       # large generated outputs
-```
+- Launch the proxy with `LITELLM_MODE=PRODUCTION`. Without it, litellm runs `load_dotenv()` on import and finds the repo's `.env` by walking up from site-packages (the venv lives inside the repo), silently loading expiring credentials regardless of cwd. The proxy then dies mid-pipeline with auth errors. Prefer non-expiring auth (instance role via the boto3 default chain) for anything longer than a token lifetime.
+- Find the provider's throttling point once, then budget workers across ALL simultaneously running jobs, not per job.
+- Project-specific launch commands and model aliases belong in the experiment's README.
 
----
+## 6. Logging and monitoring
 
-## 6. Experiment Logging
-
-Always include structured logging so runs are reproducible and inspectable from logs alone.
-
-### Training-start summary
-
-Print before the first epoch:
+Runs must be reproducible and inspectable from logs alone. Before the run starts, print the config (every hyperparameter that affects results):
 
 ```
 === Training ===
@@ -169,54 +102,14 @@ objective:  causal language modeling (cross-entropy)
 lr:         3e-4 | batch_size: 32 | max_seq_len: 512 | epochs: 3
 ```
 
-### Evaluation samples
+Each eval pass logs a few input/generation/label triples so behavior is visible at a glance.
 
-Log a few input/generation/label triples per eval pass so behavior is visible at a glance:
-
-```
-=== Evaluation sample (3 of 128) ===
-example 1:
-  input:      "Translate to French: The cat sat on the mat"
-  generation: "Le chat s'est assis sur le tapis"
-  label:      "Le chat était assis sur le tapis"
-```
-
-### Config logging
-
-Any hyperparameter that affects results must be logged before the run begins.
-
-### Job monitoring
-
-After submitting a SLURM job, **do not return control to the user and wait for them to ask about results**. Instead, sleep and poll `squeue` / log files periodically until the job finishes, then report the final results (val acc, train acc, probe figures, errors). The user should see the outcome without having to ask.
-
-On the **local GPU node** (no `squeue`), the same rule holds: after launching a detached job, poll the log file and the process until it exits, then report the outcome. Check liveness with `kill -0 <PID>` (or `tail logs/<file>.log`) and confirm GPU activity with `nvidia-smi`. Do not hand control back with a job still mid-run and unreported.
-
----
+After launching any job, do not hand control back and wait to be asked. Poll the queue or log file until it finishes, then report the outcome (metrics, figures, errors). On the local node: `kill -0 <PID>` for liveness, `tail` the log, `nvidia-smi` for GPU activity.
 
 ## 7. Smoke-test expensive jobs
 
-Before submitting any SLURM job that takes more than ~30 minutes, run a smoke-test pass that exercises the full code path on a tiny scale:
+Before any job longer than ~30 minutes: run the full code path at tiny scale (load the model, one iteration or one sample, save the real `results.json`). Only then launch the full run. This catches the failures that make long jobs worthless: offload bugs, missing files, broken save paths, malformed configs. Implement as a `--smoke` flag or a 5-minute time limit.
 
-- Load the model.
-- Run **one** iteration / one sample / one evaluation step.
-- Save a small `results.json` (or whatever the real run will save).
+## 8. Do not rename directories with running jobs
 
-If the smoke test passes, submit the full job. If it fails, fix the bug locally and re-smoke before requeuing.
-
-This catches the common failure modes that make a long job worthless: model offload bugs, meta-tensor errors, missing files, broken save paths, malformed configs. A 5-minute smoke test in front of a 4-hour run pays for itself the first time it catches anything.
-
-You can implement this by parameterizing the run script (`--smoke` flag that limits to N=1 iteration and exits after save) or by submitting with `--time=00:05:00` first.
-
----
-
-## 8. Don't rename directories with running jobs
-
-Before any folder rename or file move that affects an experiment's `output_dir`, run `squeue -u $USER` and confirm no running job has captured that path. Otherwise, the job will run to completion in memory but crash at save time when the directory it expects to write to no longer exists at the original path.
-
-If a relevant job is running:
-
-- wait for it to finish, **or**
-- save its results to a different path and migrate after, **or**
-- defer the rename until the next clean state.
-
-Same rule for git operations (`git mv`, branch switches with uncommitted dir renames) — they look local but break running jobs that hold the old path string.
+Before renaming or moving anything an active job writes to, confirm no running job holds that path (`squeue -u $USER` on clusters; `ps`/PIDs locally). A job holding the old path string finishes in memory and crashes at save time. If a job is running: wait, save elsewhere and migrate after, or defer the rename. The same applies to `git mv` and branch switches with uncommitted renames.

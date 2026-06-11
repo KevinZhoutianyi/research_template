@@ -1,104 +1,75 @@
 # Working Guide
 
-**Re-read this file periodically during long conversations.** After extended implementation work (e.g., multiple rounds of code changes, waiting for jobs, debugging), re-read CLAUDE.md before the next task to avoid drifting into mechanical execution and losing sight of the project goals.
+**Re-read this file periodically during long conversations.** After extended implementation work (rounds of code changes, waiting for jobs, debugging), re-read it before the next task so the project goals stay in view.
 
-This file contains **universal project rules**. Context-specific rules live in subdirectory CLAUDE.md files:
+This file holds universal project rules. Context-specific rules live in subdirectory CLAUDE.md files:
 
 | where | what it governs |
 |---|---|
-| `doc/CLAUDE.md` | how to write `paper.md`, `tracking.md`, weekly-update slides, and the related-papers section. Contains the two-file split rules, paper.md structure, tracking.md structure, rigorous-claims rules. |
-| `doc/weekly_updates/CLAUDE.md` | slide formatting and presentation rules. |
+| `doc/CLAUDE.md` | `paper.md`, `proposal.md`, `tracking.md`, the LaTeX paper, related-papers notes. Writing rules, claims calibration, the stranger-read pass. |
+| `doc/weekly_updates/CLAUDE.md` | slide decks. |
 | `experiments/CLAUDE.md` | code style, correctness, compute, experiment logging. |
-| `theory/CLAUDE.md` | theory writing rules: no obvious theorems, justify assumptions, concrete takeaways, tightness, necessity, proof intuition. |
+| `theory/CLAUDE.md` | theory writing: no obvious theorems, justified assumptions, tightness, proof intuition. |
 
-The LaTeX version of the paper lives at `doc/paper/`; see `doc/paper/README.md`.
-
----
-
-## 0. Feedback File
-
-**The user writes feedback into `doc/paper/feedback.md` after reading the paper or experiments.** At the start of every session, read that file and act on every bullet before doing anything else. After acting on a bullet, delete it from the file. If a bullet is ambiguous, ask before acting.
-
-Typical content: paper paragraph too long, wrong framing in a section, experiment result misrepresented, tracking.md entry stale. The user does not write this file during a conversation — they write it after reading on their own. Do not add bullets to it yourself.
-*(This is distinct from `doc/weekly_updates/YYYY-MM-DD/post_talk_notes.md`, which records advisor feedback after a talk.)*
+The LaTeX paper lives at `doc/paper/`; see `doc/paper/README.md`.
 
 ---
 
-## 1. Goal-Driven Work
+## 0. Feedback file
 
-**Whenever you design an experiment or build a slide deck, start by identifying the goal (or subgoal). Every piece of content must visibly serve that goal — if a slide, paragraph, table, plot, or experimental knob does not advance it, remove it.**
+The user writes feedback into `doc/paper/feedback.md` after reading the paper or experiments on their own (never during a conversation). At the start of every session: read it, act on every bullet, delete each bullet once handled. Ask before acting on ambiguous bullets. Do not add bullets yourself.
 
-Workflow:
+(Distinct from `doc/weekly_updates/YYYY-MM-DD/post_talk_notes.md`, which records advisor feedback after a talk.)
 
-1. **State the goal in one sentence.** ("Show that method X outperforms baseline Y on benchmark Z under condition W.") If you cannot state it in one sentence, the goal is not yet clear enough — clarify before producing content.
-2. **List the subgoals.** Each subgoal is something the audience or experiment must establish on the way to the goal.
-3. **For every slide / experiment knob / paragraph, name which subgoal it serves.** If you cannot name one, cut it.
-4. **Re-check at the end:** does the deck / experiment, read top to bottom, straight to the goal? Anything that detours, defends, or self-justifies should be cut.
+---
 
-This is the **first filter**, applied before slide-density, audience-tone, or figure-quality rules. Those rules only matter for content that has already passed the goal filter.
+## 1. Goal-driven work
+
+Before designing an experiment or building a deck, state the goal in one sentence ("Show that method X beats baseline Y on benchmark Z under condition W"). If one sentence is impossible, the goal is not clear enough yet; clarify first.
+
+Then list the subgoals, and name which subgoal every slide, paragraph, table, plot, and experimental knob serves. No subgoal, no content. Re-check at the end: does the whole thing read straight to the goal? Cut anything that detours, defends, or self-justifies.
+
+This filter comes before any formatting rule.
 
 ---
 
 ## 2. Tables over prose
 
-For results, configs, comparisons, or any structured information, use a markdown table instead of bullets or paragraphs. Applies to written reports, `tracking.md` entries, and printed experiment summaries.
+Results, configs, and comparisons go in markdown tables, not bullets or paragraphs. Applies to reports, `tracking.md` entries, and printed experiment summaries.
 
 ---
 
-## 3. Git: Commit and Push
+## 3. Git: commit and push
 
-When adding a new experiment, updating tracking.md, or making any substantive change, **commit and push immediately** — don't wait for the user to ask. The user should never have to manually push.
-
----
-
-## 4. Surgical Changes
-
-Touch only what you must. Clean up only your own mess.
-
-When editing existing code:
-
-- Don't "improve" adjacent code, comments, or formatting.
-- Don't refactor things that aren't broken.
-- Match existing style, even if you'd do it differently.
-- If you notice unrelated dead code, mention it — don't delete it.
-
-When your changes create orphans:
-
-- Remove imports/variables/functions that YOUR changes made unused.
-- Don't remove pre-existing dead code unless asked.
-
-The test: every changed line should trace directly to the user's request.
+After adding an experiment, updating tracking, or any substantive change: commit and push immediately. The user never has to ask or push manually.
 
 ---
 
-## 5. Verify Each Step
+## 4. Surgical changes
 
-Transform tasks into verifiable goals and loop until verified.
+Touch only what the request requires; clean up only your own mess.
 
-For multi-step tasks, state a brief plan:
+- Do not improve adjacent code, comments, or formatting.
+- Do not refactor what is not broken. Match existing style.
+- Mention pre-existing dead code; do not delete it.
+- Do remove imports/variables/functions that YOUR change orphaned.
 
-```
-1. [Step] → verify: [check]
-2. [Step] → verify: [check]
-3. [Step] → verify: [check]
-```
+Test: every changed line traces directly to the user's request.
 
-Examples:
+---
 
-- "Add validation" → write tests for invalid inputs, then make them pass.
-- "Fix the bug" → write a test that reproduces it, then make it pass.
-- "Refactor X" → ensure tests pass before and after.
+## 5. Verify each step
 
-Strong success criteria let you loop independently. Weak criteria ("make it work") require clarification — ask before starting.
+Turn tasks into verifiable goals and loop until verified. For multi-step tasks, state the plan as steps each paired with a check ("Add validation -> tests for invalid inputs pass"). Weak criteria ("make it work") need clarification before starting.
 
-**Always verify your output against the relevant subdirectory CLAUDE.md before declaring any task done.** The subdirectory rules are not optional checklists — they are the definition of "done" for that domain:
+A task is not done until the output passes the relevant subdirectory CLAUDE.md:
 
 | task type | verify against |
 |---|---|
-| Paper edits (`paper.md`, `main.tex`) | `doc/CLAUDE.md` — body-structure rules + self-verification checklist + render-and-read workflow |
-| Experiment code or analysis | `experiments/CLAUDE.md` — code style, correctness, smoke-test, logging |
-| Figure code (`make_figures.py`) | `experiments/CLAUDE.md` §3 — research template: Okabe-Ito colors, no inline rcParams overrides, variance bands mandatory |
-| Slide decks (`weekly_updates/`) | `doc/weekly_updates/CLAUDE.md` — slide formatting rules |
-| `tracking.md` updates | `doc/CLAUDE.md` — three-way consistency invariant (experiments ↔ paper claims ↔ tracking) |
+| Doc edits (`paper.md`, `proposal.md`, `main.tex`) | `doc/CLAUDE.md`: stranger-read pass, structure rules, self-verification checklist, render-and-read |
+| Experiment code or analysis | `experiments/CLAUDE.md`: code style, correctness, smoke-test, logging |
+| Figure code (`make_figures.py`) | `experiments/CLAUDE.md` §3: Okabe-Ito constants, no inline rcParams, variance bands |
+| Slide decks | `doc/weekly_updates/CLAUDE.md` |
+| `tracking.md` updates | `doc/CLAUDE.md` §5: three-way consistency (experiments, paper claims, tracking) |
 
-If you edit a paper section and do not run the body-structure checklist, you have not finished the task. If you write experiment code and do not smoke-test it, you have not finished the task. Verification is part of the work, not a separate optional step.
+Skipping the checklist means the task is not finished. Verification is part of the work.
