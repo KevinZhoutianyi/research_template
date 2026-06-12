@@ -73,3 +73,13 @@ A task is not done until the output passes the relevant subdirectory CLAUDE.md:
 | `tracking.md` updates | `doc/CLAUDE.md` §5: three-way consistency (experiments, paper claims, tracking) |
 
 Skipping the checklist means the task is not finished. Verification is part of the work.
+
+---
+
+## 6. Reports carry their own context
+
+Result summaries and explanations (chat messages, READMEs, tracking rows, slides) are read by someone who did not watch the work happen. Names coined during the work (a pipeline stage, an eval config, a task subset) mean nothing to that reader.
+
+Before the numbers: state in one or two sentences what question the experiment answers, what was run, and what is being compared. Define every coined term at first use in every report; a definition given in an earlier message does not carry over. Translate each headline number into its concrete meaning ("5 of the 11 tasks that passed without steering now fail", not "5 broke").
+
+Test: can the reader repeat the claim to a third person without asking a follow-up? Any sentence that would trigger "what does that mean" gets expanded before sending.
