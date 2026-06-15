@@ -4,8 +4,11 @@
       "Bash(*)",
       "Skill(update-config)",
       "Skill(update-config:*)",
+      "Read(*)",
       "WebFetch(domain:arxiv.org)",
-      "WebFetch(domain:github.com)"
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:api.semanticscholar.org)",
+      "WebFetch(domain:html.duckduckgo.com)"
     ],
     "deny": [
       "Bash(rm:*)",
