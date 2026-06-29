@@ -30,7 +30,7 @@ The same rule kills redundancy. Every claim traces to the thesis or a named subg
 
 Run this on every doc and figure before delivering. It exists because repeated review rounds traced to one root cause: text was checked for correctness but never re-read with zero context. Typical failures: a paragraph labeled "Training:" when no training had happened; metric abbreviations used before definition; an abstract category where one concrete instance was needed; figure labels colliding with arrows.
 
-1. No dangling referents. Every label, abbreviation, metric, and run name is defined before first use. Every number says what it counts or what it is a percentage of.
+1. No dangling referents. Every label, abbreviation, metric, and run name is defined before first use. Every number says what it counts or what it is a percentage of. Specific checks: (a) every term introduced in the abstract or intro that is not plain English gets a parenthetical gloss at first body use; (b) every named evaluation set (e.g., a "battery" of questions) is described — size, content, construction — at first use; (c) every named direction or axis gets a definition the first time it appears in the body, not deferred to an appendix; (d) every external technique name (e.g., "logit-lens probe") either appears in Key Terms or gets a one-clause gloss inline.
 2. Facts as sentences, not labels. "We have not trained anything yet", never a section opener like "Training:".
 3. Instance before category. Open an abstract claim with one worked example from the project's own data, then state the general point once.
 4. One point per sentence. A qualifier either earns its own sentence or is cut. Emphasizing everything emphasizes nothing.
@@ -123,6 +123,8 @@ Self-verification before declaring a paper edit done:
 6. No implementation details in the diff.
 7. No em dashes or banned words in the diff.
 8. The rendered PDF reads cleanly (overflow, figures, abstract length, references).
+9. Numerical consistency: every number in the body matches its source table/appendix. Specifically: (a) pair counts in clustering tables satisfy C(n_pass,2) + n_pass*n_fail + C(n_fail,2) = C(N,2); (b) baseline values stated in multiple places agree; (c) directional claims about a sequence of numbers (e.g., "maintained", "strengthened", "reduced") match the actual sign of the change; (d) approximate rates ("1 in 20", "~30%") are consistent with the exact numbers in the corresponding table.
+10. No forward-use of undefined terms: every technical term, named direction, named evaluation set, and external technique name is defined at or before first body use per the stranger-read pass rules above.
 
 ---
 
