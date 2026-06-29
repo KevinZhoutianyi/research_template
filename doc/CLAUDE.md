@@ -8,6 +8,7 @@
 | `tracking.md` | The status: active runs, completed, failed, next steps. Each row names the `paper.md` section it serves. |
 | `weekly_updates/` | Slide decks. Rules in `weekly_updates/CLAUDE.md`. |
 | `related_papers/` | One note per cited paper. |
+| `paper/example_papers/` | Reference PDFs whose writing, figure, and section style this paper targets. |
 
 These are living documents. Update in place; never append dated entries.
 
@@ -37,7 +38,7 @@ Run this on every doc and figure before delivering. It exists because repeated r
 
 ### Style
 
-Match the reference papers in `related_papers/`, not an internal tracking doc or a blog post.
+Match the example papers in `paper/example_papers/` across three dimensions: writing voice, figure design, section structure. Before drafting a section opener, designing a figure, or restructuring the paper, open one of those PDFs and check how it handles the same situation. The `related_papers/` notes inform what we cite; the example papers inform how the writing reads.
 
 Structure:
 - Introduction has no subsections. Flowing prose, ending with a numbered contributions list.
@@ -183,3 +184,18 @@ Job IDs and ETAs never appear in `paper.md`.
 ## 6. `related_papers/`
 
 One `<citekey>.md` per cited paper: a one-paragraph summary, the relation to our work, key numbers. Citekeys match `paper/references.bib`. The `paper.md` Related Work table stays a summary; long notes live here.
+
+---
+
+## 7. `paper/example_papers/`
+
+PDFs of papers whose presentation this paper aims to match. Different from `related_papers/`: those define what we cite; these define how we write, plot, and structure.
+
+Three dimensions to mirror:
+- Writing voice: sentence rhythm, how a claim is introduced and qualified, motivation-first openers, declarative section titles.
+- Figure design: panel layout, axis labels, color palette, caption form (question first, then plot, then implication).
+- Section structure: intro staging, body vs appendix split, how a multi-step argument is laid out across §3/§4.
+
+Before any non-trivial paper edit, ask: would this paragraph, figure, or section structure fit naturally inside one of the example papers? If no, adjust before committing.
+
+Files are named `<short_slug>_<arxiv_id>.pdf`. Update the set when the target venue or paper voice changes.
