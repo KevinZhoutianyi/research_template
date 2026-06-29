@@ -35,6 +35,7 @@ Run this on every doc and figure before delivering. It exists because repeated r
 3. Instance before category. Open an abstract claim with one worked example from the project's own data, then state the general point once.
 4. One point per sentence. A qualifier either earns its own sentence or is cut. Emphasizing everything emphasizes nothing.
 5. Figures get the same pass: render, then read the render. Trace every arrow tail to head. Check every label for collisions. Ask what each icon looks like at actual size.
+6. One logical move per paragraph. A paragraph that presents multiple independent pieces of evidence must signpost each one explicitly ("First... Second... Third...", "Ruling that out, we then show...", "A separate result confirms..."). The reader must never have to infer the logical connection between consecutive sentences. Test: cover every sentence but the last — does the final sentence follow obviously? If not, add a bridge.
 
 ### Style
 
