@@ -22,6 +22,8 @@ The advisor and collaborators already know the project. Keep it minimal: only wh
 - No title slide.
 - Slide 1 frames the deck: the question it answers and the argument it will build. After slide 1 the audience knows what claim is coming and what evidence will support it.
 - The narrative thread stays visible in slide titles and transitions ("Evidence 1:", "But does this scale?"). A deck that reads as a disconnected list of experiments has failed even if every slide passes the subgoal check.
+- Every slide must answer two questions for the reader: (1) why are we looking at this? and (2) what does it tell us? A slide that shows only a result without explaining the motivation is a data dump. For experiment slides: state the prediction before showing the finding.
+- No slides that are just notes or prose. If a slide has no figure, table, or concrete number, it belongs in the presenter's voice. Exception: the framing slide and the "what stays open" slide.
 - Order: framing, setup context, core claim, results, real open questions, next steps as a table. Skip anything the audience already knows.
 
 ## 5. Claims, not categories
