@@ -66,6 +66,8 @@ Lab allocation `robinjia_875`: ~60 A6000, 20 A100.
 
 A6000 48GB is the default (`--gres=gpu:a6000:1`); A100 80GB only when the model does not fit. Default request `--cpus-per-task=8 --mem=32G`. Availability: `noderes -f -g -p nlp`.
 
+**Never SSH into a compute node's IP to run GPU work.** Always go through SLURM (`sbatch`, or `srun` for interactive): submit from the login node and let the scheduler place you. A node SLURM lists as idle may have its GPUs held by another job, so bypassing the scheduler means a later `sbatch` can land on the same node and fail on out-of-memory or device-busy. Node hostnames belong only in `--exclude` lists for known-flaky nodes, never as connection targets.
+
 ### Local GPU node
 
 8x A100-SXM4-40GB (note: 40 GB, not 80), 96 CPUs, ~1 TB RAM. No SLURM: never write `sbatch`/`srun`/`squeue` here; launch directly and background.
