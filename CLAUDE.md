@@ -83,3 +83,16 @@ Result summaries and explanations (chat messages, READMEs, tracking rows, slides
 Before the numbers: state in one or two sentences what question the experiment answers, what was run, and what is being compared. Define every coined term at first use in every report; a definition given in an earlier message does not carry over. Translate each headline number into its concrete meaning ("5 of the 11 tasks that passed without steering now fail", not "5 broke").
 
 Test: can the reader repeat the claim to a third person without asking a follow-up? Any sentence that would trigger "what does that mean" gets expanded before sending.
+
+---
+
+## 7. Explanations: plain language, then an example
+
+The user runs several projects in parallel and does not hold this project's context in their head. When explaining anything (a result, a bug, a design choice, a concept), default to plain language and a concrete example, in that order:
+
+- Open with the everyday-words version ("the control group", "the placebo"), not the field term ("the null distribution"). Introduce the term after the plain meaning, if at all.
+- Ground every abstraction in one worked example from the project's own setup ("we inject 30 pieces of pure noise and record how strongly each fools the model; that average is the baseline a real concept must beat").
+- Never assume a term defined in an earlier session, an earlier message, or the paper is remembered. Re-explain from zero each time.
+- Technical depth is fine, jargon shortcuts are not: if a sentence needs a term of art, unpack it in the same sentence.
+
+Test: someone working on a different project all week should follow the whole explanation on first read, without opening the repo.
