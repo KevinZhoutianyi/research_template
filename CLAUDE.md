@@ -7,7 +7,7 @@ This file holds universal project rules. Context-specific rules live in subdirec
 | where | what it governs |
 |---|---|
 | `doc/CLAUDE.md` | `paper.md`, `proposal.md`, `tracking.md`, the LaTeX paper, related-papers notes. Writing rules, claims calibration, the stranger-read pass. |
-| `doc/weekly_updates/CLAUDE.md` | weekly-update PDF progress reports (LaTeX article, not slides). |
+| `doc/weekly_updates/CLAUDE.md` | slide decks. |
 | `experiments/CLAUDE.md` | code style, correctness, compute, experiment logging. |
 | `theory/CLAUDE.md` | theory writing: no obvious theorems, justified assumptions, tightness, proof intuition. |
 
@@ -69,7 +69,7 @@ A task is not done until the output passes the relevant subdirectory CLAUDE.md:
 | Doc edits (`paper.md`, `proposal.md`, `main.tex`) | `doc/CLAUDE.md`: stranger-read pass, structure rules, self-verification checklist, render-and-read |
 | Experiment code or analysis | `experiments/CLAUDE.md`: code style, correctness, smoke-test, logging |
 | Figure code (`make_figures.py`) | `experiments/CLAUDE.md` §3: Okabe-Ito constants, no inline rcParams, variance bands |
-| Weekly-update PDFs | `doc/weekly_updates/CLAUDE.md` |
+| Slide decks | `doc/weekly_updates/CLAUDE.md` |
 | `tracking.md` updates | `doc/CLAUDE.md` §5: three-way consistency (experiments, paper claims, tracking) |
 
 Skipping the checklist means the task is not finished. Verification is part of the work.
