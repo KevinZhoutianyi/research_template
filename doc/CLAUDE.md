@@ -80,6 +80,30 @@ When deleting an experiment, search `tracking.md`, `paper.md`, slides, and `pape
 
 ---
 
+## 2a. Framing and drafting methodology
+
+Rules for changing the story, not just the prose.
+
+### Sketch first, fill later
+
+Draft a paper the way you draw: outline before detail. Lock the one-sentence thesis and the section outline *first*, get them approved, then fill in prose one layer at a time. Do not polish a sentence while the thesis under it is unsettled, and do not rewrite the whole body in one pass when the framing might still move. Each framing-level decision is the user's: stop, present concrete labeled options (not open questions), and wait. "Which of these two theses is the spine?" with options beats "what should the framing be?".
+
+### Fix the stance up front, keep it consistent
+
+Decide the paper's stance toward its subject before touching wording, and hold it end to end (e.g. affirm-and-explain vs debunk). A stance leaks through title, abstract, section titles, transitions, related work, even a single scare-quoted word. After a stance change, grep the whole body for the old stance's vocabulary and fix every instance, in both `paper.md` and `paper/`.
+
+Define the central term by the source literature's own criteria and refer to it the same way throughout: set the definition in the intro, refer each result back to a named criterion, and never let the term drift into a private sense between sections.
+
+### Verify the mechanism against data before writing prose
+
+Confirm a mechanism claim against the results before writing it, not from memory or from what the framing wants; prose that runs ahead of the data can get the mechanism assignment backwards and survive many commits. Every number in the body traces to a `results.json` and is recomputable; when a framing change reassigns what an experiment shows, re-open its data and re-derive. Quote a verbatim run/sample rather than reconstructing one.
+
+### Titles and claim strength
+
+Section titles are noun phrases (topic); subsection titles state the finding as a declarative. Never put a finding-claim in a top-level section title, and never put a protocol-sensitive number (a count that moves with the null or the extraction) in any title. Calibrate every claim to the data: no bare "is X, not Y" when the data is a split or a sub-1 correlation; use a comparative or state both numbers. When a result contradicts a claim already in the paper (even one written this session), fix the claim, do not defend it.
+
+---
+
 ## 3. `paper.md`
 
 Audience: coauthors and the advisor, not venue reviewers. Keep the full argument visible, surface weak spots for discussion, and prefer "We tried X. It failed because Y. So we did Z." over reviewer-style hedging.
