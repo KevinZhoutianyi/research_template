@@ -82,8 +82,8 @@ The section order is fixed (all headers are Markdown `##`, except the top title 
 1. `## What this project is` -- 3-5 sentences only: what an LLM agent is, what the
    system does, the question the project asks, what model/hardware. No definitions here beyond
    what those sentences need.
-2. `## Definitions` -- **a dedicated section, one bullet per term of art** (game,
-   critic, moment, compressor, bank, ...). Each bullet: the term in bold, then one or two plain
+2. `## Definitions` -- **a dedicated section, one bullet per term of art** (the project's
+   terms of art). Each bullet: the term in bold, then one or two plain
    sentences, with a concrete example where one helps ("one game = one simulated-household task,
    e.g. 'put a hot potato in the garbage can'"). The body never uses a term before it appears
    here, and never re-defines inline what belongs here.

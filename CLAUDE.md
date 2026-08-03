@@ -15,6 +15,7 @@ This file holds universal project rules. Context-specific rules live in subdirec
 | `/paper-figure` skill | figure code rules (paper, updates, `visualize.py`). |
 | `/progress-report` skill | structure for status answers to the user. |
 | `/delete-dead-code` skill | prove-then-delete procedure for dead code and dead docs. |
+| `/verify-experiment` skill | the delivery gate for experiment code: pytest, smoke, untested-path report. |
 
 The LaTeX paper lives at `doc/paper/`; see `doc/paper/README.md`.
 
@@ -74,7 +75,7 @@ A task is not done until the output passes the relevant rule set (subdirectory C
 | task type | verify against |
 |---|---|
 | Doc edits (`paper.md`, `proposal.md`, `main.tex`) | `doc/CLAUDE.md` writing rules while drafting; the `/verify-paper` skill before declaring done |
-| Experiment code or analysis | `experiments/CLAUDE.md`: code style, correctness, smoke-test, logging |
+| Experiment code or analysis | `experiments/CLAUDE.md` while writing; the `/verify-experiment` skill before declaring done |
 | Figure code (`make_figures.py`, `visualize.py`, update figures) | the `/paper-figure` skill: Okabe-Ito constants, no inline rcParams, variance bands, render-then-read |
 | Weekly updates | the project's chosen form: `/weekly-update` or `/weekly-slides` (invoke before drafting, not just to verify) |
 | Theory writing | `theory/CLAUDE.md` |

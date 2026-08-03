@@ -125,7 +125,6 @@ Structure:
   Body keeps headline + plain-language reading + one caveat + appendix pointer.
 
 ## Related Work        (table: Paper | Relation to our work; notes live in related_papers/)
-## Reframing for slides (one phrase per subgoal; the source of slide headlines)
 ## Appendix A  Key terms
 ## Appendix B  How to read the metrics
 ## Appendix C+ Per-experiment detail dumps (per-bucket tables, top-N lists, sweeps)
@@ -133,8 +132,8 @@ Structure:
 
 Section rules the template cannot show:
 - The main body tells the positive story only. Ablations, falsified hypotheses, and "what we do NOT claim" lists go to the appendix.
-- §2 (controls) includes a discovery arc: observation, naive control, why it was not enough, refined control, discriminator. State what each theory predicts before each result.
-- §3 (mechanism) opens with numbered questions, one subsection per question, a one-sentence answer each, then a synthesis table and an explicit what-we-do-NOT-claim list citing what falsifies each over-reading.
+- A controls/validity section, when the paper has one, includes a discovery arc: observation, naive control, why it was not enough, refined control, discriminator. State what each theory predicts before each result.
+- A mechanism/analysis section, when the paper has one, opens with numbered questions, one subsection per question, a one-sentence answer each, then a synthesis table and an explicit what-we-do-NOT-claim list citing what falsifies each over-reading.
 - Planned sections are framed as predictions to test, never as results.
 
 Before declaring a paper edit done, invoke the `/verify-paper` skill and run its 10-point self-verification checklist (positive claims, declarative titles, tables, `results.json` backing, `\ref{}` targets, no implementation details, language greps, rendered-PDF audit, numerical consistency, no forward-use of undefined terms).

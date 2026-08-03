@@ -1,6 +1,6 @@
 ---
 name: progress-report
-description: Structure for any "where are we / how is it going / status" answer to the user. Invoke before drafting the reply — the report is framed around the goal, never around activity.
+description: Structure for any status answer to the user — "where are we", "how is it going", "什么情况", "进展如何", or any request for progress. Invoke before drafting the reply — the report is framed around the goal, never around activity.
 ---
 
 # Progress Reports Are Measured Against the Goal

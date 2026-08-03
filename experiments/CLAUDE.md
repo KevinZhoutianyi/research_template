@@ -17,7 +17,7 @@ Section comments label major blocks only, formatted exactly `=== <section> ===`,
 
 ## 2. Correctness
 
-Final code has zero tolerance for bugs; the cure is testing, not careful writing. Use Pydantic models over tuples (`output.loss`, not `output[0]`); prefer frozen models. Anything unit-testable should get pytest coverage, but wait until asked before writing tests; meanwhile flag untested code. Prefer simple control flow that takes instrumentation (prints, log hooks) without restructuring.
+Final code has zero tolerance for bugs; the cure is testing, not careful writing. Use Pydantic models over tuples (`output.loss`, not `output[0]`); prefer frozen models. Code whose output reaches a report or the paper (scoring, statistics, data processing) gets pytest coverage by default, without waiting to be asked; the `/verify-experiment` skill is the delivery gate that runs it. One-off scaffolding and exploratory code may skip tests but is flagged as untested. Prefer simple control flow that takes instrumentation (prints, log hooks) without restructuring.
 
 ## 3. Figure code
 
