@@ -19,29 +19,13 @@ Section comments label major blocks only, formatted exactly `=== <section> ===`,
 
 Final code has zero tolerance for bugs; the cure is testing, not careful writing. Use Pydantic models over tuples (`output.loss`, not `output[0]`); prefer frozen models. Anything unit-testable should get pytest coverage, but wait until asked before writing tests; meanwhile flag untested code. Prefer simple control flow that takes instrumentation (prints, log hooks) without restructuring.
 
-## 3. Figure code (research template)
+## 3. Figure code
 
-All paper figures in `doc/paper/figures/make_figures.py` follow this template. Verify before committing.
-
-- Global rcParams are set once at the top (sans-serif, `#E0E0E0` grid, white background, no top/right spines). Never override inside figure functions.
-- Okabe-Ito colors via the named constants only, never raw hex:
-
-```python
-C_BLUE="#0072B2"  C_ORANGE="#E69F00"  C_GREEN="#009E73"  C_RED="#D55E00"
-C_LBLUE="#56B4E9" C_YELLOW="#F0E442" C_GRAY="#999999"   C_BLACK="#000000"
-```
-
-- If `results.json` has per-element stds, plot the variance band; a line-only plot hides uncertainty:
-
-```python
-ax.fill_between(x, means - stds, means + stds, alpha=0.15, color=color)
-```
-
-Pre-commit check: named constants used; no rcParams overrides; variance band present when stds exist; the `main.tex` caption opens with the question the figure answers; the figure is readable at print size in the rendered PDF.
+All figure code follows the `/paper-figure` skill; invoke it before editing any figure script. It carries the data-plot template (Okabe-Ito named constants, one global rcParams block, variance bands when stds exist), the separate method-diagram convention (serif type, hairlines, square corners, one accent), and the render-then-read check.
 
 ## 4. Experiment visualization
 
-Every experiment has a `visualize.py` whose figures a reader can understand without reading code or configs: the task as an input-output contract, one fully concrete example (input, key intermediate steps, output or failure), and dataset/run stats (split sizes, trajectory lengths, pass/fail split, key knobs). Figures pass the stranger-read pass in `doc/CLAUDE.md`: render, then read the render.
+Every experiment has a `visualize.py`; its required content (input-output contract, one fully concrete example, dataset/run stats) and style rules live in the `/paper-figure` skill.
 
 ## 5. Compute and storage
 
@@ -67,6 +51,12 @@ Lab allocation `robinjia_875`: ~60 A6000, 20 A100.
 A6000 48GB is the default (`--gres=gpu:a6000:1`); A100 80GB only when the model does not fit. Default request `--cpus-per-task=8 --mem=32G`. Availability: `noderes -f -g -p nlp`.
 
 **Never SSH into a compute node's IP to run GPU work.** Always go through SLURM (`sbatch`, or `srun` for interactive): submit from the login node and let the scheduler place you. A node SLURM lists as idle may have its GPUs held by another job, so bypassing the scheduler means a later `sbatch` can land on the same node and fail on out-of-memory or device-busy. Node hostnames belong only in `--exclude` lists for known-flaky nodes, never as connection targets.
+
+### SLURM job shape (any cluster)
+
+- **Never run compute on the login node.** This covers GPU work AND CPU-only work (batch API harnesses, container runs): the login node is shared and unmanaged, and a crashed local run leaks processes and container mounts onto it. Submitting jobs, queue/log inspection, and seconds-long single-file analysis are the only login-node activities; anything with a worker pool, a container, or a runtime over ~1 minute is a batch job.
+- **One job = one `srun` process, no background processes inside the job.** The process owns its GPUs directly; when the job dies, SLURM reaps the whole step and nothing is left holding GPU memory. Parallelism comes from MORE JOBS (N-way sharding, one shard per node, merge at the end), never from background processes inside one job.
+- **No server-in-job (e.g. a vLLM server backgrounded inside the batch script).** A background server turns every non-happy-path job exit into orphaned workers holding GPU memory on a node the scheduler then hands to other users as "idle". If a server is ever unavoidable, quarantine it: `setsid` + EXIT-trap group-kill + block-until-dead (hold the node rather than return it dirty).
 
 ### Local GPU node
 
@@ -106,7 +96,7 @@ lr:         3e-4 | batch_size: 32 | max_seq_len: 512 | epochs: 3
 
 Each eval pass logs a few input/generation/label triples so behavior is visible at a glance.
 
-After launching any job, do not hand control back and wait to be asked. Poll the queue or log file until it finishes, then report the outcome (metrics, figures, errors). On the local node: `kill -0 <PID>` for liveness, `tail` the log, `nvidia-smi` for GPU activity.
+After launching a job, hand control back. Do not sit in a polling loop waiting for it: report the job id and how to watch it (`squeue` or the log path on clusters; `kill -0 <PID>`, `tail` the log, `nvidia-smi` on a local node), and let the user drive from there.
 
 ## 7. Smoke-test expensive jobs
 

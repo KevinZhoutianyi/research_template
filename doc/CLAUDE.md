@@ -6,7 +6,7 @@
 | `proposal.md` | The research proposal: method, baselines, risks, plan. Same writing rules as `paper.md`; numbers in it must match `tracking.md`. |
 | `paper/` | The same argument as LaTeX for Overleaf. Mirrors `paper.md`; lags it. |
 | `tracking.md` | The status: active runs, completed, failed, next steps. Each row names the `paper.md` section it serves. |
-| `weekly_updates/` | Slide decks. Rules in `weekly_updates/CLAUDE.md`. |
+| `weekly_updates/` | Weekly progress reports. Two forms: `/weekly-update` (Markdown) or `/weekly-slides` (Beamer); the project picks one at init (`weekly_updates/CLAUDE.md`). |
 | `related_papers/` | One note per cited paper. |
 | `paper/example_papers/` | Reference PDFs whose writing, figure, and section style this paper targets. |
 
@@ -28,14 +28,7 @@ The same rule kills redundancy. Every claim traces to the thesis or a named subg
 
 ### The stranger-read pass
 
-Run this on every doc and figure before delivering. It exists because repeated review rounds traced to one root cause: text was checked for correctness but never re-read with zero context. Typical failures: a paragraph labeled "Training:" when no training had happened; metric abbreviations used before definition; an abstract category where one concrete instance was needed; figure labels colliding with arrows.
-
-1. No dangling referents. Every label, abbreviation, metric, and run name is defined before first use. Every number says what it counts or what it is a percentage of. Specific checks: (a) every term introduced in the abstract or intro that is not plain English gets a parenthetical gloss at first body use; (b) every named evaluation set (e.g., a "battery" of questions) is described — size, content, construction — at first use; (c) every named direction or axis gets a definition the first time it appears in the body, not deferred to an appendix; (d) every external technique name (e.g., "logit-lens probe") either appears in Key Terms or gets a one-clause gloss inline.
-2. Facts as sentences, not labels. "We have not trained anything yet", never a section opener like "Training:".
-3. Instance before category. Open an abstract claim with one worked example from the project's own data, then state the general point once.
-4. One point per sentence. A qualifier either earns its own sentence or is cut. Emphasizing everything emphasizes nothing.
-5. Figures get the same pass: render, then read the render. Trace every arrow tail to head. Check every label for collisions. Ask what each icon looks like at actual size.
-6. One logical move per paragraph. A paragraph that presents multiple independent pieces of evidence must signpost each one explicitly ("First... Second... Third...", "Ruling that out, we then show...", "A separate result confirms..."). The reader must never have to infer the logical connection between consecutive sentences. Test: cover every sentence but the last — does the final sentence follow obviously? If not, add a bridge.
+Run this on every doc and figure before delivering: re-read with zero context, checking for dangling referents, label-style section openers, categories without instances, overloaded sentences, unsignposted logical moves, and unreadable figure renders. The full pass (six numbered checks with the specific sub-checks) lives in the `/verify-paper` skill; invoke it before declaring any doc edit done.
 
 ### Style
 
@@ -43,7 +36,7 @@ Match the example papers in `paper/example_papers/` across three dimensions: wri
 
 Structure:
 - Introduction has no subsections. Flowing prose, ending with a numbered contributions list.
-- Section titles are noun phrases ("Depth Generalization"), not sentences. Same for subsections.
+- Section titles are noun phrases naming the topic ("Depth Generalization"); subsection titles state the finding as a declarative sentence. Claim strength and number rules for titles: §2a.
 - Related Work is flowing prose, one paragraph per paper or group.
 - Mechanism subsection titles state the finding ("Detection forms in the last seven layers"), not a question.
 - Caveats go inline after the result they qualify. No standalone "Limitations" subsections inside experiment sections.
@@ -55,6 +48,11 @@ Language:
 - No contractions. First-person plural throughout.
 - Short declarative sentences. "X reaches 99.7%. Y fails at 63.3%." Not "We observe that X consistently reaches...".
 - Cut filler openers ("It is worth noting that"), defensive hedging, grandiose framing, and narration ("Table X shows that").
+- No self-justifying sentences about our own honesty, transparency, or rigor. Banned shapes: "reported honestly", "whatever it shows", "visible, not hidden", "to be fair", "we do not hide/soften", "even when unflattering", "reported transparently". They tell the reader to trust us instead of showing the data, and announcing our own honesty plants the opposite doubt. Lead with the finding and state the number as fact instead. Grep prose (not fenced code) before committing.
+- **No capitals as emphasis.** Not "the SAME model", "it HURTS here". Emphasis is carried by word order and sentence structure; a reader sees shouting, and a reviewer sees an author who could not make the sentence do the work. Rewrite: "the SAME model" becomes "holding both seats at the same model". Capitals survive only as literals inside fenced blocks (a protocol token like `STEER`, a checker's `FAILED`), which are quoted text. Grep prose for `\b[A-Z]{4,}\b` before committing; one draft had 24 such words.
+- **Third person, not second.** No "Consider an agent that has just...", no "you will notice", no addressing the reader. State the fact instead. Second person is the voice of a tutorial. The exception is quoted text inside a fenced block, where a speaker really does say "you".
+- **No meta-narrative.** The document does not describe its own structure or signpost its own argument: cut "this is what everything below builds on", "as we shall see", "the rest of this section". A section that needs a pointer to the next one is usually two sections in the wrong order.
+- **State the result; do not grade it.** Cut "the result supports the design's premise", "this confirms our hypothesis", "this is a strong result". End on the measurement and let the reader draw the conclusion.
 - Banned words, rewrite every instance: delve, crucial, pivotal, robust, leverage, utilize, showcase, comprehensive, notably, importantly, interestingly, it is worth noting, this allows us to, in summary, in conclusion.
 - No implementation details in the body. Library names, file paths, CLI flags, experiment IDs go to `tracking.md` or a run script docstring.
 - Every technical claim gets a plain-English gloss within one paragraph. If a non-specialist cannot restate the claim, the gloss is missing.
@@ -139,17 +137,7 @@ Section rules the template cannot show:
 - §3 (mechanism) opens with numbered questions, one subsection per question, a one-sentence answer each, then a synthesis table and an explicit what-we-do-NOT-claim list citing what falsifies each over-reading.
 - Planned sections are framed as predictions to test, never as results.
 
-Self-verification before declaring a paper edit done:
-1. Every new sentence supports a positive claim (else: appendix).
-2. Subsection titles are declarative.
-3. Multi-condition results are tables.
-4. Causal claims have `results.json` backing.
-5. `\ref{}` targets are correct.
-6. No implementation details in the diff.
-7. No em dashes or banned words in the diff.
-8. The rendered PDF reads cleanly (overflow, figures, abstract length, references).
-9. Numerical consistency: every number in the body matches its source table/appendix. Specifically: (a) pair counts in clustering tables satisfy C(n_pass,2) + n_pass*n_fail + C(n_fail,2) = C(N,2); (b) baseline values stated in multiple places agree; (c) directional claims about a sequence of numbers (e.g., "maintained", "strengthened", "reduced") match the actual sign of the change; (d) approximate rates ("1 in 20", "~30%") are consistent with the exact numbers in the corresponding table.
-10. No forward-use of undefined terms: every technical term, named direction, named evaluation set, and external technique name is defined at or before first body use per the stranger-read pass rules above.
+Before declaring a paper edit done, invoke the `/verify-paper` skill and run its 10-point self-verification checklist (positive claims, declarative titles, tables, `results.json` backing, `\ref{}` targets, no implementation details, language greps, rendered-PDF audit, numerical consistency, no forward-use of undefined terms).
 
 ---
 
@@ -157,21 +145,7 @@ Self-verification before declaring a paper edit done:
 
 Sync: `paper.md` is the source of truth. Promote a section to `main.tex` only when stable. Structure mirrors `paper.md`; if they drift, the working draft wins. `paper/README.md` maintains the section mapping.
 
-Render and read after every non-trivial edit:
-
-```bash
-cd doc/paper
-pdflatex main.tex && bibtex main && pdflatex main.tex && pdflatex main.tex
-# render pages for the Read tool:
-uv run python -c "
-import fitz, os
-doc = fitz.open('doc/paper/main.pdf')
-os.makedirs('/tmp/paper_pages', exist_ok=True)
-for i, page in enumerate(doc):
-    page.get_pixmap(dpi=110).save(f'/tmp/paper_pages/page_{i+1:02d}.png')"
-```
-
-Read each page. Audit: figures cut off or unreadable at print size, empty plots, broken glyphs, `??` references, table overflow (`Overfull \hbox`: fix with `p{width}` columns), abstract over 10 lines (trim to 200 words).
+Render and read after every non-trivial edit: the `/verify-paper` skill §4 has the render script (compile + rasterize every page to `/tmp/paper_pages/`) and the page-by-page audit list.
 
 Figures earn their place by answering a question the prose set up, being readable at final size, and carrying structure prose cannot (distributions, comparisons, sweeps). A figure showing one number already in the prose is redundant. Captions open with the question the figure answers. When removing a figure: comment out its call in `make_figures.py` with a one-line reason, keep the function, remove the `\ref{}`s from both `main.tex` and `paper.md`. Figure PDFs are regenerated by `paper/figures/make_figures.py` from `results.json`; never hand-edit them.
 

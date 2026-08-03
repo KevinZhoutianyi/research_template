@@ -2,14 +2,19 @@
 
 **Re-read this file periodically during long conversations.** After extended implementation work (rounds of code changes, waiting for jobs, debugging), re-read it before the next task so the project goals stay in view.
 
-This file holds universal project rules. Context-specific rules live in subdirectory CLAUDE.md files:
+This file holds universal project rules. Context-specific rules live in subdirectory CLAUDE.md files and task-triggered skills (`.claude/skills/`):
 
 | where | what it governs |
 |---|---|
-| `doc/CLAUDE.md` | `paper.md`, `proposal.md`, `tracking.md`, the LaTeX paper, related-papers notes. Writing rules, claims calibration, the stranger-read pass. |
-| `doc/weekly_updates/CLAUDE.md` | slide decks. |
-| `experiments/CLAUDE.md` | code style, correctness, compute, experiment logging. |
+| `doc/CLAUDE.md` | `paper.md`, `proposal.md`, `tracking.md`, the LaTeX paper, related-papers notes. Writing rules, claims calibration. |
+| `experiments/CLAUDE.md` | code style, correctness, compute (per-project), experiment logging. |
 | `theory/CLAUDE.md` | theory writing: no obvious theorems, justified assumptions, tightness, proof intuition. |
+| `/weekly-update` skill | weekly progress reports as Markdown. Invoke before drafting one. |
+| `/weekly-slides` skill | weekly progress reports as Beamer decks. Each project picks one form at init (`doc/weekly_updates/CLAUDE.md`). |
+| `/verify-paper` skill | the delivery gate for doc edits: stranger-read pass, checklist, render-and-read. |
+| `/paper-figure` skill | figure code rules (paper, updates, `visualize.py`). |
+| `/progress-report` skill | structure for status answers to the user. |
+| `/delete-dead-code` skill | prove-then-delete procedure for dead code and dead docs. |
 
 The LaTeX paper lives at `doc/paper/`; see `doc/paper/README.md`.
 
@@ -39,6 +44,14 @@ Results, configs, and comparisons go in markdown tables, not bullets or paragrap
 
 ---
 
+## 2b. Compute posture (per-project)
+
+Every project states its compute rules here at init: which cluster/scheduler, what is free vs metered, the parallelism posture, any self-imposed caps. Details and gotchas live in `experiments/CLAUDE.md` §5.
+
+Example (an AWS-sponsored project): API calls are unlimited and free — optimize wall-clock speed with maximum request parallelism, never economize on calls or model size; every compute job goes through `sbatch` on a compute node, never the login node; GPU jobs self-capped at 40 nodes across all concurrent jobs.
+
+---
+
 ## 3. Git: commit and push
 
 After adding an experiment, updating tracking, or any substantive change: commit and push immediately. The user never has to ask or push manually.
@@ -51,8 +64,8 @@ Touch only what the request requires; clean up only your own mess.
 
 - Do not improve adjacent code, comments, or formatting.
 - Do not refactor what is not broken. Match existing style.
-- Mention pre-existing dead code; do not delete it.
 - Do remove imports/variables/functions that YOUR change orphaned.
+- Delete dead code and dead docs once you have PROVEN them dead. Never delete on suspicion: the proof procedure (grep for callers and references, half-live check, running jobs, data-not-code) is the `/delete-dead-code` skill -- invoke it before deleting OR before deciding to leave suspected-dead content in place.
 
 Test: every changed line traces directly to the user's request.
 
@@ -62,14 +75,15 @@ Test: every changed line traces directly to the user's request.
 
 Turn tasks into verifiable goals and loop until verified. For multi-step tasks, state the plan as steps each paired with a check ("Add validation -> tests for invalid inputs pass"). Weak criteria ("make it work") need clarification before starting.
 
-A task is not done until the output passes the relevant subdirectory CLAUDE.md:
+A task is not done until the output passes the relevant rule set (subdirectory CLAUDE.md or skill):
 
 | task type | verify against |
 |---|---|
-| Doc edits (`paper.md`, `proposal.md`, `main.tex`) | `doc/CLAUDE.md`: stranger-read pass, structure rules, self-verification checklist, render-and-read |
+| Doc edits (`paper.md`, `proposal.md`, `main.tex`) | `doc/CLAUDE.md` writing rules while drafting; the `/verify-paper` skill before declaring done |
 | Experiment code or analysis | `experiments/CLAUDE.md`: code style, correctness, smoke-test, logging |
-| Figure code (`make_figures.py`) | `experiments/CLAUDE.md` §3: Okabe-Ito constants, no inline rcParams, variance bands |
-| Slide decks | `doc/weekly_updates/CLAUDE.md` |
+| Figure code (`make_figures.py`, `visualize.py`, update figures) | the `/paper-figure` skill: Okabe-Ito constants, no inline rcParams, variance bands, render-then-read |
+| Weekly updates | the project's chosen form: `/weekly-update` or `/weekly-slides` (invoke before drafting, not just to verify) |
+| Theory writing | `theory/CLAUDE.md` |
 | `tracking.md` updates | `doc/CLAUDE.md` §5: three-way consistency (experiments, paper claims, tracking) |
 
 Skipping the checklist means the task is not finished. Verification is part of the work.
@@ -93,6 +107,7 @@ The user runs several projects in parallel and does not hold this project's cont
 - Open with the everyday-words version ("the control group", "the placebo"), not the field term ("the null distribution"). Introduce the term after the plain meaning, if at all.
 - Ground every abstraction in one worked example from the project's own setup ("we inject 30 pieces of pure noise and record how strongly each fools the model; that average is the baseline a real concept must beat").
 - Never assume a term defined in an earlier session, an earlier message, or the paper is remembered. Re-explain from zero each time.
+- Never cite an experiment ID, run name, config tag, or commit hash as if the user remembers it. Restate what it was in words every time: "the run where the steerer was capped at 3 steps", not "`1150ed6_1`".
 - Technical depth is fine, jargon shortcuts are not: if a sentence needs a term of art, unpack it in the same sentence.
 
 Test: someone working on a different project all week should follow the whole explanation on first read, without opening the repo.
@@ -101,14 +116,10 @@ Test: someone working on a different project all week should follow the whole ex
 
 ## 8. Progress reports are measured against the goal
 
-When the user asks for status or progress (any "where are we" update, not a one-off factual answer), frame the report around the goal, never around activity. Structure, in this order:
+When the user asks for status or progress (any "where are we" update, not a one-off factual answer), invoke the `/progress-report` skill before drafting. Its rule in one line: goal restated first, progress judged against it (met / not met / partial and why), one comparison table, unfavorable results included, single next step -- never a list of activity.
 
-1. **Restate the goal in one sentence**, with the success criterion and how it is measured ("beat baseline B and competing method M on benchmark Z, K seeds, reported as mean successes / N").
-2. **State progress against that goal** -- met / not met / partial, and *why* -- not a list of what you did. "We led once (+1.7) and tied once, both inside the noise band, so not yet demonstrated" beats "I ran two evals."
-3. **Compare our method to the baseline AND to the other methods** side by side in one table (§2).
-4. **Report results that do not support us** plainly. A run where we tie or lose is part of the status and is never omitted or softened.
-5. **End with the single next step that moves toward the goal.**
+---
 
-"What I did this round" is a separate, shorter section placed AFTER the goal status -- never the headline.
+## 9. Decisions are prompted as options
 
-Test: the first two sentences must tell the user whether we are closer to beating the baseline than last time. If they only say what ran, rewrite.
+At a decision point (framing a paper, choosing the next experiment, restructuring rules or docs, any "what should we do" moment), stop and present the choice as 2-4 concrete labeled options with their trade-offs, then wait. An open question ("what framing do you want?") is not a prompt. Executing an already-agreed plan needs no prompt; setting direction always does.
