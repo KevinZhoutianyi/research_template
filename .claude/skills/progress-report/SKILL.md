@@ -1,6 +1,6 @@
 ---
 name: progress-report
-description: Structure for any status answer to the user — "where are we", "how is it going", "什么情况", "进展如何", or any request for progress. Invoke before drafting the reply — the report is framed around the goal, never around activity.
+description: Structure for any status answer to the user — "where are we", "how is it going", "什么情况", "进展如何", or any request for progress. Invoke before drafting the reply — the report is framed around the goal, never around activity. This is the chat answer; the committed weekly file is /weekly-update.
 ---
 
 # Progress Reports Are Measured Against the Goal

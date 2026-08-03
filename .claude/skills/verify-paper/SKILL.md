@@ -1,6 +1,6 @@
 ---
 name: verify-paper
-description: Run before declaring any doc edit done — paper.md, proposal.md, or the LaTeX paper. The stranger-read pass, the self-verification checklist, the banned-language greps, and (for LaTeX) the render-and-read audit. An edit is not finished until this passes.
+description: Run before declaring any doc edit done — paper.md, proposal.md, or the LaTeX paper. The stranger-read pass, the self-verification checklist, the banned-language greps, and (for LaTeX) the render-and-read audit. An edit is not finished until this passes. Prose and LaTeX only; experiment code goes through /verify-experiment.
 ---
 
 # Doc Verification
@@ -53,3 +53,7 @@ pdflatex x2, then rasterize every page to `/tmp/paper_pages/page_NN.png`), then 
 image. Audit: figures cut off or unreadable at print size, empty plots, broken glyphs, `??`
 references, table overflow (`Overfull \hbox`: fix with `p{width}` columns), abstract over 10
 lines (trim to 200 words).
+
+## Done when
+
+Every applicable check above passes and a full read of the rendered pages surfaces nothing new. Anything short of that: report what is still red, do not declare the edit done.

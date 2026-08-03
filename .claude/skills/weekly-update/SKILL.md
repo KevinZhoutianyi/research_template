@@ -1,6 +1,6 @@
 ---
 name: weekly-update
-description: Write or edit a weekly-update progress report (doc/weekly_updates/YYYY-MM-DD/update.md) or post_talk_notes.md. Invoke BEFORE gathering numbers or drafting — the rules govern how results are reported, not just the prose.
+description: Write or edit a weekly-update progress report (doc/weekly_updates/YYYY-MM-DD/update.md) or post_talk_notes.md. Invoke BEFORE gathering numbers or drafting — the rules govern how results are reported, not just the prose. This is the committed weekly file; an ad-hoc status answer in chat is /progress-report.
 ---
 
 # Weekly Update Rules
@@ -172,3 +172,5 @@ or mixed, the title says so ("works on single steps, not yet on full games").
   soften, transparent, unflattering). Any hit is a rewrite: lead with the finding, state the
   number as fact (see `doc/CLAUDE.md` Language rules).
 - Commit the `.md`. There is no compiled artifact.
+
+Done when: every check in this section passes and `check_language.sh` exits clean. Until then the update is a draft, not done.

@@ -33,3 +33,7 @@ Prove it dead first, and say in the commit message what proved it:
 
 Deletion is one commit, separate from the bug fix that exposed it, so a revert of either does
 not drag in the other.
+
+Delete only when every proof step above passes. If any step fails or stays uncertain, leave the
+content in place and record what blocked the proof (a comment or the conversation), so the next
+reader does not re-derive it.

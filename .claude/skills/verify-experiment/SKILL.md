@@ -1,6 +1,6 @@
 ---
 name: verify-experiment
-description: The delivery gate for experiment code — run before declaring any experiment code change done. Runs pytest on report-bound code paths, smoke-tests changed pipelines, and reports what remains untested.
+description: The delivery gate for experiment code — run before declaring any experiment code change done. Runs pytest on report-bound code paths, smoke-tests changed pipelines, and reports what remains untested. Code only; doc edits go through /verify-paper.
 allowed-tools: Bash(pytest *), Bash(git diff *), Bash(uv run pytest *)
 ---
 

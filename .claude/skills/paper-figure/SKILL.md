@@ -66,3 +66,6 @@ present when stds exist; the `main.tex` caption opens with the question the figu
 Then the stranger-read pass from `doc/CLAUDE.md`: render the figure, Read the render, trace
 every arrow tail to head, check every label for collisions, confirm it is readable at the size
 it will be viewed (print size for the paper).
+
+Done when: the pre-commit check passes and the re-rendered figure has been read with no
+collisions or unreadable elements. A figure whose latest render was not read is not done.
