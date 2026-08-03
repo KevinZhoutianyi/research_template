@@ -47,7 +47,7 @@ details almost never serve that goal.
   tagline, no summary in the title.
 - After any talk or sponsor meeting, write `post_talk_notes.md` in the same folder: what was
   flagged or pushed back on (with enough context to be useful weeks later), and the plan going
-  forward as a table. Distinct from `doc/paper/feedback.md`.
+  forward as a table.
 
 ## 3. Language: plain, literal, concise
 

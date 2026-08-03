@@ -15,5 +15,4 @@ This project uses: `<fill at init>`
 
 Regardless of form: every claim is grounded in a real `results.json`, run log, or transcript;
 nothing invented, nothing softened, no "should help" written as "helps". After any talk or
-sponsor meeting, write `post_talk_notes.md` in the same folder (distinct from
-`doc/paper/feedback.md`).
+sponsor meeting, write `post_talk_notes.md` in the same folder.

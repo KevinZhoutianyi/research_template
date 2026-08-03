@@ -20,19 +20,13 @@ The LaTeX paper lives at `doc/paper/`; see `doc/paper/README.md`.
 
 ---
 
-## 0. Feedback file
-
-The user writes feedback into `doc/paper/feedback.md` after reading the paper or experiments on their own (never during a conversation). At the start of every session: read it, act on every bullet, delete each bullet once handled. Ask before acting on ambiguous bullets. Do not add bullets yourself.
-
-(Distinct from `doc/weekly_updates/YYYY-MM-DD/post_talk_notes.md`, which records advisor feedback after a talk.)
-
----
-
 ## 1. Goal-driven work
 
 Before designing an experiment or building a deck, state the goal in one sentence ("Show that method X beats baseline Y on benchmark Z under condition W"). If one sentence is impossible, the goal is not clear enough yet; clarify first.
 
 Then list the subgoals, and name which subgoal every slide, paragraph, table, plot, and experimental knob serves. No subgoal, no content. Re-check at the end: does the whole thing read straight to the goal? Cut anything that detours, defends, or self-justifies.
+
+The same anchoring applies to conversation, not just artifacts. When proposing, reporting, or discussing anything mid-task, say which goal or subgoal it serves and how; if the connection cannot be stated in one sentence, stop and re-anchor before continuing. A thread that drifts from the goal (side quests, speculative tangents, polish nobody asked for) gets cut the same way a detouring paragraph does.
 
 This filter comes before any formatting rule.
 

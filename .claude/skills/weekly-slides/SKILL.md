@@ -14,7 +14,7 @@ A weekly update's goal is usually "convince the advisor we made progress on X th
 ## 2. Files
 
 - Beamer source at `doc/weekly_updates/YYYY-MM-DD/slides.tex`; copy every image into the same folder so it uploads to Overleaf as-is.
-- After the talk, write `post_talk_notes.md` in the same folder: what was flagged or pushed back on (with enough context to be useful weeks later), and the plan going forward as a table (model x dataset x task x prediction). Distinct from `doc/paper/feedback.md`.
+- After the talk, write `post_talk_notes.md` in the same folder: what was flagged or pushed back on (with enough context to be useful weeks later), and the plan going forward as a table (model x dataset x task x prediction).
 
 ## 3. Audience and tone
 
