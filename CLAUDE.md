@@ -117,3 +117,14 @@ When the user asks for status or progress (any "where are we" update, not a one-
 ## 9. Decisions are prompted as options
 
 At a decision point (framing a paper, choosing the next experiment, restructuring rules or docs, any "what should we do" moment), stop and present the choice as 2-4 concrete labeled options with their trade-offs, then wait. An open question ("what framing do you want?") is not a prompt. Executing an already-agreed plan needs no prompt; setting direction always does.
+
+---
+
+## 10. Everything earns its place
+
+Before writing any sentence -- chat, doc, report, commit message -- it passes two checks:
+
+- **Grounded.** It states something verified (a number from a real file, a behavior actually observed, a rule actually written), or marks itself unverified ("not yet checked", "untested"). Plausible-sounding filler stated as fact is the worst failure mode.
+- **Necessary.** It changes what the reader knows or decides next. Restating the known, padding transitions, and empty hedges get cut, not polished.
+
+The same two checks govern code and docs as artifacts: concise and effective over redundant and complex. Every function, branch, config knob, section, and table earns its place by serving the goal; the simple version that works beats the general version that might someday be needed. When something fails the check, delete it, however well it reads or however long it took to write.
