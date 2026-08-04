@@ -1,6 +1,6 @@
 ---
 name: weekly-slides
-description: Write or edit a weekly-update slide deck (doc/weekly_updates/YYYY-MM-DD/slides.tex, Beamer) or post_talk_notes.md. Invoke BEFORE building the deck — the rules govern what earns a slide, not just formatting. Alternative to /weekly-update (Markdown report); each project picks one form at init.
+description: Write or edit a weekly-update slide deck (doc/weekly_updates/YYYY-MM-DD/slides.tex, Beamer) or post_talk_notes.md. Invoke BEFORE building the deck, since the rules govern what earns a slide, not just formatting. Use for a week with a live talk; a written report nobody presents is /weekly-update, and an ad-hoc status answer in chat is /progress-report.
 ---
 
 # Weekly Update Slide Rules
