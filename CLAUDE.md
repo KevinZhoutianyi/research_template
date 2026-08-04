@@ -10,7 +10,7 @@ This file holds universal project rules. Context-specific rules live in subdirec
 | `experiments/CLAUDE.md` | code style, correctness, compute (per-project), experiment logging. |
 | `theory/CLAUDE.md` | theory writing: no obvious theorems, justified assumptions, tightness, proof intuition. |
 | `/weekly-update` skill | weekly progress reports as Markdown. Invoke before drafting one. |
-| `/weekly-slides` skill | weekly progress reports as Beamer decks. Each project picks one form at init (`doc/weekly_updates/CLAUDE.md`). |
+| `/weekly-slides` skill | weekly progress reports as Beamer decks, for a week with a live talk. Both skills stay; pick per week (`doc/weekly_updates/CLAUDE.md`). |
 | `/verify-paper` skill | the delivery gate for doc edits: stranger-read pass, checklist, render-and-read. |
 | `/scientific-figure-making` skill | figure code rules (paper, updates, `visualize.py`). |
 | `/progress-report` skill | structure for status answers to the user. |
