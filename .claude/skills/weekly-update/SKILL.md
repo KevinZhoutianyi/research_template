@@ -1,14 +1,13 @@
 ---
 name: weekly-update
-description: Write or edit a weekly-update progress report (doc/weekly_updates/YYYY-MM-DD/update.md) or post_talk_notes.md. Invoke BEFORE gathering numbers or drafting — the rules govern how results are reported, not just the prose. This is the committed weekly file; an ad-hoc status answer in chat is /progress-report.
+description: Write or edit a weekly-update progress report (doc/weekly_updates/YYYY-MM-DD/update.md) or post_talk_notes.md. Invoke BEFORE gathering numbers or drafting, since the rules govern how results are reported, not just the prose. Use for a written report read asynchronously; the live weekly talk is /weekly-slides, and an ad-hoc status answer in chat is /progress-report.
 ---
 
 # Weekly Update Rules
 
 The weekly update is a **Markdown progress report** (`.md`), not a
 PDF, not a LaTeX article, not a slide deck, and not paper prose. It records what happened this
-week and what the plan is, for a reader who tracks the project week to week. (Older updates under
-`archive/` are LaTeX/PDF; do not add new ones in that form.)
+week and what the plan is, for a reader who tracks the project week to week.
 
 Start from [template.md](template.md) for a new update. Before committing, run
 `scripts/check_language.sh <update.md>` (banned-metaphor and self-justification greps).
@@ -18,8 +17,8 @@ Start from [template.md](template.md) for a new update. Before committing, run
 These govern every sentence; the numbered rules below are how you satisfy them.
 
 - **Every claim is grounded, nothing is invented.** Each number traces to a real
-  `results.json` or run log; each mechanism ("the steerer misdiagnoses billing as technical")
-  is read from actual transcripts, not guessed. If you have not verified it, do not write it as
+  `results.json` or run log; each mechanism ("the model commits to an answer before the retrieved
+  passage enters the context") is read from actual transcripts, not guessed. If you have not verified it, do not write it as
   fact: write "not yet established" and put verifying it in the Plan. No plausible-sounding
   filler, no rounded-up hopes, no "should help" stated as "helps". When in doubt, go read the
   data before writing the sentence.
@@ -57,20 +56,20 @@ paper, or the codebase, and definitions do not carry over between updates. Concr
 - **No research slang or metaphor.** Banned: "knob", "lever", "standout", "a wash", "cashes
   out", "fires the falsifier", "landed", "cell", "arm", "harness" (say "the same setup"),
   "slice". Say what happened literally: not "temperature is the one knob that mattered" but
-  "one training setting (temperature 2) scores 18/34; every other setting we tried scores
-  3--10". If a sentence needs the metaphor to be short, rewrite the sentence.
+  "at temperature 2 the method solves 18 of 34 tasks; at every other temperature we tried it
+  solves 3 to 10". If a sentence needs the metaphor to be short, rewrite the sentence.
 - **Every number states its baseline.** A score is meaningless without its floor and ceiling:
-  write "improved from 5/34 to 18/34 (no correction: 0/34 by definition; written text: 34/34 by
-  definition)", never a bare "18/34". Changes are stated as "from a to b", not "reached b".
-- **Short sentences, one fact each.** Prefer "The vectors do help: 17 of their 19 rescues are
-  games text also rescues." over multi-clause constructions.
-- Every condition name that appears in a table (naive, text, vectors, vectors + gate) is defined
-  before or at its first table, in words a non-specialist can repeat.
+  write "18 of 34 tasks, against 5 of 34 for the baseline and 34 of 34 for the oracle that is
+  given the answer", never a bare "18/34". Changes are stated as "from a to b", not "reached b".
+- **Short sentences, one fact each.** Prefer "The method helps where the baseline fails: 17 of
+  its 19 additional solves are tasks the baseline missed." over multi-clause constructions.
+- Every condition name that appears in a table (baseline, method, method plus filter, oracle) is
+  defined before or at its first table, in words a non-specialist can repeat.
 - Not too much detail: one table and 3-5 bullets per result; sub-variants collapse into a "best
   variant" row unless the variant is the point. Full sweeps and per-cell provenance live in
   `tracking.md`.
 - Report final results only, in absolute terms. **No comparisons to superseded or failed
-  versions** ("last week's compressor failed", "improved over the old design") -- the reader
+  versions** ("last week's extraction was broken", "improved over the old design") -- the reader
   tracks this week, and failure history lives in `tracking.md`. Bug histories and superseded
   numbers never appear; show the current best-known number for each cell as if it were always
   so.
@@ -79,23 +78,23 @@ paper, or the codebase, and definitions do not carry over between updates. Concr
 
 The section order is fixed (all headers are Markdown `##`, except the top title `#`):
 
-1. `## What this project is` -- 3-5 sentences only: what an LLM agent is, what the
-   system does, the question the project asks, what model/hardware. No definitions here beyond
-   what those sentences need.
+1. `## What this project is` -- 3-5 sentences only: what the object of study is, what the
+   method does, the question the project asks, which models and hardware. No definitions here
+   beyond what those sentences need.
 2. `## Definitions` -- **a dedicated section, one bullet per term of art** (the project's
    terms of art). Each bullet: the term in bold, then one or two plain
-   sentences, with a concrete example where one helps ("one game = one simulated-household task,
-   e.g. 'put a hot potato in the garbage can'"). The body never uses a term before it appears
-   here, and never re-defines inline what belongs here.
+   sentences, with a concrete example where one helps ("one task = one question the model answers
+   from a retrieved document, e.g. 'which year did the treaty take effect?'"). The body never
+   uses a term before it appears here, and never re-defines inline what belongs here.
 3. One `## Result N: <plain-language finding with its numbers>` per subgoal. Section
-   titles are one-sentence conclusions carrying the key numbers ("on full games, every vector
-   variant scores 65-69; text scores 88.8"), not topic labels.
+   titles are one-sentence conclusions carrying the key numbers ("on the full benchmark every
+   variant of the method scores 65 to 69; the baseline scores 88.8"), not topic labels.
 4. `## Plan` -- every item names its prediction and, where one exists, its falsifier,
-   both stated concretely ("if the score still sits at 67-69, then X"). This is the last
-   section: the update ends on the Plan.
-5. Appendix sections (`## Appendix: ...`) -- one verbatim example per claim type (a real test
-   case, a rescued game, a broken game), quoted from committed run data, never composed. Put
-   verbatim quotes in fenced code blocks.
+   both stated concretely ("if the score still sits inside the baseline's rerun spread, the
+   mechanism is not what we think"). This is the last section: the update ends on the Plan.
+5. Appendix sections (`## Appendix: ...`) -- one verbatim example per claim type (a case the
+   method solves, one it fails, one where the measurement itself broke), quoted from committed run
+   data, never composed. Put verbatim quotes in fenced code blocks.
 
 **No Summary section.** Do not add a closing summary or recap; it duplicates the Result titles
 (which are already one-sentence conclusions with their numbers) and the Plan. End on the Plan.
@@ -103,7 +102,7 @@ The section order is fixed (all headers are Markdown `##`, except the top title 
 **Every result table is preceded by two labeled lines:**
 
 - `**Data.**` -- which dataset, its size, and **exactly what is train and what is test**:
-  how the split was made (by game, by time, ...), the counts on each side, and that they do not
+  how the split was made (by item, by model, by time), the counts on each side, and that they do not
   overlap -- or, if any overlap exists, state it plainly as a caveat instead of hiding it.
 - `**Metric.**` -- what is counted, what a point means, and the floor/ceiling values with
   why they are the floor and ceiling.
@@ -124,11 +123,11 @@ temperature, a threshold) in the method description. The method text says the pa
 and is "chosen by experiment in Result N"; the result section shows the sweep over its values
 and lets the table pick the winner ("k=32: best; used from here on").
 
-**Quantified motivations get measured columns.** If the project's pitch is a quantified benefit
-(fewer tokens, lower cost, less time), every result table carries the measured benefit as its
-own column (e.g. "injected tokens" and "saved vs. text %"), computed honestly even when the
-number is unflattering -- and the accompanying bullet says plainly whether the benefit is
-currently real ("the saving is 2--10%, not yet meaningful").
+**Quantified claims get measured columns.** If the week's claim is that an effect exceeds
+something (a baseline, a control, a cost budget), every result table carries both sides as its own
+columns: the measured effect and the thing it has to clear. Compute it even when the comparison is
+against us, and let the accompanying bullet say plainly whether the margin is real ("the median
+item sits 0.03 above its control, inside the seed-to-seed spread").
 
 ## 5. Claims, not categories
 
@@ -136,22 +135,24 @@ State the finding as the section title or lead bullet, show the one or two numbe
 it, and point to `tracking.md` for detail. Every number says what it counts (metric, n, split).
 Results and comparisons go in booktabs tables, not prose (root CLAUDE.md rule 2); a table row
 that needs explanation gets a bullet under the table, not a paragraph. Where a result is partial
-or mixed, the title says so ("works on single steps, not yet on full games").
+or mixed, the title says so ("holds on five models, untested on the sixth").
 
 ## 6. Rigor rules (each caught a real mistake in review)
 
 - **Titles obey §3 and §4.3 even when they are correct conclusions.** A layperson reading only
-  the title must get the finding, so no jargon or metaphor in it: not "the one-imperative-sentence
-  requirement is load-bearing" but "making the steerer give one specific instruction, not a vague
-  comment, is what makes it work".
+  the title must get the finding, so no jargon or metaphor in it: not "the magnitude-matched control
+  is load-bearing" but "comparing against a content-free intervention of the same size, instead of
+  against no intervention at all, is what separates the effect from a size effect".
 - **One variable per comparison.** A row that changes two things at once (stronger model AND new
   design) proves nothing about either. Hold everything else fixed, vary the one thing the claim is
-  about, and say in the Metric paragraph what is held fixed ("steerer fixed at Opus in both rows,
-  so the only change is the design"). If two things genuinely differ, split into two comparisons.
+  about, and say in the Metric paragraph what is held fixed ("the same 99 items and the same layer
+  in both rows, so the only change is the design"). If two things genuinely differ, split into two
+  comparisons.
 - **When something does not work, give the failure reason from evidence, not just the number.**
-  Not "our design loses on telecom (35.6 vs 48.8)" but "the steerer misreads billing as technical:
-  0 of 37 notes mention the bill; steered trials score 0.07 vs silent 0.51". If the reason is not
-  known, write "reason not yet established" and put finding it in the Plan; never a bare loss.
+  Not "the method loses on the second dataset (35.6 vs 48.8)" but "on the second dataset the
+  instrument is dead: the four probability cells sum below 0.5, so the score carries no signal". If
+  the reason is not known, write "reason not yet established" and put finding it in the Plan; never
+  a bare loss.
 - **Small-n results carry their noise.** On a small test set (tens of tasks) a single run is
   fragile: report reruns or a range, and if the range overlaps the baseline say so ("the real gap
   is about +4, not the +12.5 a single run showed"). Never headline a number a rerun would not hold.

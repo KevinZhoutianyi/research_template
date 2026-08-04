@@ -6,7 +6,7 @@
 | `proposal.md` | The research proposal: method, baselines, risks, plan. Same writing rules as `paper.md`; numbers in it must match `tracking.md`. |
 | `paper/` | The same argument as LaTeX for Overleaf. Mirrors `paper.md`; lags it. |
 | `tracking.md` | The status: active runs, completed, failed, next steps. Each row names the `paper.md` section it serves. |
-| `weekly_updates/` | Weekly progress reports. Two forms: `/weekly-update` (Markdown) or `/weekly-slides` (Beamer); the project picks one at init (`weekly_updates/CLAUDE.md`). |
+| `weekly_updates/` | Weekly progress reports. Two forms, chosen per week: `/weekly-update` (Markdown) or `/weekly-slides` (Beamer). See `weekly_updates/CLAUDE.md`. |
 | `related_papers/` | One note per cited paper. |
 | `paper/example_papers/` | Reference PDFs whose writing, figure, and section style this paper targets. |
 

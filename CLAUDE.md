@@ -43,7 +43,7 @@ Results, configs, and comparisons go in markdown tables, not bullets or paragrap
 
 Every project states its compute rules here at init: which cluster/scheduler, what is free vs metered, the parallelism posture, any self-imposed caps. Details and gotchas live in `experiments/CLAUDE.md` §5.
 
-Example (an AWS-sponsored project): API calls are unlimited and free — optimize wall-clock speed with maximum request parallelism, never economize on calls or model size; every compute job goes through `sbatch` on a compute node, never the login node; GPU jobs self-capped at 40 nodes across all concurrent jobs.
+Example (an AWS-sponsored project): API calls are unlimited and free, so optimize wall-clock speed with maximum request parallelism and never economize on calls or model size; every compute job goes through `sbatch` on a compute node, never the login node; GPU jobs self-capped at 40 nodes across all concurrent jobs.
 
 ---
 
@@ -77,7 +77,7 @@ A task is not done until the output passes the relevant rule set (subdirectory C
 | Doc edits (`paper.md`, `proposal.md`, `main.tex`) | `doc/CLAUDE.md` writing rules while drafting; the `/verify-paper` skill before declaring done |
 | Experiment code or analysis | `experiments/CLAUDE.md` while writing; the `/verify-experiment` skill before declaring done |
 | Figure code (`make_figures.py`, `visualize.py`, update figures) | the `/scientific-figure-making` skill: semantic palette, minimalist spines, tightened y-limits, export policy, then look at the export |
-| Weekly updates | the project's chosen form: `/weekly-update` or `/weekly-slides` (invoke before drafting, not just to verify) |
+| Weekly updates | the week's form: `/weekly-update` or `/weekly-slides` (invoke before drafting, not just to verify) |
 | Theory writing | `theory/CLAUDE.md` |
 | `tracking.md` updates | `doc/CLAUDE.md` §5: three-way consistency (experiments, paper claims, tracking) |
 
@@ -100,9 +100,9 @@ Test: can the reader repeat the claim to a third person without asking a follow-
 The user runs several projects in parallel and does not hold this project's context in their head. When explaining anything (a result, a bug, a design choice, a concept), default to plain language and a concrete example, in that order:
 
 - Open with the everyday-words version ("the control group", "the placebo"), not the field term ("the null distribution"). Introduce the term after the plain meaning, if at all.
-- Ground every abstraction in one worked example from the project's own setup ("we inject 30 pieces of pure noise and record how strongly each fools the model; that average is the baseline a real concept must beat").
+- Ground every abstraction in one worked example from the project's own setup ("we run the method on 30 inputs carrying no real signal and record how strongly each one scores; that average is the bar a real input has to beat").
 - Never assume a term defined in an earlier session, an earlier message, or the paper is remembered. Re-explain from zero each time.
-- Never cite an experiment ID, run name, config tag, or commit hash as if the user remembers it. Restate what it was in words every time: "the run where the steerer was capped at 3 steps", not "`1150ed6_1`".
+- Never cite an experiment ID, run name, config tag, or commit hash as if the user remembers it. Restate what it was in words every time: "the run where the intervention was switched off before the question", not "`1150ed6_1`".
 - Technical depth is fine, jargon shortcuts are not: if a sentence needs a term of art, unpack it in the same sentence.
 
 Test: someone working on a different project all week should follow the whole explanation on first read, without opening the repo.
