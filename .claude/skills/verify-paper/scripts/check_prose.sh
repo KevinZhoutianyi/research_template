@@ -25,6 +25,10 @@ INFLATED='plays a (key|vital|significant|central) role|underscor(es|ing) the (im
 INGCLAUSE=', (highlighting|underscoring|emphasizing|showcasing|reflecting|symbolizing|demonstrating|contributing to|illustrating|exemplifying|cultivating|fostering|encompassing)\b'
 # §3 copula avoidance: an elaborate verb standing in for "is" or "has".
 COPULA='\b(serves|stands|functions) as\b|\bboasts\b'
+# §13 positional connectives: they announce a slot in a list instead of a logical relation, and they
+# are the residue of a paragraph that was drafted as bullets. Sentence-initial only, so "moreover"
+# mid-clause and a legitimate "first" in a numbered procedure do not fire.
+POSITIONAL='(^|\. |: )(First and foremost|Firstly|Secondly|Thirdly|Lastly|Additionally|Furthermore|Moreover|In addition)\b'
 
 fail=0
 for FILE in "$@"; do
@@ -69,6 +73,12 @@ for FILE in "$@"; do
     hits=$(grep -inE "$COPULA" <<<"$PROSE")
     if [ -n "$hits" ]; then
         echo "=== $FILE: copula avoidance, use is/has (ai-writing-patterns.md 3) ==="
+        echo "$hits"
+        fail=1
+    fi
+    hits=$(grep -nE "$POSITIONAL" <<<"$PROSE")
+    if [ -n "$hits" ]; then
+        echo "=== $FILE: positional connective, state the logical relation (ai-writing-patterns.md 13) ==="
         echo "$hits"
         fail=1
     fi

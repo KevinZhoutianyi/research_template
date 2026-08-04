@@ -211,6 +211,58 @@ following noun; drop it when the compound follows what it describes.
 
 ---
 
+## 12. Markup carrying the emphasis
+
+Bold or italic doing the job word order should do. A reviewer reads it as an author who could not
+make the sentence land, which is the same failure as capitals-as-emphasis in `doc/CLAUDE.md` §1, one
+register up.
+
+**Before:**
+> Grounding asks whether the ``yes'' depends on \emph{which} input was used.
+
+**After:**
+> Grounding asks whether the ``yes'' depends on the identity of the input, or only on the fact that an
+> intervention occurred.
+
+The italic was carrying a contrast the sentence never stated. Naming the alternative does the work
+and adds the information the italic was gesturing at.
+
+Test before removing markup: is the marked span a name (a term being defined, a token that is itself
+the object of study, a criterion quoted from a cited definition) or a stress? A name keeps its markup
+everywhere it appears. A stress gets the sentence rebuilt so the emphasized thing sits in the subject
+position. Expect most `\emph{}` uses in a finished paper to be names, so this is a read-check and not
+a grep: a regex over `\emph{}` flags the correct uses to find the few incorrect ones.
+
+---
+
+## 13. Prose converted from a list, and the list that should have stayed
+
+Two opposite defects with one cause: the draft was assembled as bullets and then either shipped that
+way or flattened by prefixing each bullet with a connective. Flattened bullets are recognizable by
+the connectives doing the joining: "First and foremost", "Additionally", "Furthermore", "Moreover",
+"Lastly". Each announces position in a list rather than a logical relation, so the paragraph has the
+shape of an argument with none of the joins.
+
+**Before:**
+> First, the first component triggers the response. Additionally, the second raises the target
+> output. Moreover, the two act in sequence. Lastly, together they reproduce the full behaviour.
+
+**After:**
+> Applied alone, the first component triggers the response on four of five models and produces the
+> target output on none. The second does the reverse. Because each supplies what the other lacks,
+> applying both in sequence reproduces the full behaviour.
+
+The rewrite replaces three positional connectives with one causal join ("because each supplies what
+the other lacks") and one contrast that names its own content ("does the reverse"). `doc/CLAUDE.md`
+§1 already restricts body bullets to contributions lists and procedural steps; a contributions list
+correctly stays a list.
+
+The mirror-image error is worth stating because the fix for one is the other's defect: genuinely 2D
+evidence (N conditions by M outcomes) flattened into prose becomes unreadable, and `doc/CLAUDE.md` §1
+sends it to a table, not to bullets and not to a paragraph.
+
+---
+
 ## What not to flag
 
 An aggressive pass is worse than none if it rewrites correct prose. None of the following is
@@ -236,9 +288,14 @@ rewrite, not a word swap.
 
 ## How to run this
 
-`scripts/check_prose.sh` greps the mechanical subset: §1, §2, §3, §8, and filler phrases. The rest
-(§4, §5, §6, §7, §9, §10, §11) are read-checks with no reliable grep, and they are the reason this
-file exists rather than a longer regex.
+`scripts/check_prose.sh` greps the mechanical subset: §1, §2, §3, §8, §13's positional connectives,
+and filler phrases. The rest (§4, §5, §6, §7, §9, §10, §11, §12) are read-checks with no reliable
+grep, and they are the reason this file exists rather than a longer regex.
+
+Threshold, and it matters more than any single pattern: **a rewrite that only swaps words is not a
+rewrite.** If the input paragraph reads naturally and carries its numbers, leave it. Rewriting
+correct prose to look rewritten is the failure mode this file can cause, and it costs more than the
+patterns cost, because the original was already verified against the data and the replacement is not.
 
 For each hit or read-check finding: rewrite at paragraph scale, then re-read the paragraph and ask
 the two questions that make the loop converge.
