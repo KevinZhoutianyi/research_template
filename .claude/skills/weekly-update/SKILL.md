@@ -113,8 +113,8 @@ and may carry one worked end-to-end example (instance before category, per `doc/
 
 **A workflow diagram is welcome when it earns its place.** For a method that is a pipeline or a
 multi-stage flow, one figure can replace paragraphs. Rules: generate it with a committed
-plotting script (save the `.py` beside the `.md`), reference it from the method section, use the
-Okabe-Ito palette, and run the stranger-read pass on the render before committing -- every arrow
+plotting script (save the `.py` beside the `.md`), reference it from the method section, follow the
+`/scientific-figure-making` palette, and run the stranger-read pass on the render before committing -- every arrow
 connects edge-to-edge between boxes (anchor arrows to box edges in code, do not hand-place
 endpoints), no label overlaps a box or another label, every box and arrow is legible at the
 width it will be viewed. A figure that just repeats the prose is cut.

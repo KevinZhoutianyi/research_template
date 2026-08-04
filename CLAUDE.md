@@ -12,7 +12,7 @@ This file holds universal project rules. Context-specific rules live in subdirec
 | `/weekly-update` skill | weekly progress reports as Markdown. Invoke before drafting one. |
 | `/weekly-slides` skill | weekly progress reports as Beamer decks. Each project picks one form at init (`doc/weekly_updates/CLAUDE.md`). |
 | `/verify-paper` skill | the delivery gate for doc edits: stranger-read pass, checklist, render-and-read. |
-| `/paper-figure` skill | figure code rules (paper, updates, `visualize.py`). |
+| `/scientific-figure-making` skill | figure code rules (paper, updates, `visualize.py`). |
 | `/progress-report` skill | structure for status answers to the user. |
 | `/delete-dead-code` skill | prove-then-delete procedure for dead code and dead docs. |
 | `/verify-experiment` skill | the delivery gate for experiment code: pytest, smoke, untested-path report. |
@@ -76,7 +76,7 @@ A task is not done until the output passes the relevant rule set (subdirectory C
 |---|---|
 | Doc edits (`paper.md`, `proposal.md`, `main.tex`) | `doc/CLAUDE.md` writing rules while drafting; the `/verify-paper` skill before declaring done |
 | Experiment code or analysis | `experiments/CLAUDE.md` while writing; the `/verify-experiment` skill before declaring done |
-| Figure code (`make_figures.py`, `visualize.py`, update figures) | the `/paper-figure` skill: Okabe-Ito constants, no inline rcParams, variance bands, render-then-read |
+| Figure code (`make_figures.py`, `visualize.py`, update figures) | the `/scientific-figure-making` skill: semantic palette, minimalist spines, tightened y-limits, export policy, then look at the export |
 | Weekly updates | the project's chosen form: `/weekly-update` or `/weekly-slides` (invoke before drafting, not just to verify) |
 | Theory writing | `theory/CLAUDE.md` |
 | `tracking.md` updates | `doc/CLAUDE.md` §5: three-way consistency (experiments, paper claims, tracking) |

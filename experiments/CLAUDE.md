@@ -21,11 +21,11 @@ Final code has zero tolerance for bugs; the cure is testing, not careful writing
 
 ## 3. Figure code
 
-All figure code follows the `/paper-figure` skill; invoke it before editing any figure script. It carries the data-plot template (Okabe-Ito named constants, one global rcParams block, variance bands when stds exist), the separate method-diagram convention (serif type, hairlines, square corners, one accent), and the render-then-read check.
+All figure code follows the `/scientific-figure-making` skill; invoke it before editing any figure script. It carries the house style (semantic palette, minimalist spines, frameless legends, typography and export policy), the layout patterns (ultra-wide multi-metric rows, legend-only subplot, tightened y-limits, hatch and edge encoding for grayscale print), and end-to-end walkthroughs for bars, trends, and heatmaps.
 
 ## 4. Experiment visualization
 
-Every experiment has a `visualize.py`; its required content (input-output contract, one fully concrete example, dataset/run stats) and style rules live in the `/paper-figure` skill.
+Every experiment has a `visualize.py` whose figures a reader understands without reading code or configs: the task as an input-output contract, one fully concrete example (input, key intermediate steps, output or failure), and dataset/run stats (split sizes, pass/fail split, key knobs). Style rules live in the `/scientific-figure-making` skill.
 
 ## 5. Compute and storage
 
