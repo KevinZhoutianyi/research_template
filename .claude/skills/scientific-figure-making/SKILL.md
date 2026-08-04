@@ -4,8 +4,9 @@ description: >-
   Covers publication-ready matplotlib figures for academic papers, slides, and
   reports—bars, trends, scatter, heatmaps, and multi-panel layouts—with this
   repository’s house style, print/vector export conventions, and parity with
-  figures4papers demos. Use when the user is finalizing or creating such figures
-  in matplotlib. Do not use for interactive dashboards or web viz (Plotly, Altair,
+  figures4papers demos. Also covers uncertainty (variance bands, error bars) and
+  method/architecture diagrams, which follow a separate serif hairline convention.
+  Use when the user is finalizing or creating such figures in matplotlib. Do not use for interactive dashboards or web viz (Plotly, Altair,
   Bokeh), exploratory-only plots without a publication target, dominant 3D or
   geographic mapping, or Illustrator/Figma-first infographic workflows.
 paths:
@@ -34,6 +35,8 @@ Open `references/` only as needed; do not preload every file. Start from the tab
 - Matplotlib figures for **papers, slides, or reports** that must match **this repo’s publication look** (fonts, palette, spines, legends, export).
 - Requests involving **grouped bars, trend lines, heatmaps, multi-panel grids**, or **PDF/SVG/high-DPI** output in a scientific-figure context.
 - References to **figures4papers** `figure_*` projects or “same style as the repo figures.”
+- **Method, architecture, or pipeline diagrams**, and any plot whose results carry per-element
+  spread (see `references/uncertainty-and-diagrams.md`).
 
 ## When not to load
 
@@ -51,7 +54,14 @@ Open `references/` only as needed; do not preload every file. Start from the tab
 | [references/common-patterns.md](references/common-patterns.md) | Layout patterns, legend panel, print-safe bars |
 | [references/design-theory.md](references/design-theory.md) | Typography, export policy, palette rationale |
 | [references/demos.md](references/demos.md) | Canonical `figure_*` demo links in figures4papers |
+| [references/uncertainty-and-diagrams.md](references/uncertainty-and-diagrams.md) | **Always, for a plot with stds or for any method/architecture diagram** (project-owned, not upstream) |
+
+The upstream references cover data plots: bars, trends, scatter, heatmaps, and their export. They
+say nothing about **showing uncertainty** or about **method and architecture diagrams**, which
+follow a near-opposite convention (serif, hairline strokes, greyscale plus one accent). Both live in
+`uncertainty-and-diagrams.md`; open it before drawing a band, an error bar, or a diagram.
 
 Done when: the script runs, the exported file has been opened and looked at (not just
-regenerated), and the figure follows the palette, spine, y-limit, and export conventions in
-`design-theory.md`. A figure whose latest export was never viewed is not done.
+regenerated), the figure follows the palette, spine, y-limit, and export conventions in
+`design-theory.md`, and a variance band is present wherever the results carry stds. A figure whose
+latest export was never viewed is not done.
