@@ -69,6 +69,36 @@ Two rules that matter more than the table:
 
 ---
 
+## 2b) What the figure asserts on its own
+
+A figure is read before the prose around it, and in a submitted paper it is often read by someone
+who never reads that prose. Four conventions follow from that, and they are venue rules rather than
+preferences.
+
+- **Vector, not raster.** Export plots and diagrams as PDF. A rasterized plot is visibly soft in
+  print at any DPI, and 300 vs 600 DPI only matters for a figure containing a photograph or a dense
+  pixel grid.
+- **Direction is on the axis, not in the reader's head.** When an axis measures a quantity with a
+  better direction, the label says which: `Accuracy (\%) $\uparrow$`, `Error rate $\downarrow$`.
+  Same rule as the table headers in `doc/CLAUDE.md` §4, and the same reason: a reader who has not
+  read the metrics appendix cannot tell which way a project-specific metric is supposed to move.
+  Axes measuring something with no better direction (an index, a correlation, an intervention
+  strength) carry no marker.
+- **The caption is self-contained.** It opens with the question the figure answers, then names what
+  is plotted, the n behind it, and what a band or interval means. A caption that requires the body
+  paragraph to be intelligible fails for the reviewer who scanned figures first.
+- **A title inside the axes only when the panel is a claim.** Two different jobs get confused here.
+  A multi-panel figure needs per-panel labels (`(a) dose-response`), and those stay. What does not
+  belong is a title restating the caption's opening sentence, so that the same words are set twice on
+  one page. A figure that is also read standalone in a slide deck may carry its finding as an in-axes
+  title; when it does, the caption must not repeat that title verbatim. Decide per project and stay
+  consistent.
+- **Colour is never the only channel.** The Okabe-Ito palette in `design-theory.md` is
+  colourblind-safe, which handles hue confusion but not greyscale printing. Series that must be
+  distinguished in print also differ by line style, marker, or hatch (`common-patterns.md`).
+
+---
+
 ## 3) Render, then READ the render
 
 Coordinate arithmetic does not catch collisions. Four survived it in one diagram, including a
@@ -80,8 +110,9 @@ This applies to data plots too: a band that renders as a solid block, an annotat
 bar, or a tick label collision only shows up in the render.
 
 Done when: the export has been opened and read, every arrow traced, no label collides, the band is
-present wherever stds exist, and the caption states what the band means. A figure whose latest
-export was never viewed is not done.
+present wherever stds exist, every directional axis carries its marker, the caption stands alone and
+states what the band means, and the file is vector PDF. A figure whose latest export was never
+viewed is not done.
 
 ## Related files
 

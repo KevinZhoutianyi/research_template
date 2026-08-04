@@ -1,6 +1,6 @@
 ---
 name: verify-paper
-description: Run before declaring any doc edit done — paper.md, proposal.md, or the LaTeX paper. The stranger-read pass, the self-verification checklist, the banned-language greps, and (for LaTeX) the render-and-read audit. An edit is not finished until this passes. Prose and LaTeX only; experiment code goes through /verify-experiment.
+description: Run before declaring any doc edit done — paper.md, proposal.md, or the LaTeX paper. The stranger-read pass, the reverse outline, the self-verification checklist, the banned-language greps, the reject-risk pass, and (for LaTeX) the render-and-read audit. An edit is not finished until this passes. Prose and LaTeX only; experiment code goes through /verify-experiment.
 ---
 
 # Doc Verification
@@ -8,6 +8,11 @@ description: Run before declaring any doc edit done — paper.md, proposal.md, o
 The writing rules being verified (motivation first, style, language, claims calibration) live in
 `doc/CLAUDE.md` §1-§2 and apply while drafting. This skill is the delivery gate: run every part
 that applies, fix what it catches, re-run until clean.
+
+| Reference | Open when |
+|---|---|
+| [references/ai-writing-patterns.md](references/ai-writing-patterns.md) | `check_prose.sh` fires, or a paragraph reads as written-for-cadence. Eleven patterns, each with a before/after rewrite at paragraph scale, plus the what-not-to-flag list. |
+| [references/abstract-and-intro-templates.md](references/abstract-and-intro-templates.md) | Drafting or restructuring the abstract or the introduction. Three abstract shapes and a seven-paragraph intro plan, at the sentence level. |
 
 ## 1. The stranger-read pass (every doc and figure)
 
@@ -24,20 +29,50 @@ needed; figure labels colliding with arrows.
 5. Figures get the same pass: render, then read the render. Trace every arrow tail to head. Check every label for collisions. Ask what each icon looks like at actual size.
 6. One logical move per paragraph. A paragraph that presents multiple independent pieces of evidence must signpost each one explicitly ("First... Second... Third...", "Ruling that out, we then show...", "A separate result confirms..."). The reader must never have to infer the logical connection between consecutive sentences. Test: cover every sentence but the last — does the final sentence follow obviously? If not, add a bridge.
 
+## 1b. The reverse outline (global pass)
+
+The pass above is local: it checks sentences and paragraphs one at a time. This one is global, and
+it is the only check that catches a section whose paragraphs are each defensible but collectively
+do not add up to the claim in its title. Run it on every section a non-trivial edit touched.
+
+1. Write the section's claim in one sentence, taken from its title.
+2. List the first sentence of every paragraph in that section, in order.
+3. Next to each, name the one piece of evidence that paragraph rests on.
+4. Map each first sentence onto a part of the claim. A paragraph mapping onto nothing gets cut or
+   rewritten. Two paragraphs mapping onto the same part get merged.
+5. Read the list of first sentences alone, bodies hidden. If that list is not already a readable
+   argument, the section order is wrong and no amount of sentence polish fixes it.
+
+Two failures this catches that nothing else does: (a) paragraphs that defend a number instead of
+stating it, which is what a section accumulates when a result was contested during drafting;
+(b) a finding asserted in a subsection title that no paragraph in the section actually supports.
+
+If the outline is hard to write, the section has no thesis yet. Settle the thesis before the prose.
+
 ## 2. Language greps
 
 Run `scripts/check_prose.sh <file> [...]` on every changed doc. It greps for the banned lists in
 `doc/CLAUDE.md` §1 Language: em dashes (`---` or Unicode), the banned-word list (delve, crucial,
 robust, leverage, ...), self-justifying framing about our own honesty ("reported honestly",
-"to be fair", ...), and capitals used as emphasis (`\b[A-Z]{4,}\b` in prose). Any hit is a
-rewrite, not an allowlist entry. The script cannot catch the remaining language rules (second
-person, meta-narrative, grading our own results); check those by reading.
+"to be fair", ...), capitals used as emphasis (`\b[A-Z]{4,}\b` in prose), and the greppable AI
+writing patterns (inflated significance, `-ing` clauses tacked onto a finished sentence, copula
+avoidance, authority tropes, filler phrases). Any hit is a rewrite, not an allowlist entry.
+
+The script cannot catch the remaining language rules (second person, meta-narrative, grading our own
+results) or the AI patterns that need counting rather than matching (rule of three, synonym cycling,
+false ranges, aphorism formulas, staccato runs); check those by reading.
+[references/ai-writing-patterns.md](references/ai-writing-patterns.md) holds all eleven patterns with
+a before/after rewrite for each, plus the what-not-to-flag list that keeps the pass from gutting
+correct prose. Open it whenever the script fires or a paragraph reads as written-for-cadence; a word
+swap does not fix a paragraph built on one of these shapes.
 
 ## 3. Self-verification checklist (paper.md / proposal.md edits)
 
 1. Every new sentence supports a positive claim (else: appendix).
 2. Subsection titles are declarative.
-3. Multi-condition results are tables.
+3. Multi-condition results are tables, formatted per `doc/CLAUDE.md` §4 Tables: `booktabs` rules
+   only, direction marker on every column where one direction is better, one decimal count per
+   column, `\multicolumn` + `\cmidrule` for groups, one message per table.
 4. Causal claims have `results.json` backing.
 5. `\ref{}` targets are correct.
 6. No implementation details in the diff.
@@ -53,6 +88,27 @@ pdflatex x2, then rasterize every page to `/tmp/paper_pages/page_NN.png`), then 
 image. Audit: figures cut off or unreadable at print size, empty plots, broken glyphs, `??`
 references, table overflow (`Overfull \hbox`: fix with `p{width}` columns), abstract over 10
 lines (trim to 200 words).
+
+## 5. Reject-risk pass (before submission, and before any framing change)
+
+Checks 1-4 ask whether the paper is correct and readable. This one asks whether it gets in, which
+is a different question with a different failure mode: a paper can pass every check above and still
+be rejected for a thin contribution or a missing ablation. Run it when a submission is in view or
+when the framing is being reconsidered, not on every edit.
+
+Read the paper as a reviewer looking for a reason to reject, and answer each question with a
+specific pointer into the text (section, table, number) or the word "missing".
+
+| Dimension | The reviewer's question |
+|---|---|
+| Contribution | What does a reader know after this paper that they could not have predicted? Is the problem a real puzzle, or a common case with a known cause? Is the result surprising, or the expected outcome of the setup? |
+| Clarity | Could a knowledgeable reader reproduce every measurement from the paper alone? Does every component have a stated motivation tied to a named difficulty? Is notation stable across sections? |
+| Empirical strength | Are the comparisons against the strongest available baseline, or a convenient one? Do the effects hold across models, seeds, and settings, or only where they were found? Are failures and ties stated where they belong? |
+| Evaluation completeness | Does every design claim have an ablation or control that could have falsified it? Are the datasets and settings hard enough that the effect is not an artifact of an easy one? |
+| Soundness | Is the setup realistic, or tuned per case? Does the demonstration show the mechanism, or only that the mechanism is constructible? Would a reviewer argue the net contribution is negative? |
+
+Mark each answer `pass`, `needs revision`, or `needs new experiment`. Anything in the third
+category is a `tracking.md` next step, not a sentence to be written more carefully.
 
 ## Done when
 
