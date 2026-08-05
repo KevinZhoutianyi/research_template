@@ -28,3 +28,7 @@ wandb/
 
 # Editor
 .vscode/
+
+# Vendored figure demos write into ./figures/ next to the script they ran from;
+# the scripts are the reference, their outputs are not.
+.claude/skills/scientific-figure-making/demos/*/figures/

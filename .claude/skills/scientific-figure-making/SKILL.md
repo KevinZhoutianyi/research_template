@@ -32,6 +32,14 @@ figure script (or plain matplotlib calls that follow the same conventions), and 
 
 Open `references/` only as needed; do not preload every file. Start from the table below, then follow links inside the document you opened (and into `figure_*` code via [references/demos.md](references/demos.md)) instead of loading the full reference set up front.
 
+All 25 upstream demo scripts are vendored under `demos/`, so a demo is a file to open, not a URL to
+fetch. **Read the matching demo before drawing a kind of figure this project has not drawn before**
+(radar, stacked composition, hatch-encoded bars, pseudo-3D geometry): `demos.md` maps figure kind to
+file. Each script embeds its own data, so it runs standalone under matplotlib and numpy. Take the
+construction from the demo and the type sizes, palette, and canvas width from this project's own
+rcParams block in `doc/paper/figures/make_figures.py`, which is set for print width where the demos
+are sized for slides.
+
 ## When to load this skill
 
 - Matplotlib figures for **papers, slides, or reports** that must match **this repo’s publication look** (fonts, palette, spines, legends, export).
@@ -55,7 +63,7 @@ Open `references/` only as needed; do not preload every file. Start from the tab
 | [references/api.md](references/api.md) | Function signatures, `PALETTE`, validation rules |
 | [references/common-patterns.md](references/common-patterns.md) | Layout patterns, legend panel, print-safe bars |
 | [references/design-theory.md](references/design-theory.md) | Typography, export policy, palette rationale |
-| [references/demos.md](references/demos.md) | Canonical `figure_*` demo links in figures4papers |
+| [references/demos.md](references/demos.md) | **Before drawing a figure kind new to this project**: maps kind to a vendored script under `demos/` |
 | [references/uncertainty-and-diagrams.md](references/uncertainty-and-diagrams.md) | **Always, for a plot with stds or for any method/architecture diagram** (project-owned, not upstream) |
 
 The upstream references cover data plots: bars, trends, scatter, heatmaps, and their export. They

@@ -2,6 +2,12 @@
 
 This document specifies the conventions, constants, and function signatures that implementations should follow for publication-style figures. Implement these in your own code or adapt from the [figure_* demos](demos.md).
 
+**No module ships with these names.** `apply_publication_style`, `make_grouped_bar`, `finalize_figure`
+and the rest are a specification, not an import: nothing in the vendored `demos/` defines them either,
+and the demos call plain matplotlib directly. Never emit an `import` for anything on this page. The
+equivalent in this project is the `plt.rcParams.update({...})` block and the palette constants at the
+top of `doc/paper/figures/make_figures.py`, whose values differ from the `PALETTE` below.
+
 ---
 
 ## Constants
