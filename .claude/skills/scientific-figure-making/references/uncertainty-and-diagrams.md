@@ -72,18 +72,12 @@ Two rules that matter more than the table:
 ## 2b) What the figure asserts on its own
 
 A figure is read before the prose around it, and in a submitted paper it is often read by someone
-who never reads that prose. Four conventions follow from that, and they are venue rules rather than
-preferences.
+who never reads that prose. The conventions below follow from that, and they are venue rules rather
+than preferences.
 
 - **Vector, not raster.** Export plots and diagrams as PDF. A rasterized plot is visibly soft in
   print at any DPI, and 300 vs 600 DPI only matters for a figure containing a photograph or a dense
   pixel grid.
-- **Direction is on the axis, not in the reader's head.** When an axis measures a quantity with a
-  better direction, the label says which: `Accuracy (\%) $\uparrow$`, `Error rate $\downarrow$`.
-  Same rule as the table headers in `doc/CLAUDE.md` §4, and the same reason: a reader who has not
-  read the metrics appendix cannot tell which way a project-specific metric is supposed to move.
-  Axes measuring something with no better direction (an index, a correlation, an intervention
-  strength) carry no marker.
 - **The caption is self-contained.** It opens with the question the figure answers, then names what
   is plotted, the n behind it, and what a band or interval means. A caption that requires the body
   paragraph to be intelligible fails for the reviewer who scanned figures first.
@@ -110,8 +104,8 @@ This applies to data plots too: a band that renders as a solid block, an annotat
 bar, or a tick label collision only shows up in the render.
 
 Done when: the export has been opened and read, every arrow traced, no label collides, the band is
-present wherever stds exist, every directional axis carries its marker, the caption stands alone and
-states what the band means, and the file is vector PDF. A figure whose latest export was never
+present wherever stds exist, the caption stands alone and states what the band
+means, and the file is vector PDF. A figure whose latest export was never
 viewed is not done.
 
 ## Related files

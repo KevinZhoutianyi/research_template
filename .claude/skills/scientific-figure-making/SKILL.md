@@ -6,8 +6,8 @@ description: >-
   repository’s house style, print/vector export conventions, and parity with
   figures4papers demos. Also covers uncertainty (variance bands, error bars),
   method/architecture diagrams, which follow a separate serif hairline convention,
-  and what a figure must assert standalone (vector export, direction markers on
-  directional axes, self-contained captions, no colour-only encoding).
+  and what a figure must assert standalone (vector export, self-contained
+  captions, no colour-only encoding).
   Use when the user is finalizing or creating such figures in matplotlib. Do not use for interactive dashboards or web viz (Plotly, Altair,
   Bokeh), exploratory-only plots without a publication target, dominant 3D or
   geographic mapping, or Illustrator/Figma-first infographic workflows.
@@ -61,8 +61,8 @@ Open `references/` only as needed; do not preload every file. Start from the tab
 The upstream references cover data plots: bars, trends, scatter, heatmaps, and their export. They
 say nothing about **showing uncertainty**, about **method and architecture diagrams** (which follow a
 near-opposite convention: serif, hairline strokes, greyscale plus one accent), or about **what a
-figure must assert standalone** (vector export, direction markers on axes whose quantity has a better
-direction, self-contained captions, no colour-only encoding). All three live in
+figure must assert standalone** (vector export, self-contained captions, no
+colour-only encoding). All three live in
 `uncertainty-and-diagrams.md`; open it before drawing a band, an error bar, or a diagram, and before
 writing a caption.
 

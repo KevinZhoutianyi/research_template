@@ -71,7 +71,7 @@ swap does not fix a paragraph built on one of these shapes.
 1. Every new sentence supports a positive claim (else: appendix).
 2. Subsection titles are declarative.
 3. Multi-condition results are tables, formatted per `doc/CLAUDE.md` §4 Tables: `booktabs` rules
-   only, direction marker on every column where one direction is better, one decimal count per
+   only, one decimal count per
    column, `\multicolumn` + `\cmidrule` for groups, one message per table.
 4. Causal claims have `results.json` backing.
 5. `\ref{}` targets are correct.
