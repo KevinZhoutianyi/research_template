@@ -10,8 +10,11 @@
 set -u
 FILE="${1:?usage: check_language.sh <update.md>}"
 
-# Strip fenced code blocks, then grep. awk toggles on ``` lines.
-PROSE=$(awk '/^```/{code=!code; next} !code' "$FILE")
+# Strip fenced code blocks, HTML comments (editor-facing notes, dropped from any paste), and
+# inline code spans (literals), then grep. awk toggles on ``` lines.
+PROSE=$(awk '/^```/{code=!code; next} !code' "$FILE" \
+    | awk '/<!--/{c=1} c{ if (/-->/){c=0}; next } 1' \
+    | sed 's/`[^`]*`//g')
 
 METAPHORS='\bknob\b|\blever\b|\bstandout\b|a wash|cashes out|fires the falsifier|\blanded\b|\bcell\b|\barm\b|\bharness\b|\bslice\b'
 SELFJUST='honest|whatever it shows|not hidden|visible not|to be fair|we do not hide|we do not soften|transparent|unflattering'

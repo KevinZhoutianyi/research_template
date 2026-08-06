@@ -32,9 +32,13 @@ POSITIONAL='(^|\. |: )(First and foremost|Firstly|Secondly|Thirdly|Lastly|Additi
 
 fail=0
 for FILE in "$@"; do
-    PROSE=$(awk '/^```/{code=!code; next} !code' "$FILE")
+    # Strip fenced code blocks, HTML comments (editor-facing provenance notes, dropped from any
+    # paste/render), and inline code spans (literals: API names, protocol tokens, task names).
+    PROSE=$(awk '/^```/{code=!code; next} !code' "$FILE" \
+        | awk '/<!--/{c=1} c{ if (/-->/){c=0}; next } 1' \
+        | sed 's/`[^`]*`//g')
 
-    hits=$(grep -n $'—' <<<"$PROSE"; grep -n -- '---' <<<"$PROSE" | grep -v '^\s*[0-9]*:---\s*$')
+    hits=$(grep -n $'—' <<<"$PROSE"; grep -n -- '---' <<<"$PROSE" | grep -v '^\s*[0-9]*:---\s*$' | grep -vE '^[0-9]+:\|[-|: ]+\|?\s*$')
     if [ -n "$hits" ]; then
         echo "=== $FILE: em dashes (use commas, colons, parentheses, or split) ==="
         echo "$hits"
@@ -52,7 +56,12 @@ for FILE in "$@"; do
         echo "$hits"
         fail=1
     fi
-    hits=$(grep -nE '\b[A-Z]{4,}\b' <<<"$PROSE" | grep -v '^\s*[0-9]*:\s*#')
+    # ACRONYMS are the one sanctioned exclusion from the caps grep: words whose standard
+    # spelling is all-caps (an ISA, a protocol, a file format), never words a writer chose to
+    # shout. Before adding one, check the style.md rule: if lowercase spelling exists, it is
+    # emphasis and gets rewritten, not listed here.
+    ACRONYMS='\b(MIPS|JSON|HTML|HTTP|HTTPS|SQL|YAML|SIGV4)\b'
+    hits=$(sed -E "s/$ACRONYMS//g" <<<"$PROSE" | grep -nE '\b[A-Z]{4,}\b' | grep -v '^\s*[0-9]*:\s*#')
     if [ -n "$hits" ]; then
         echo "=== $FILE: capitals as emphasis (rewrite so the sentence carries it) ==="
         echo "$hits"
