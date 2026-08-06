@@ -32,11 +32,23 @@ POSITIONAL='(^|\. |: )(First and foremost|Firstly|Secondly|Thirdly|Lastly|Additi
 
 fail=0
 for FILE in "$@"; do
-    # Strip fenced code blocks, HTML comments (editor-facing provenance notes, dropped from any
-    # paste/render), and inline code spans (literals: API names, protocol tokens, task names).
+    # Strip fenced code blocks and HTML comments (editor-facing provenance notes, dropped from any
+    # paste/render) from every file, then one file-type-specific strip. A backtick means different
+    # things in the two formats, so the strips must not be swapped: in .md it opens an inline code
+    # span (literals: API names, protocol tokens, task names), in .tex it opens a quotation.
+    #
+    # The .tex strip removes ``...'' spans, which is the same exemption fenced code gets: a prompt
+    # quoted verbatim from a cited paper is that paper's wording, and rewriting its em dash or its
+    # capitals to pass our own style gate would misquote it. Non-greedy, so a nested single-quoted
+    # word inside the quotation does not end the span early.
     PROSE=$(awk '/^```/{code=!code; next} !code' "$FILE" \
-        | awk '/<!--/{c=1} c{ if (/-->/){c=0}; next } 1' \
-        | sed 's/`[^`]*`//g')
+        | awk '/<!--/{c=1} c{ if (/-->/){c=0}; next } 1')
+    # The .tex branch also drops whole-line % comments, which are editor-facing exactly as an HTML
+    # comment is (slide-section rules built from dashes are the common false positive).
+    case "$FILE" in
+        *.tex) PROSE=$(grep -v '^\s*%' <<<"$PROSE" | perl -pe "s/\`\`.*?''//g") ;;
+        *)     PROSE=$(sed 's/`[^`]*`//g' <<<"$PROSE") ;;
+    esac
 
     hits=$(grep -n $'—' <<<"$PROSE"; grep -n -- '---' <<<"$PROSE" | grep -v '^\s*[0-9]*:---\s*$' | grep -vE '^[0-9]+:\|[-|: ]+\|?\s*$')
     if [ -n "$hits" ]; then
