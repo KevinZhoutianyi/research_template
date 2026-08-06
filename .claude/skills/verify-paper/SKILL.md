@@ -1,16 +1,18 @@
 ---
 name: verify-paper
-description: Run before declaring any doc edit done — paper.md, proposal.md, or the LaTeX paper. The stranger-read pass, the reverse outline, the self-verification checklist, the banned-language greps, the reject-risk pass, and (for LaTeX) the render-and-read audit. An edit is not finished until this passes. Prose and LaTeX only; experiment code goes through /verify-experiment.
+description: Invoke at two points of any doc edit — before drafting (open references/style.md, the house structure and language rules, and follow them while writing) and before declaring done (the delivery gate: stranger-read pass, reverse outline, self-verification checklist, banned-language greps, reject-risk pass, and for LaTeX the render-and-read audit). Covers paper.md, proposal.md, and the LaTeX paper. Prose and LaTeX only; experiment code goes through /verify-experiment.
 ---
 
 # Doc Verification
 
-The writing rules being verified (motivation first, style, language, claims calibration) live in
-`doc/CLAUDE.md` §1-§2 and apply while drafting. This skill is the delivery gate: run every part
-that applies, fix what it catches, re-run until clean.
+The structure and language rules live in [references/style.md](references/style.md) and apply
+while drafting; the drafting-methodology rules (motivation first, claims calibration, framing)
+live in `doc/CLAUDE.md` §1-§2a. This skill is also the delivery gate: run every part that
+applies, fix what it catches, re-run until clean.
 
 | Reference | Open when |
 |---|---|
+| [references/style.md](references/style.md) | Before drafting any prose: the house structure and language rules (single home; `doc/CLAUDE.md` points here). |
 | [references/ai-writing-patterns.md](references/ai-writing-patterns.md) | `check_prose.sh` fires, or a paragraph reads as written-for-cadence. Eleven patterns, each with a before/after rewrite at paragraph scale, plus the what-not-to-flag list. |
 | [references/abstract-and-intro-templates.md](references/abstract-and-intro-templates.md) | Drafting or restructuring the abstract or the introduction. Three abstract shapes and a seven-paragraph intro plan, at the sentence level. |
 
@@ -52,7 +54,7 @@ If the outline is hard to write, the section has no thesis yet. Settle the thesi
 ## 2. Language greps
 
 Run `scripts/check_prose.sh <file> [...]` on every changed doc. It greps for the banned lists in
-`doc/CLAUDE.md` §1 Language: em dashes (`---` or Unicode), the banned-word list (delve, crucial,
+[references/style.md](references/style.md): em dashes (`---` or Unicode), the banned-word list (delve, crucial,
 robust, leverage, ...), self-justifying framing about our own honesty ("reported honestly",
 "to be fair", ...), capitals used as emphasis (`\b[A-Z]{4,}\b` in prose), and the greppable AI
 writing patterns (inflated significance, `-ing` clauses tacked onto a finished sentence, copula

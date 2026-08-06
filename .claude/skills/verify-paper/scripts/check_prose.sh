@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Usage: check_prose.sh <file.md|file.tex> [more files...]
 #
-# Greps doc prose for the banned lists in doc/CLAUDE.md §1 Language:
+# Greps doc prose for the banned lists in ../references/style.md (the house language rules):
 #   1. em dashes, in --- or Unicode form
 #   2. the banned-word list
 #   3. self-justifying framing about our own honesty

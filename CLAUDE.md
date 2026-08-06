@@ -1,132 +1,63 @@
 # Working Guide
 
-**Re-read this file periodically during long conversations.** After extended implementation work (rounds of code changes, waiting for jobs, debugging), re-read it before the next task so the project goals stay in view.
+**Re-read this file periodically during long conversations**, before the next task after extended
+implementation work, so the project goals stay in view.
 
-This file holds universal project rules. Context-specific rules live in subdirectory CLAUDE.md files and task-triggered skills (`.claude/skills/`):
+**Every rule has exactly one home.** This file holds safety rules (full text) and behavior rules
+(one line + pointer). Task procedures live in skills; directory facts live in subdirectory
+CLAUDE.md files. When adding a rule, place it once and point to it from anywhere else; a rule
+restated in two files will drift.
 
-| where | what it governs |
+## Routing
+
+| task | rules live in |
 |---|---|
-| `doc/CLAUDE.md` | `paper.md`, `proposal.md`, `tracking.md`, the LaTeX paper, related-papers notes. Writing rules, claims calibration. |
-| `experiments/CLAUDE.md` | code style, correctness, compute (per-project), experiment logging. |
-| `theory/CLAUDE.md` | theory writing: no obvious theorems, justified assumptions, tightness, proof intuition. |
-| `/weekly-update` skill | weekly progress reports as Markdown. Invoke before drafting one. |
-| `/weekly-slides` skill | weekly progress reports as Beamer decks, for a week with a live talk. Both skills stay; pick per week (`doc/weekly_updates/CLAUDE.md`). |
-| `/verify-paper` skill | the delivery gate for doc edits: stranger-read pass, checklist, render-and-read. |
-| `/scientific-figure-making` skill | figure code rules (paper, updates, `visualize.py`). |
-| `/progress-report` skill | structure for status answers to the user. |
-| `/delete-dead-code` skill | prove-then-delete procedure for dead code and dead docs. |
-| `/verify-experiment` skill | the delivery gate for experiment code: pytest, smoke, untested-path report. |
+| doc edits (`paper.md`, `proposal.md`, LaTeX) | `/verify-paper` (style.md before drafting, gate before done) + `doc/CLAUDE.md` |
+| experiment code / analysis | `experiments/CLAUDE.md` while writing; `/verify-experiment` before done |
+| theory writing | `theory/CLAUDE.md` |
+| figures (paper, updates, `visualize.py`) | `/scientific-figure-making` |
+| weekly updates | `/weekly-update` (Markdown) or `/weekly-slides` (live talk); invoke before drafting |
+| status answers in chat | `/progress-report` |
+| reading a paper into `related_papers/` | `/read-paper` |
+| brainstorming an experiment idea | `/ideate` |
+| deleting code or docs | `/delete-dead-code` (prove dead first) |
+| `tracking.md` | `doc/CLAUDE.md` §5: three-way consistency |
 
-The LaTeX paper lives at `doc/paper/`; see `doc/paper/README.md`.
+## Safety rules (full text; these do not move)
 
----
+- **Compute posture (per-project; state at init).** Which cluster/scheduler, what is free vs
+  metered, the parallelism posture, any self-imposed caps. Example (an AWS-sponsored project):
+  API calls are unlimited and free, so optimize wall-clock speed with maximum request
+  parallelism; every compute job goes through `sbatch` on a compute node, never the login node;
+  GPU jobs self-capped at 40 nodes across all concurrent jobs. Details: `experiments/CLAUDE.md` §5.
+- **Delete only what is proven dead** via the `/delete-dead-code` procedure; never on suspicion.
+- **Commit and push after any substantive change.** The user never has to ask.
+- **Decisions are prompted as options.** At any "what should we do" moment (framing, next
+  experiment, restructuring), present 2-4 concrete labeled options with trade-offs and wait.
+  Executing an agreed plan needs no prompt; setting direction always does.
 
-## 1. Goal-driven work
+## Behavior rules (one line each; the pointer holds the detail)
 
-Before designing an experiment or building a deck, state the goal in one sentence ("Show that method X beats baseline Y on benchmark Z under condition W"). If one sentence is impossible, the goal is not clear enough yet; clarify first.
+- **Goal first.** State the goal in one sentence before designing anything; every part serves a
+  named subgoal, and threads that drift get cut. Applies to conversation too.
+- **Verify each step.** A task is done when it passes its gate in the routing table, not when
+  the code runs. Skipping the checklist means the task is not finished.
+- **Surgical changes.** Touch only what the request requires; remove what your change orphaned;
+  do not improve adjacent code.
+- **Tables over prose** for results, configs, and comparisons, everywhere.
+- **Reports carry their own context.** Define every coined term at first use in every report;
+  translate each headline number into its concrete meaning. The test: the reader can repeat the
+  claim to a third person without a follow-up question.
+- **Plain language, then an example.** The user runs several projects in parallel: open with the
+  everyday-words version, ground each abstraction in one worked example from this project, never
+  cite a run ID or config tag as if remembered (restate in words).
+- **Experiment ideas are presented as idea cards.** Question, hypothesis with falsifier, minimal
+  experiment, cost, decision options: the format lives in `/ideate`.
+- **Everything earns its place.** Every sentence is grounded (verified, or marked unverified)
+  and necessary (changes what the reader knows or decides). Chat follows the house language
+  rules too (`/verify-paper` references/style.md, "Chat replies"): no em dash, contrast
+  constructions at most once per reply, vary the colon-then-elaboration join.
 
-Then list the subgoals, and name which subgoal every slide, paragraph, table, plot, and experimental knob serves. No subgoal, no content. Re-check at the end: does the whole thing read straight to the goal? Cut anything that detours, defends, or self-justifies.
-
-The same anchoring applies to conversation, not just artifacts. When proposing, reporting, or discussing anything mid-task, say which goal or subgoal it serves and how; if the connection cannot be stated in one sentence, stop and re-anchor before continuing. A thread that drifts from the goal (side quests, speculative tangents, polish nobody asked for) gets cut the same way a detouring paragraph does.
-
-This filter comes before any formatting rule.
-
----
-
-## 2. Tables over prose
-
-Results, configs, and comparisons go in markdown tables, not bullets or paragraphs. Applies to reports, `tracking.md` entries, and printed experiment summaries.
-
----
-
-## 2b. Compute posture (per-project)
-
-Every project states its compute rules here at init: which cluster/scheduler, what is free vs metered, the parallelism posture, any self-imposed caps. Details and gotchas live in `experiments/CLAUDE.md` §5.
-
-Example (an AWS-sponsored project): API calls are unlimited and free, so optimize wall-clock speed with maximum request parallelism and never economize on calls or model size; every compute job goes through `sbatch` on a compute node, never the login node; GPU jobs self-capped at 40 nodes across all concurrent jobs.
-
----
-
-## 3. Git: commit and push
-
-After adding an experiment, updating tracking, or any substantive change: commit and push immediately. The user never has to ask or push manually.
-
----
-
-## 4. Surgical changes
-
-Touch only what the request requires; clean up only your own mess.
-
-- Do not improve adjacent code, comments, or formatting.
-- Do not refactor what is not broken. Match existing style.
-- Do remove imports/variables/functions that YOUR change orphaned.
-- Delete dead code and dead docs once you have PROVEN them dead. Never delete on suspicion: the proof procedure (grep for callers and references, half-live check, running jobs, data-not-code) is the `/delete-dead-code` skill -- invoke it before deleting OR before deciding to leave suspected-dead content in place.
-
-Test: every changed line traces directly to the user's request.
-
----
-
-## 5. Verify each step
-
-Turn tasks into verifiable goals and loop until verified. For multi-step tasks, state the plan as steps each paired with a check ("Add validation -> tests for invalid inputs pass"). Weak criteria ("make it work") need clarification before starting.
-
-A task is not done until the output passes the relevant rule set (subdirectory CLAUDE.md or skill):
-
-| task type | verify against |
-|---|---|
-| Doc edits (`paper.md`, `proposal.md`, `main.tex`) | `doc/CLAUDE.md` writing rules while drafting; the `/verify-paper` skill before declaring done |
-| Experiment code or analysis | `experiments/CLAUDE.md` while writing; the `/verify-experiment` skill before declaring done |
-| Figure code (`make_figures.py`, `visualize.py`, update figures) | the `/scientific-figure-making` skill: semantic palette, minimalist spines, tightened y-limits, export policy, then look at the export |
-| Weekly updates | the week's form: `/weekly-update` or `/weekly-slides` (invoke before drafting, not just to verify) |
-| Theory writing | `theory/CLAUDE.md` |
-| `tracking.md` updates | `doc/CLAUDE.md` §5: three-way consistency (experiments, paper claims, tracking) |
-
-Skipping the checklist means the task is not finished. Verification is part of the work.
-
----
-
-## 6. Reports carry their own context
-
-Result summaries and explanations (chat messages, READMEs, tracking rows, slides) are read by someone who did not watch the work happen. Names coined during the work (a pipeline stage, an eval config, a task subset) mean nothing to that reader.
-
-Before the numbers: state in one or two sentences what question the experiment answers, what was run, and what is being compared. Define every coined term at first use in every report; a definition given in an earlier message does not carry over. Translate each headline number into its concrete meaning ("5 of the 11 tasks that passed without steering now fail", not "5 broke").
-
-Test: can the reader repeat the claim to a third person without asking a follow-up? Any sentence that would trigger "what does that mean" gets expanded before sending.
-
----
-
-## 7. Explanations: plain language, then an example
-
-The user runs several projects in parallel and does not hold this project's context in their head. When explaining anything (a result, a bug, a design choice, a concept), default to plain language and a concrete example, in that order:
-
-- Open with the everyday-words version ("the control group", "the placebo"), not the field term ("the null distribution"). Introduce the term after the plain meaning, if at all.
-- Ground every abstraction in one worked example from the project's own setup ("we run the method on 30 inputs carrying no real signal and record how strongly each one scores; that average is the bar a real input has to beat").
-- Never assume a term defined in an earlier session, an earlier message, or the paper is remembered. Re-explain from zero each time.
-- Never cite an experiment ID, run name, config tag, or commit hash as if the user remembers it. Restate what it was in words every time: "the run where the intervention was switched off before the question", not "`1150ed6_1`".
-- Technical depth is fine, jargon shortcuts are not: if a sentence needs a term of art, unpack it in the same sentence.
-
-Test: someone working on a different project all week should follow the whole explanation on first read, without opening the repo.
-
----
-
-## 8. Progress reports are measured against the goal
-
-When the user asks for status or progress (any "where are we" update, not a one-off factual answer), invoke the `/progress-report` skill before drafting. Its rule in one line: goal restated first, progress judged against it (met / not met / partial and why), one comparison table, unfavorable results included, single next step -- never a list of activity.
-
----
-
-## 9. Decisions are prompted as options
-
-At a decision point (framing a paper, choosing the next experiment, restructuring rules or docs, any "what should we do" moment), stop and present the choice as 2-4 concrete labeled options with their trade-offs, then wait. An open question ("what framing do you want?") is not a prompt. Executing an already-agreed plan needs no prompt; setting direction always does.
-
----
-
-## 10. Everything earns its place
-
-Before writing any sentence -- chat, doc, report, commit message -- it passes two checks:
-
-- **Grounded.** It states something verified (a number from a real file, a behavior actually observed, a rule actually written), or marks itself unverified ("not yet checked", "untested"). Plausible-sounding filler stated as fact is the worst failure mode.
-- **Necessary.** It changes what the reader knows or decides next. Restating the known, padding transitions, and empty hedges get cut, not polished.
-- **Plainly written, in chat too.** The language rules in `doc/CLAUDE.md` §1 are not only for files under `doc/`; they govern chat replies, which never pass through `check_prose.sh` and so are the one channel with no gate. Three specific limits: no em dash in either `---` or Unicode form; `rather than` plus `X, not Y` at most once per reply, since stacking them makes every paragraph read as a running contrast; and a colon-then-elaboration is one repair among several, not the default. Vary the join or state the conclusion outright. A reply is not exempt because it is conversational; a paragraph built for cadence reads the same in chat as in a paper. Worth measuring rather than assuming: counting these three across one real session is a two-minute grep over the transcript, and the counts have come back an order of magnitude above what they felt like.
-
-The same checks govern code and docs as artifacts: concise and effective over redundant and complex. Every function, branch, config knob, section, and table earns its place by serving the goal; the simple version that works beats the general version that might someday be needed. When something fails the check, delete it, however well it reads or however long it took to write.
+Enforcement that does not rely on memory: a git pre-commit hook (`.githooks/`; enable with
+`git config core.hooksPath .githooks`) runs the language checks on staged docs, and a
+UserPromptSubmit hook suggests the matching skill; neither replaces reading the rules.

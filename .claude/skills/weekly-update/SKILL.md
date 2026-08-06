@@ -133,7 +133,7 @@ item sits 0.03 above its control, inside the seed-to-seed spread").
 
 State the finding as the section title or lead bullet, show the one or two numbers that support
 it, and point to `tracking.md` for detail. Every number says what it counts (metric, n, split).
-Results and comparisons go in booktabs tables, not prose (root CLAUDE.md rule 2); a table row
+Results and comparisons go in booktabs tables, not prose (root CLAUDE.md: tables over prose); a table row
 that needs explanation gets a bullet under the table, not a paragraph. Where a result is partial
 or mixed, the title says so ("holds on five models, untested on the sixth").
 

@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+# Language gate on staged docs (root CLAUDE.md "Enforcement"). Runs the prose checks that
+# otherwise rely on remembering to invoke the skill:
+#   - check_prose.sh   on staged paper.md, proposal.md, doc/paper/*.tex
+#   - check_language.sh on staged doc/weekly_updates/**/update.md
+# A hit blocks the commit; rewrite the flagged line (never allowlist). Emergency bypass:
+# git commit --no-verify, and say so in the commit message.
+
+set -u
+ROOT=$(git rev-parse --show-toplevel)
+CHECK_PROSE="$ROOT/.claude/skills/verify-paper/scripts/check_prose.sh"
+CHECK_LANG="$ROOT/.claude/skills/weekly-update/scripts/check_language.sh"
+
+staged=$(git diff --cached --name-only --diff-filter=ACM)
+[ -z "$staged" ] && exit 0
+
+fail=0
+
+prose_targets=$(grep -E '^doc/(paper\.md|proposal\.md|paper/.*\.tex)$' <<<"$staged" || true)
+if [ -n "$prose_targets" ] && [ -x "$CHECK_PROSE" ]; then
+    # shellcheck disable=SC2086
+    (cd "$ROOT" && "$CHECK_PROSE" $prose_targets) || fail=1
+fi
+
+update_targets=$(grep -E '^doc/weekly_updates/.*/(update|post_talk_notes)\.md$' <<<"$staged" || true)
+if [ -n "$update_targets" ] && [ -x "$CHECK_LANG" ]; then
+    for f in $update_targets; do
+        (cd "$ROOT" && "$CHECK_LANG" "$f") || fail=1
+    done
+fi
+
+if [ "$fail" -ne 0 ]; then
+    echo ""
+    echo "pre-commit: language gate failed on staged docs (rules: .claude/skills/verify-paper/references/style.md)."
+    echo "Rewrite the flagged lines, re-stage, and commit again."
+fi
+exit "$fail"
