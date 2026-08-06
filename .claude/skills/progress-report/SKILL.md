@@ -11,7 +11,7 @@ answer), frame the report around the goal, never around activity. Structure, in 
 1. **Restate the goal in one sentence**, with the success criterion and how it is measured ("beat baseline B and competing method M on benchmark Z, K seeds, reported as mean successes / N").
 2. **State progress against that goal** -- met / not met / partial, and *why* -- not a list of what you did. "We led once (+1.7) and tied once, both inside the noise band, so not yet demonstrated" beats "I ran two evals."
 3. **Compare our method to the baseline AND to the other methods** side by side in one table (root CLAUDE.md: tables over prose).
-4. **Report results that do not support us** plainly. A run where we tie or lose is part of the status and is never omitted or softened.
+4. **Report results that do not support us** plainly. A run where we tie or lose is part of the status and is never omitted or softened. Claim strength follows the statistical hard rules in `doc/CLAUDE.md` §2 "Statistical reporting" (single run, no strength claim; gap inside the spread, say so).
 5. **End with the single next step that moves toward the goal.**
 
 "What I did this round" is a separate, shorter section placed AFTER the goal status -- never the

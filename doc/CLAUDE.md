@@ -60,6 +60,16 @@ Every prediction carries an explicit falsifier, stated as concretely as the pred
 
 Caveats sit inline next to the result: asymmetric comparisons, single-seed runs, partially completed experiments.
 
+### Statistical reporting (hard rules; the single home, pointed at from the update and report skills)
+
+What a result is allowed to claim is set by what was run, not by how it looks:
+
+- **No reruns, no strength claim.** A single run reports its number with "single run" attached; "X beats Y" needs the rerun spread (or seeds) showing the gap outside it. With 3+ runs, report mean and spread with n; when the gap sits inside the spread, the sentence says so.
+- **No baseline in the run, no comparative claim.** Absolute numbers only until the comparison arm exists.
+- **Name the analysis unit** (task, seed, episode) before computing anything across it. A tasks-by-conditions table over the same tasks is a paired comparison, not independent samples; no winner is declared while the unit is ambiguous.
+- **Allowed wording, forbidden wording.** For each headline claim, write both the wording the evidence supports and the stronger wording it does not. The forbidden version is what a rushed reader will repeat, so it is written down to be checked against.
+- **Never replace missing evidence with confident prose.** A gap in the data is a sentence naming the gap and a `tracking.md` next step, not a smoother paragraph.
+
 When deleting an experiment, search `tracking.md`, `paper.md`, slides, and `paper/` for citations of its findings. Remove them or demote to "lives in git history at commit `<hash>`".
 
 ---

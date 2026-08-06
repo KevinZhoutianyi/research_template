@@ -156,6 +156,9 @@ or mixed, the title says so ("holds on five models, untested on the sixth").
 - **Small-n results carry their noise.** On a small test set (tens of tasks) a single run is
   fragile: report reruns or a range, and if the range overlaps the baseline say so ("the real gap
   is about +4, not the +12.5 a single run showed"). Never headline a number a rerun would not hold.
+  The full statistical hard rules (what a single run may claim, analysis unit, allowed vs
+  forbidden wording per claim) live in `doc/CLAUDE.md` §2 "Statistical reporting"; check the
+  week's headline claims against them before drafting.
 - **Few sections, not many.** Merge related findings into one Result with an arc (effect, then
   why/what-breaks-it, then generalization); about three Results total. Caveats and method checks
   are bullets inside a Result, not their own sections.
