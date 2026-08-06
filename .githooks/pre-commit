@@ -2,7 +2,8 @@
 # Language gate on staged docs (root CLAUDE.md "Enforcement"). Runs the prose checks that
 # otherwise rely on remembering to invoke the skill:
 #   - check_prose.sh   on staged paper.md, proposal.md, doc/paper/*.tex
-#   - check_language.sh on staged doc/weekly_updates/**/update.md
+#   - check_language.sh on staged doc/weekly_updates/**/*.md (any report there, not just
+#     update.md — the midterm report slipped through the narrower pattern; CLAUDE.md exempt)
 # A hit blocks the commit; rewrite the flagged line (never allowlist). Emergency bypass:
 # git commit --no-verify, and say so in the commit message.
 
@@ -22,10 +23,14 @@ if [ -n "$prose_targets" ] && [ -x "$CHECK_PROSE" ]; then
     (cd "$ROOT" && "$CHECK_PROSE" $prose_targets) || fail=1
 fi
 
-update_targets=$(grep -E '^doc/weekly_updates/.*/(update|post_talk_notes)\.md$' <<<"$staged" || true)
-if [ -n "$update_targets" ] && [ -x "$CHECK_LANG" ]; then
+update_targets=$(grep -E '^doc/weekly_updates/.*\.md$' <<<"$staged" | grep -v 'CLAUDE\.md$' || true)
+if [ -n "$update_targets" ]; then
+    # Reports get both gates: check_language.sh (metaphors, self-justification) covers the
+    # report-specific bans; check_prose.sh covers the banned-word and AI-pattern lists that
+    # a long-form report (e.g. the midterm) needs just as much as the paper does.
     for f in $update_targets; do
-        (cd "$ROOT" && "$CHECK_LANG" "$f") || fail=1
+        [ -x "$CHECK_LANG" ] && { (cd "$ROOT" && "$CHECK_LANG" "$f") || fail=1; }
+        [ -x "$CHECK_PROSE" ] && { (cd "$ROOT" && "$CHECK_PROSE" "$f") || fail=1; }
     done
 fi
 

@@ -1,6 +1,6 @@
 ---
 name: verify-paper
-description: Invoke at two points of any doc edit — before drafting (open references/style.md, the house structure and language rules, and follow them while writing) and before declaring done (the delivery gate: stranger-read pass, reverse outline, self-verification checklist, banned-language greps, reject-risk pass, and for LaTeX the render-and-read audit). Covers paper.md, proposal.md, and the LaTeX paper. Prose and LaTeX only; experiment code goes through /verify-experiment.
+description: Invoke at two points of any doc edit — before drafting (open references/style.md, the house structure and language rules, and follow them while writing) and before declaring done (the delivery gate: stranger-read pass, reverse outline, self-verification checklist, banned-language greps, reject-risk pass, and for LaTeX the render-and-read audit). Covers paper.md, proposal.md, the LaTeX paper, and any long-form prose report (e.g. a midterm report under doc/weekly_updates/); for reports, the number-reporting rules of /weekly-update apply on top. Prose and LaTeX only; experiment code goes through /verify-experiment.
 ---
 
 # Doc Verification
