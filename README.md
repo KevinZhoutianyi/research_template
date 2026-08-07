@@ -61,7 +61,8 @@ Three parts, deliberately short so that all of it survives in attention during l
   discipline, caps, what is free vs metered — filled in per project at init), prove-then-delete
   for dead code, commit-and-push after substantive changes, and decisions-presented-as-options
   (at any "what should we do" moment, present 2-4 labeled options with trade-offs and wait).
-- **Behavior rules, one line each.** Goal-first work, verify-each-step, surgical changes,
+- **Behavior rules, one line each.** Goal-first work (relate, never enumerate), ask-don't-assume
+  (one targeted question when a reading changes the outcome), verify-each-step, surgical changes,
   tables over prose, reports that carry their own context, plain language with a worked
   example, experiment ideas as idea cards, everything earns its place. Each line names where
   the full rule lives.

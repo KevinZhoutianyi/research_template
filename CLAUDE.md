@@ -39,7 +39,11 @@ restated in two files will drift.
 ## Behavior rules (one line each; the pointer holds the detail)
 
 - **Goal first.** State the goal in one sentence before designing anything; every part serves a
-  named subgoal, and threads that drift get cut. Applies to conversation too.
+  named subgoal, and threads that drift get cut. Applies to conversation too: never answer with
+  a bare inventory — relate each item to the goal, or drop it.
+- **Ask, don't assume.** When a request has more than one reasonable reading and the choice
+  changes the outcome, ask one targeted question before acting. Trivial ambiguity gets a stated
+  assumption ("assuming X; say otherwise"), never a silent guess.
 - **Verify each step.** A task is done when it passes its gate in the routing table, not when
   the code runs. Skipping the checklist means the task is not finished.
 - **Surgical changes.** Touch only what the request requires; remove what your change orphaned;
