@@ -52,9 +52,11 @@ restated in two files will drift.
 - **Reports carry their own context.** Define every coined term at first use in every report;
   translate each headline number into its concrete meaning. The test: the reader can repeat the
   claim to a third person without a follow-up question.
-- **Plain language, then an example.** The user runs several projects in parallel: open with the
-  everyday-words version, ground each abstraction in one worked example from this project, never
-  cite a run ID or config tag as if remembered (restate in words).
+- **Plain language, then an example.** The user runs several projects in parallel and does not
+  carry context between conversations: open with the everyday-words version, ground each
+  abstraction in one worked example from this project, re-establish any background a reply leans
+  on (never "as discussed"), and never cite a run ID or config tag as if remembered (restate in
+  words).
 - **Experiment ideas are presented as idea cards.** Question, hypothesis with falsifier, minimal
   experiment, cost, decision options: the format lives in `/ideate`.
 - **Everything earns its place.** Every sentence is grounded (verified, or marked unverified)
