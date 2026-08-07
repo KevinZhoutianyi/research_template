@@ -1,7 +1,7 @@
 # Research Template
 
 A template for AI/ML research projects driven with [Claude Code](https://claude.com/claude-code).
-It ships the directory skeleton of a research project (paper, tracking, experiments, weekly
+It ships the directory skeleton of a research project (paper, experiments, weekly
 updates) together with the rules and skills that make an AI assistant productive inside it:
 what to write where, how results are reported, and which gates a change must pass before it
 counts as done.
@@ -23,13 +23,11 @@ git config core.hooksPath .githooks   # enable the language gate
 |---|---|
 | `CLAUDE.md` | the root working guide (see below) |
 | `doc/paper.md` | the working draft of the argument: goal, thesis, outline, per-section evidence |
-| `doc/tracking.md` | experiment status: active / completed / failed runs, next steps, each row naming the paper section it serves |
 | `doc/paper/` | the LaTeX paper for Overleaf; mirrors `paper.md`, lags it |
 | `doc/related_papers/` | one note per cited paper (written by the `/read-paper` skill) |
 | `doc/weekly_updates/` | weekly progress reports, one folder per week |
-| `experiments/` | numbered, self-contained experiment folders |
+| `experiments/` | numbered, self-contained experiment folders; `experiments/src/` holds the shared code all experiments import |
 | `theory/` | theory writing, with its own rules |
-| `src/` | shared library code |
 | `.claude/skills/` | the nine skills (see below) |
 | `.claude/hooks/` + `.claude/settings.json` | the skill-prematch hook |
 | `.githooks/pre-commit` | the language gate on staged docs |
@@ -73,8 +71,7 @@ Three parts, deliberately short so that all of it survives in attention during l
   motivation-first writing rule, claims-and-evidence calibration (claim strength matched to
   the data, every prediction carrying a falsifier), framing methodology (sketch first,
   stance fixed up front, mechanism verified against data before prose), LaTeX/table/figure
-  conventions, and the three-way consistency rule: experiment results, paper claims, and
-  tracking rows always agree.
+  conventions, and the consistency rule: experiment results and paper claims always agree.
 - `experiments/CLAUDE.md` — code style (minimal logic, generous explanation), correctness
   through tests rather than careful writing, per-project compute rules, logging that makes
   runs reproducible from logs alone, and smoke-testing anything longer than ~30 minutes.
@@ -135,7 +132,7 @@ at it.
   pressures our claims, and key facts to cite. Metadata is always fetched, never recalled;
   bib entries carry `author = {TBD}` for the human to fill from verified metadata. If the
   paper threatens a claim currently in `paper.md`, that surfaces in chat and lands in
-  `tracking.md`, never silently filed.
+  the affected `paper.md` section, never silently filed.
 - **`/ideate`** — structured brainstorming, and the standing format for proposing any
   experiment: the five-part idea card (question in plain language; hypothesis with a
   falsifier as concrete as the prediction; the minimal experiment, one variable per
@@ -143,7 +140,7 @@ at it.
   is always "do not run it"). A brainstorm session diverges across four candidate kinds
   (weakness in the current result, gap the related work leaves open, cheaper/harder version
   of what works, questions the collected data can already answer), converges by
-  information-per-cost, and lands the chosen card as a `tracking.md` next step.
+  information-per-cost, and lands the chosen card as a (planned) row in the `paper.md` outline.
 - **`/delete-dead-code`** — prove-then-delete. Grep for callers, check for half-live files
   (dead `main()`, live imports), check no running job holds the path, distinguish results
   artifacts (data, never deleted to tidy up) from code. Deletion is its own commit, and the

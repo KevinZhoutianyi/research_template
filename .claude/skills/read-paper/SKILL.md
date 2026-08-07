@@ -53,8 +53,8 @@ house example: `expel.md`):
 
 ## 4. Close the loop
 
-- If the paper contradicts or weakens a claim currently in `paper.md`, say so in chat and add
-  fixing it as a `tracking.md` next step; do not silently file the note.
+- If the paper contradicts or weakens a claim currently in `paper.md`, say so in chat and mark
+  the affected `paper.md` section; do not silently file the note.
 - The Related Work table in `paper.md` gets a row (Paper | Relation) when the paper will be
   cited; the note holds the long form.
 - Commit and push both artifacts.

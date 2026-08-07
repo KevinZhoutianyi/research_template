@@ -7,11 +7,6 @@ reframing, and detail appendices. A reader scanning top-to-bottom should
 hit: Goal → Thesis → Prior work → Outline → Evidence → Reframing →
 Appendices, with no detours into job IDs or queue state.
 
-The companion file **tracking.md** holds experiment status (active runs,
-recently completed, recently failed, next steps). Each row of
-tracking.md cross-references the paper.md section it serves. See
-CLAUDE.md §3 for the full two-file rule.
-
 The structure below is taken from a real research project and is meant
 to generalize. Replace [BRACKETED PLACEHOLDERS] with your content; the
 HTML comments explain the *intent* of each block.
@@ -292,10 +287,6 @@ claims. -->
 | **[Paper C]** (Author, Year) | [Orthogonal — different measurement; mentioned because reviewers will ask.] |
 
 ---
-
-<!-- Experiment status (Active runs / Recently completed / Recently
-failed / Next steps) lives in **tracking.md** — this file holds the
-argument only. -->
 
 ## Reframing for slides
 

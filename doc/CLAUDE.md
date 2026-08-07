@@ -3,16 +3,15 @@
 | file / folder | what it holds |
 |---|---|
 | `paper.md` | The argument: goal, thesis, outline, per-section evidence, related work, appendices. Changes land here first. |
-| `proposal.md` | The research proposal: method, baselines, risks, plan. Same writing rules as `paper.md`; numbers in it must match `tracking.md`. |
+| `proposal.md` | The research proposal: method, baselines, risks, plan. Same writing rules as `paper.md`. |
 | `paper/` | The same argument as LaTeX for Overleaf. Mirrors `paper.md`; lags it. |
-| `tracking.md` | The status: active runs, completed, failed, next steps. Each row names the `paper.md` section it serves. |
 | `weekly_updates/` | Weekly progress reports. Two forms, chosen per week: `/weekly-update` (Markdown) or `/weekly-slides` (Beamer). See `weekly_updates/CLAUDE.md`. |
 | `related_papers/` | One note per cited paper. |
 | `paper/example_papers/` | Reference PDFs whose writing, figure, and section style this paper targets. |
 
 These are living documents. Update in place; never append dated entries.
 
-`paper.md` and `tracking.md` are canonical templates: copy their section structure into new projects instead of inventing parallel structures.
+`paper.md` is a canonical template: copy its section structure into new projects instead of inventing parallel structures.
 
 ---
 
@@ -68,9 +67,9 @@ What a result is allowed to claim is set by what was run, not by how it looks:
 - **No baseline in the run, no comparative claim.** Absolute numbers only until the comparison arm exists.
 - **Name the analysis unit** (task, seed, episode) before computing anything across it. A tasks-by-conditions table over the same tasks is a paired comparison, not independent samples; no winner is declared while the unit is ambiguous.
 - **Allowed wording, forbidden wording.** For each headline claim, write both the wording the evidence supports and the stronger wording it does not. The forbidden version is what a rushed reader will repeat, so it is written down to be checked against.
-- **Never replace missing evidence with confident prose.** A gap in the data is a sentence naming the gap and a `tracking.md` next step, not a smoother paragraph.
+- **Never replace missing evidence with confident prose.** A gap in the data is a sentence naming the gap and a next step recorded in the paper's plan, not a smoother paragraph.
 
-When deleting an experiment, search `tracking.md`, `paper.md`, slides, and `paper/` for citations of its findings. Remove them or demote to "lives in git history at commit `<hash>`".
+When deleting an experiment, search `paper.md`, slides, and `paper/` for citations of its findings. Remove them or demote to "lives in git history at commit `<hash>`".
 
 ---
 
@@ -158,22 +157,12 @@ Overleaf zip, from `doc/paper/`: `zip <project>_overleaf.zip main.tex references
 
 ---
 
-## 5. `tracking.md`
+## 5. Results and claims stay consistent
 
-Four tables, every row cross-referencing the `paper.md` section it serves:
-
-```
-## Active runs                job | exp | status | serves paper.md § | note (the note says WHY)
-## Recently completed jobs    job | exp | serves paper.md § | result (one line)
-## Recently failed jobs       job | exp | failure mode | resolution    <- mandatory; prevents blind re-attempts
-## Next steps                 numbered, each naming the paper.md § it serves
-```
-
-Three artifacts carry project state: experiment code/results, paper claims, tracking rows. A change to one is incomplete until the other two match:
-- New experiment: add a tracking row and update the paper's evidence section.
-- New paper claim: point it at a supporting `results.json`, or mark the section (planned) and add a next step.
-- Landed result: move the tracking row to completed; update the paper's headline number, reading, and caveat. If `tracking.md` says "15/39 pass" while the paper says "passes the test", the paper is stale.
-- Falsified hypothesis: remove it from the paper body (or mark it ruled out), record the verdict in tracking, note the triggered falsifier in the run script docstring.
+Two artifacts carry project state: experiment code/results and paper claims. A change to one is incomplete until the other matches:
+- New paper claim: point it at a supporting `results.json`, or mark the section (planned).
+- Landed result: update the paper's headline number, reading, and caveat. If `results.json` says "15/39 pass" while the paper says "passes the test", the paper is stale.
+- Falsified hypothesis: remove it from the paper body (or mark it ruled out), note the triggered falsifier in the run script docstring.
 
 Job IDs and ETAs never appear in `paper.md`.
 

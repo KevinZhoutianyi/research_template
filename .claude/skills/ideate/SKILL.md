@@ -37,19 +37,21 @@ the card that come from real files cite their source; guesses are marked as gues
 When the user opens a brainstorm (rather than reacting to one idea):
 
 1. **Anchor.** Restate the project goal in one sentence and where we stand against it (the
-   current headline result and its biggest weakness). Pull from `tracking.md` and `paper.md`,
-   not memory.
+   current headline result and its biggest weakness). Pull from `paper.md` and the experiment
+   READMEs, not memory.
 2. **Diverge.** Generate candidate directions across distinct kinds — at least one from each
    that applies: (a) a weakness in the current result (a confound, a missing control), (b) a
    gap the related work leaves open (check `related_papers/` notes, "Where it pressures our
    claims"), (c) a cheaper or harder version of what already works, (d) something the data
    already collected can answer without a new run.
-3. **Converge.** Kill candidates that fail a one-sentence goal link, duplicate a tracking.md
-   next step, or have no reachable falsifier. Rank survivors by information-per-cost.
+3. **Converge.** Kill candidates that fail a one-sentence goal link, duplicate a planned
+   experiment already in `paper.md`, or have no reachable falsifier. Rank survivors by
+   information-per-cost.
 4. **Cards.** Write the top 2-4 as idea cards and present them as the decision.
-5. **Land.** The chosen card's minimal experiment becomes a `tracking.md` next step naming the
-   `paper.md` section it serves. An unchosen card worth keeping gets one line in tracking.md's
-   next steps marked (parked); the rest are dropped, not archived.
+5. **Land.** The chosen card's minimal experiment becomes a (planned) row in the `paper.md`
+   outline naming the section it serves. An unchosen card worth keeping gets one (parked) line
+   there; the rest are dropped, not archived.
 
-Done when: every idea on the table is either a card, a tracking.md line, or explicitly
-dropped, and the user has made the call (or the cards are in front of them awaiting it).
+Done when: every idea on the table is either a card, a (planned)/(parked) line in `paper.md`,
+or explicitly dropped, and the user has made the call (or the cards are in front of them
+awaiting it).

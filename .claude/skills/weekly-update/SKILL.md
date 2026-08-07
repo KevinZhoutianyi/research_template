@@ -27,7 +27,7 @@ These govern every sentence; the numbered rules below are how you satisfy them.
   section handing to the next. Result 2 exists because Result 1 raised its question; the Plan
   follows from what the Results did and did not show. A reader must be able to say "they asked X,
   tested it this way, found Y, so next they do Z" after one read. Never a pile of disconnected
-  true statements; if a paragraph does not advance the line, cut it or move it to `tracking.md`.
+  true statements; if a paragraph does not advance the line, cut it.
 
 ## 1. Goal first
 
@@ -67,10 +67,10 @@ paper, or the codebase, and definitions do not carry over between updates. Concr
   defined before or at its first table, in words a non-specialist can repeat.
 - Not too much detail: one table and 3-5 bullets per result; sub-variants collapse into a "best
   variant" row unless the variant is the point. Full sweeps and per-cell provenance live in
-  `tracking.md`.
+  the experiment's own README and results files.
 - Report final results only, in absolute terms. **No comparisons to superseded or failed
   versions** ("last week's extraction was broken", "improved over the old design") -- the reader
-  tracks this week, and failure history lives in `tracking.md`. Bug histories and superseded
+  tracks this week, and failure history lives in the experiment's own README. Bug histories and superseded
   numbers never appear; show the current best-known number for each cell as if it were always
   so.
 
@@ -132,7 +132,7 @@ item sits 0.03 above its control, inside the seed-to-seed spread").
 ## 5. Claims, not categories
 
 State the finding as the section title or lead bullet, show the one or two numbers that support
-it, and point to `tracking.md` for detail. Every number says what it counts (metric, n, split).
+it, and point to the experiment's README for detail. Every number says what it counts (metric, n, split).
 Results and comparisons go in booktabs tables, not prose (root CLAUDE.md: tables over prose); a table row
 that needs explanation gets a bullet under the table, not a paragraph. Where a result is partial
 or mixed, the title says so ("holds on five models, untested on the sixth").
@@ -168,8 +168,8 @@ or mixed, the title says so ("holds on five models, untested on the sixth").
 - Read the whole `.md` top to bottom (the stranger-read pass from `doc/CLAUDE.md`): every table
   renders as a table (header separator row present, columns aligned), every term used in the
   body appears in the Definitions section, every number carries its baseline, no filename /
-  experiment-name / CLI / env-var leaks (those live in run-script docstrings or `tracking.md`).
-- Every number matches its `results.json` or `tracking.md` row (three-way consistency).
+  experiment-name / CLI / env-var leaks (those live in run-script docstrings).
+- Every number matches its `results.json` (doc/CLAUDE.md §5 consistency).
 - Run `scripts/check_language.sh <update.md>`: it greps the prose (fenced code blocks excluded)
   for the banned-metaphor list in §3 and for self-justifying framing about our own honesty
   (honest, whatever it shows, not hidden, visible not, to be fair, we do not hide, we do not

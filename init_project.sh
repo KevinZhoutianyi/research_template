@@ -31,8 +31,8 @@ find "$DEST" -type f \( -name "*.md" -o -name "*.toml" -o -name "*.json" -o -nam
 done
 
 # Rename the src package directory
-if [ -d "$DEST/src/PROJECT_NAME" ]; then
-    mv "$DEST/src/PROJECT_NAME" "$DEST/src/$PROJECT_NAME"
+if [ -d "$DEST/experiments/src/PROJECT_NAME" ]; then
+    mv "$DEST/experiments/src/PROJECT_NAME" "$DEST/experiments/src/$PROJECT_NAME"
 fi
 
 # Create the data directory outside the repo

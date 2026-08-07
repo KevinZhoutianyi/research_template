@@ -25,7 +25,7 @@ Prove it dead first, and say in the commit message what proved it:
   separately from script invocations.
 - For docs: no other doc links to it, and its claims are either superseded (the newer doc says
   so) or absorbed into the mainline story. A failed-direction writeup whose verdict is recorded
-  in `tracking.md` needs no standalone file.
+  in the experiment's README needs no standalone file.
 - No running job holds the path (`squeue`/`ps` before deleting).
 - Results artifacts a report still reads (`results.json`, `runs/<name>/`) are DATA, not dead
   code -- never delete these to tidy up. If a reader and writer disagree on a filename, fix the

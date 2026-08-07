@@ -110,7 +110,7 @@ specific pointer into the text (section, table, number) or the word "missing".
 | Soundness | Is the setup realistic, or tuned per case? Does the demonstration show the mechanism, or only that the mechanism is constructible? Would a reviewer argue the net contribution is negative? |
 
 Mark each answer `pass`, `needs revision`, or `needs new experiment`. Anything in the third
-category is a `tracking.md` next step, not a sentence to be written more carefully.
+category becomes a planned experiment in `paper.md` (marked (planned) with its prediction), not a sentence to be written more carefully.
 
 ## Done when
 

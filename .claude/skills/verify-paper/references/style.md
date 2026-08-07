@@ -30,7 +30,7 @@ by reading. Paragraph-scale rewrites for the AI-writing patterns live in
 - **State the result; do not grade it.** Cut "the result supports the design's premise", "this confirms our hypothesis", "this is a strong result". End on the measurement and let the reader draw the conclusion.
 - Banned words, rewrite every instance: delve, crucial, pivotal, robust, leverage, utilize, showcase, comprehensive, notably, importantly, interestingly, it is worth noting, this allows us to, in summary, in conclusion.
 - **The plain word, unless the technical one is doing work.** The list above is a list of instances; the rule behind it is that a longer word earns its place only by being more precise than the short one. Use "use" for leverage and utilize, "study" or "measure" for investigate and explore, "setting" or "context" for landscape and tapestry, "show" for demonstrate when nothing was proven. This does not touch terms of art: the field's precise words stay, even when they are long. The test is substitution: if the plain word can replace the fancy one with no loss of meaning, the fancy one was decoration.
-- No implementation details in the body. Library names, file paths, CLI flags, experiment IDs go to `tracking.md` or a run script docstring.
+- No implementation details in the body. Library names, file paths, CLI flags, experiment IDs go to the experiment's README or a run script docstring.
 - Every technical claim gets a plain-English gloss within one paragraph. If a non-specialist cannot restate the claim, the gloss is missing.
 
 ## Chat replies

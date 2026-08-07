@@ -5,8 +5,7 @@ implementation work, so the project goals stay in view.
 
 **Every rule has exactly one home.** This file holds safety rules (full text) and behavior rules
 (one line + pointer). Task procedures live in skills; directory facts live in subdirectory
-CLAUDE.md files. When adding a rule, place it once and point to it from anywhere else; a rule
-restated in two files will drift.
+CLAUDE.md files.
 
 ## Routing
 
@@ -21,7 +20,6 @@ restated in two files will drift.
 | reading a paper into `related_papers/` | `/read-paper` |
 | brainstorming an experiment idea | `/ideate` |
 | deleting code or docs | `/delete-dead-code` (prove dead first) |
-| `tracking.md` | `doc/CLAUDE.md` §5: three-way consistency |
 
 ## Safety rules (full text; these do not move)
 
@@ -48,6 +46,9 @@ restated in two files will drift.
   the code runs. Skipping the checklist means the task is not finished.
 - **Surgical changes.** Touch only what the request requires; remove what your change orphaned;
   do not improve adjacent code.
+- **The repo stays clean.** Scratch files, one-off test scripts, and temp dirs go under `/tmp`,
+  never into the repo; every tracked file has a home named in the README layout table, and the
+  repo root gains a new file or folder only by an explicit user decision.
 - **Tables over prose** for results, configs, and comparisons, everywhere.
 - **Reports carry their own context.** Define every coined term at first use in every report;
   translate each headline number into its concrete meaning. The test: the reader can repeat the

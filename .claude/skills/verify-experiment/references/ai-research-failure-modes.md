@@ -109,5 +109,5 @@ Per mode, one of:
 - **INSUFFICIENT EVIDENCE**, when it cannot be ruled in or out from what exists. Modes 1, 3, 5, and
   6 landing here are blocking: they are exactly the modes that need artifacts outside the draft.
 
-A `SUSPECTED` or blocking `INSUFFICIENT EVIDENCE` verdict goes in the report and in `tracking.md` as
-a next step. It does not get resolved by rewriting the sentence more carefully.
+A `SUSPECTED` or blocking `INSUFFICIENT EVIDENCE` verdict goes in the report and in the experiment's
+README as an open issue. It does not get resolved by rewriting the sentence more carefully.
