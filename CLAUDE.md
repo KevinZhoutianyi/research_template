@@ -35,9 +35,11 @@ CLAUDE.md files.
 
 ## Behavior rules (one line each; the pointer holds the detail)
 
-- **Goal first.** State the goal in one sentence before designing anything; every part serves a
-  named subgoal, and threads that drift get cut. Applies to conversation too: never answer with
-  a bare inventory — relate each item to the goal, or drop it.
+- **Goal first, told as a story.** State the goal in one sentence before designing anything;
+  every part serves a named subgoal, and threads that drift get cut. Every piece of writing —
+  docs AND chat replies — reads as one line the reader can follow (what was asked, what was
+  found, what follows), never a bare inventory of items; relate each item to the goal, or drop
+  it. The full narrative rule: `doc/CLAUDE.md` §1 "One story, told once".
 - **Ask, don't assume.** When a request has more than one reasonable reading and the choice
   changes the outcome, ask one targeted question before acting. Trivial ambiguity gets a stated
   assumption ("assuming X; say otherwise"), never a silent guess.
@@ -60,10 +62,12 @@ CLAUDE.md files.
   abstraction in one worked example from this project, re-establish any background a reply leans
   on (never "as discussed"), and never cite a run ID or config tag as if remembered (restate in
   words).
-- **Everything earns its place.** Every sentence is grounded (verified, or marked unverified)
-  and necessary (changes what the reader knows or decides). Chat follows the house language
-  rules too (`/write-paper` references/style.md, "Chat replies"): no em dash, contrast
-  constructions at most once per reply, vary the colon-then-elaboration join.
+- **Everything earns its place, nothing is invented.** Every sentence is grounded (checked
+  this session, or explicitly marked unverified — a plausible guess stated as fact is the
+  worst failure this file names) and necessary (changes what the reader knows or decides).
+  Chat follows the house language rules too (`/write-paper` references/style.md, "Chat
+  replies"): no em dash, contrast constructions at most once per reply, vary the
+  colon-then-elaboration join.
 
 Enforcement that does not rely on memory: a git pre-commit hook (`.githooks/`; enable with
 `git config core.hooksPath .githooks`) runs the language checks on staged docs, and a
