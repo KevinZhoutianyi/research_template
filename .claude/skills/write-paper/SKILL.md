@@ -10,8 +10,13 @@ The common entry point: a result has landed and belongs in the paper. The path i
 plus reading plus caveat), how strongly it may be claimed (§2 claims and evidence, the
 statistical hard rules), and the framing methodology when the result moves the story (§2a).
 The structure and language rules live in [references/style.md](references/style.md) and apply
-while drafting. This skill is also the delivery gate: run every part that applies, fix what it
-catches, re-run until clean.
+while drafting. This skill is also the delivery gate.
+
+**The loop.** For new content: load the rules, draft under them, then gate → fix → re-gate
+until a pass reports nothing worth fixing. For existing content (a pasted draft, a section
+already in the paper): gate first — it produces the edit list — then fix, then re-gate the
+changed text. Never one review pass and unchecked fixes: a rewritten sentence can introduce
+the next dangling referent, so fixes always get a re-pass.
 
 | Reference | Open when |
 |---|---|
@@ -115,6 +120,22 @@ specific pointer into the text (section, table, number) or the word "missing".
 
 Mark each answer `pass`, `needs revision`, or `needs new experiment`. Anything in the third
 category becomes a planned experiment in `paper.md` (marked (planned) with its prediction), not a sentence to be written more carefully.
+
+## Reporting the gate
+
+The gate's findings are reported as edits, never as checklist bookkeeping. The reader is the
+writer deciding what to change, not an auditor of this skill; internal labels ("stranger-read
+check 3", "checklist item 9") mean nothing to them and do not appear. For each finding:
+
+1. Quote the problem sentence (or name the missing thing).
+2. Say what is wrong in plain words, in one sentence.
+3. Show the fix: the rewritten sentence, or the one-line addition.
+
+Order findings by what most changes the document (a missing contribution statement outranks an
+overlong sentence), group them by location in the document (not by which check found them),
+and cap the list at the fixes worth making: a finding not worth the writer's minute does not
+earn a line. Lead with one sentence on where the draft stands overall; end with the one thing
+to fix first.
 
 ## Done when
 
