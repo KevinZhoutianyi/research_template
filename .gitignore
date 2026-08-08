@@ -36,3 +36,16 @@ wandb/
 # Vendored figure demos write into ./figures/ next to the script they ran from;
 # the scripts are the reference, their outputs are not.
 .claude/skills/scientific-figure-making/demos/*/figures/
+
+# Personal Claude Code config — never tracked (permissions and notification hooks are per-user)
+.claude/settings.local.json
+
+# LaTeX build products (doc/paper/README.md promises these are ignored)
+doc/paper/main.pdf
+doc/paper/*.aux
+doc/paper/*.log
+doc/paper/*.out
+doc/paper/*.bbl
+doc/paper/*.blg
+doc/paper/*.toc
+*_overleaf.zip

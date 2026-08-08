@@ -1,7 +1,7 @@
 # Paper
 
 <!-- HOW TO USE THIS TEMPLATE
-This file is the **argument** — the living paper-in-progress. It holds
+This file is the **argument**: the living paper-in-progress. It holds
 the goal, thesis, outline, per-section evidence, related work, slide
 reframing, and detail appendices. A reader scanning top-to-bottom should
 hit: Goal → Thesis → Prior work → Outline → Evidence → Reframing →
@@ -38,7 +38,7 @@ falsifiable and specific. -->
 <!-- Why the obvious experiment doesn't settle the question. What
 confound or measurement ambiguity makes prior claims open to alternative
 interpretations? Name the two (or more) theories that the same observable
-data is consistent with — this sets up §1 phenomenon and §2 controls. -->
+data is consistent with: this sets up §1 phenomenon and §2 controls. -->
 
 [2–4 sentences: prior claim + the measurement that supports it +
 the alternative interpretation prior work did not rule out.]
@@ -50,7 +50,7 @@ the alternative interpretation prior work did not rule out.]
 
 ---
 
-## Outline — N subgoals and how we achieve each
+## Outline: N subgoals and how we achieve each
 
 <!-- KEY PATTERN: the Outline is the paper's argument in compressed form.
 Each row reads left-to-right as a self-contained chain:
@@ -70,18 +70,18 @@ Rules for cells:
 | § | Question | What we did | What we showed | Therefore → |
 |---|---|---|---|---|
 | **§1 Phenomenon** | [Does the observation prior work claims actually hold under a fair measurement?] | [Re-ran the canonical experiment with the obvious confounds removed; tested at small scale for robustness.] | [The phenomenon is real but [varies with X]; not explained by [confound A or B].] | [The phenomenon exists, but the variation is what needs explaining. → §2] |
-| **§2 Controls** | [What's actually causing the observed effect — theory 1 (concept-specific) or theory 2 (alternative)?] | [First tried the naive control X. When that failed, noticed property Y in the data. Built a refined control matching property Y. Stress-tested.] | [The naive control failed; the refined control reproduced the effect *without* the property theory 1 requires. Theory 1 falsified for the majority of cases.] | [The trigger is [property Y], not [theory 1's mechanism]. Open question: how does property Y produce the output? → §3] |
-| **§3 Mechanism** | [N mechanistic questions in order: (1) where? (2) one feature or many? (3) is step A alone enough? (4) feature 1 or feature 2? (5) ...] | [Localization probe; single-axis predictor test; direct injection of the candidate feature; falsification test of a candidate alternative.] | [(1) Localized to [region X]. (2) Multi-dimensional. (3) [Step A] alone is *not* enough — the cascade through [steps B] is essential. (4) [feature 2], not [feature 1].] | [The effect is the system's normal output behavior conditioned on a perturbed state, not a dedicated detector. → §4] |
+| **§2 Controls** | [What's actually causing the observed effect: theory 1 (concept-specific) or theory 2 (alternative)?] | [First tried the naive control X. When that failed, noticed property Y in the data. Built a refined control matching property Y. Stress-tested.] | [The naive control failed; the refined control reproduced the effect *without* the property theory 1 requires. Theory 1 falsified for the majority of cases.] | [The trigger is [property Y], not [theory 1's mechanism]. Open question: how does property Y produce the output? → §3] |
+| **§3 Mechanism** | [N mechanistic questions in order: (1) where? (2) one feature or many? (3) is step A alone enough? (4) feature 1 or feature 2? (5) ...] | [Localization probe; single-axis predictor test; direct injection of the candidate feature; falsification test of a candidate alternative.] | [(1) Localized to [region X]. (2) Multi-dimensional. (3) [Step A] alone is *not* enough: the cascade through [steps B] is essential. (4) [feature 2], not [feature 1].] | [The effect is the system's normal output behavior conditioned on a perturbed state, not a dedicated detector. → §4] |
 | **§4 Origin** *(planned)* | [When during training does the [readout-layer geometry / capability / mechanism] form? Is it [post-training-specific] or [already present in pretraining]?] | [(planned) Run §1 + §2 measurements across intermediate training checkpoints; compare emergence trajectory to other capabilities.] | *(predicted)* [The mechanism emerges with general-output capability during pretraining, not as a separate post-training milestone.] | [If predicted: the phenomenon is a side-effect of general capability geometry. If falsified: it's genuinely [post-training-specific]. Either way, sharpens the headline claim.] |
 
 ---
 
 ## §1 Phenomenon ([status])
 
-**Claim.** [One sentence stating what §1 proves — usually "the prior
+**Claim.** [One sentence stating what §1 proves: usually "the prior
 finding replicates under our fairer measurement".]
 
-### Evidence: [exp name] — [one-line description]
+### Evidence: [exp name]: [one-line description]
 
 <!-- KEY PATTERN: body shows narrative, not data dumps.
 Per the appendix rule in CLAUDE.md, keep only:
@@ -91,7 +91,7 @@ Per the appendix rule in CLAUDE.md, keep only:
   (d) a pointer "→ See Appendix X" for the detail tables.
 
 Per-bucket pass-rates, top-N rankings, full hyperparameter sweeps,
-counter-example tables — ALL of these go in an experiment-specific
+counter-example tables: ALL of these go in an experiment-specific
 appendix, not here. -->
 
 **Classification:** [Central | Sanity check | Supporting].
@@ -105,14 +105,14 @@ Observed: [result]. There is a tendency for [pattern], but [within-bucket
 counter-examples / caveats] prevent a clean rule.]
 
 **[Caveat name].** [One sentence on the methodological caveat that
-changes the obvious reading — e.g., "concrete-bucket failures are
+changes the obvious reading: e.g., "concrete-bucket failures are
 off-distribution, not 'no'." Single caveats only; full diagnostic
 numbers go in the appendix.]
 
 → See **Appendix C** for the per-bucket table, top-N passers, counter-
 example pairs, and off-distribution diagnostics.
 
-### Evidence: [exp name] — methodological control
+### Evidence: [exp name]: methodological control
 
 **Classification:** Supporting (rules out [specific rebuttal]).
 
@@ -124,9 +124,9 @@ example pairs, and off-distribution diagnostics.
 
 ---
 
-## §2 Controls — theory 1 vs theory 2 ([status])
+## §2 Controls: theory 1 vs theory 2 ([status])
 
-**Claim.** [One sentence stating what §2 proves — the discriminator.]
+**Claim.** [One sentence stating what §2 proves: the discriminator.]
 
 ### The discovery arc (read in order)
 
@@ -148,7 +148,7 @@ each step as: observation → question → next experiment. -->
 | [Exp B/02] | Sanity check | Both theories predict same outcome; confirms setup. |
 | [Exp B/03] | Supporting | Robustness across [knob]. |
 
-### Evidence: [exp name] — [central control]
+### Evidence: [exp name]: [central control]
 
 **Classification:** Central.
 
@@ -167,7 +167,7 @@ Caveats inline (single seed? one setting? asymmetric comparison?). -->
 
 ---
 
-## §3 Mechanism — Q&A format ([status])
+## §3 Mechanism: Q&A format ([status])
 
 <!-- KEY PATTERN: §3 (mechanism) should be structured as explicit
 questions and answers, not a list of facts. Each question is
@@ -254,7 +254,7 @@ is how the document survives review. -->
 
 ---
 
-## §4 Origin — [research question] (planned)
+## §4 Origin: [research question] (planned)
 
 <!-- §4 is typically forward-looking. Frame it as a *prediction to test*,
 not a result. State what each theory predicts, then the experiment that
@@ -284,7 +284,7 @@ claims. -->
 |---|---|
 | **[Paper A]** (Author, Year) | [Supports §1 by ...] |
 | **[Paper B]** (Author, Year) | [Contrasts §2 by claiming X; we show Y.] |
-| **[Paper C]** (Author, Year) | [Orthogonal — different measurement; mentioned because reviewers will ask.] |
+| **[Paper C]** (Author, Year) | [Orthogonal: different measurement; mentioned because reviewers will ask.] |
 
 ---
 
@@ -294,29 +294,29 @@ claims. -->
 update. Used as raw material for slide decks; lets you check that the
 slide story matches the document. -->
 
-- §1: [one phrase — phenomenon claim].
-- §2: [one phrase — control finding].
-- §3: [one phrase — mechanism claim].
-- §4: [one phrase — next thing to measure].
+- §1: [one phrase: phenomenon claim].
+- §2: [one phrase: control finding].
+- §3: [one phrase: mechanism claim].
+- §4: [one phrase: next thing to measure].
 - Headline: [one sentence].
 
 ---
 
-## Appendix A — Key terms
+## Appendix A: Key terms
 
 <!-- Define every technical term used in the body. The body links to
 this appendix rather than defining inline. Keeps the main narrative
 readable. -->
 
-- **[Term 1]** — [definition + how it's measured].
-- **[Term 2]** — [definition].
-- **[Setup name]** — [the canonical experimental configuration (knobs +
+- **[Term 1]**: [definition + how it's measured].
+- **[Term 2]**: [definition].
+- **[Setup name]**: [the canonical experimental configuration (knobs +
   defaults). Refer to "canonical setup" in the body instead of repeating
   the values.]
 
 ---
 
-## Appendix B — How to read the metrics
+## Appendix B: How to read the metrics
 
 ### [Primary metric]
 

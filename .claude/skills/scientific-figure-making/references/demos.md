@@ -27,8 +27,8 @@ reading even where it will not run.
 The demos use a large-font sans style on wide, slide-sized canvases. **A paper figure is drawn at the
 width it prints at**, which is a much smaller canvas, so the demos' type sizes do not transfer. Take
 the **construction** from a demo (how bars get grouped, how a legend panel is built, how a radar axis
-is laid out) and the **numbers** from this project's own rcParams block in
-`doc/paper/figures/make_figures.py`. Copying a demo's `font.size = 24`, `figsize=(28, 6)`, or
+is laid out) and the **numbers** from this project's own rcParams block and per-figure `figsize`
+values in `doc/paper/figures/make_figures.py`. Copying a demo's `font.size = 24`, `figsize=(28, 6)`, or
 `#0F4D92` palette into a paper figure would break it.
 
 | Need | Read | Why this one |

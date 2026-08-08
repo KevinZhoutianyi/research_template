@@ -105,7 +105,7 @@ swap does not fix a paragraph built on one of these shapes.
 ## 4. Render and read (LaTeX edits)
 
 After every non-trivial edit to `doc/paper/`, run `scripts/render_pages.sh` (pdflatex + bibtex +
-pdflatex x2, then rasterize every page to `/tmp/paper_pages/page_NN.png`), then Read each page
+pdflatex x2, then rasterize every page to `tmp/paper_pages/page_NN.png`), then Read each page
 image. Audit: figures cut off or unreadable at print size, empty plots, broken glyphs, `??`
 references, table overflow (`Overfull \hbox`: fix with `p{width}` columns), abstract over 10
 lines (trim to 200 words).

@@ -10,12 +10,11 @@ Start a new project:
 
 ```bash
 ./init_project.sh myproject ~/projects/myproject
-cd ~/projects/myproject
-git init && git add -A && git commit -m "scaffold from research_template"
-git config core.hooksPath .githooks   # enable the language gate
 ```
 
-`init_project.sh` copies everything except git history and replaces `PROJECT_NAME` throughout.
+`init_project.sh` copies the tracked files (never local junk), replaces `PROJECT_NAME`
+throughout, initializes git with the language gate enabled, and makes the first commit.
+The destination must be outside the template directory.
 
 ## Layout
 

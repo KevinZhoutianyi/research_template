@@ -26,8 +26,8 @@ pdflatex main.tex && bibtex main && pdflatex main.tex && pdflatex main.tex
 ```
 
 This produces `main.pdf` (gitignored). For the workflow that includes
-visually auditing the rendered PDF, see the "Render-and-read workflow"
-section in [`../CLAUDE.md`](../CLAUDE.md).
+visually auditing the rendered PDF, see "Render and read" in §4 of
+[`../CLAUDE.md`](../CLAUDE.md).
 
 ## Importing to Overleaf
 

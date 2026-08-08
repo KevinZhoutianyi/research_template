@@ -37,8 +37,8 @@ fetch. **Read the matching demo before drawing a kind of figure this project has
 (radar, stacked composition, hatch-encoded bars, pseudo-3D geometry): `demos.md` maps figure kind to
 file. Each script embeds its own data, so it runs standalone under matplotlib and numpy. Take the
 construction from the demo and the type sizes, palette, and canvas width from this project's own
-rcParams block in `doc/paper/figures/make_figures.py`, which is set for print width where the demos
-are sized for slides.
+rcParams block and per-figure `figsize` values in `doc/paper/figures/make_figures.py`, which are
+set for print width where the demos are sized for slides.
 
 ## When to load this skill
 

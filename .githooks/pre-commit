@@ -9,34 +9,51 @@
 
 set -u
 ROOT=$(git rev-parse --show-toplevel)
-CHECK_PROSE="$ROOT/.claude/skills/verify-paper/scripts/check_prose.sh"
+CHECK_PROSE="$ROOT/.claude/skills/write-paper/scripts/check_prose.sh"
 CHECK_LANG="$ROOT/.claude/skills/weekly-update/scripts/check_language.sh"
+
+# Fail LOUDLY if a gate script is missing (a rename once made this hook a silent no-op).
+for s in "$CHECK_PROSE" "$CHECK_LANG"; do
+    if [ ! -x "$s" ]; then
+        echo "pre-commit: gate script missing or not executable: $s" >&2
+        echo "pre-commit: refusing to commit docs unchecked; fix the path in .githooks/pre-commit." >&2
+        exit 1
+    fi
+done
 
 staged=$(git diff --cached --name-only --diff-filter=ACM)
 [ -z "$staged" ] && exit 0
 
+# Check the STAGED content, not the working tree: materialize the staged blobs
+# into a scratch dir so what is checked is exactly what is committed.
+SCRATCH="$ROOT/tmp/precommit.$$"
+trap 'rm -rf "$SCRATCH"' EXIT
+stage_copy() {
+    mkdir -p "$SCRATCH/$(dirname "$1")"
+    git show ":$1" > "$SCRATCH/$1"
+    echo "$SCRATCH/$1"
+}
+
 fail=0
 
 prose_targets=$(grep -E '^doc/(paper\.md|proposal\.md|paper/.*\.tex)$' <<<"$staged" || true)
-if [ -n "$prose_targets" ] && [ -x "$CHECK_PROSE" ]; then
-    # shellcheck disable=SC2086
-    (cd "$ROOT" && "$CHECK_PROSE" $prose_targets) || fail=1
-fi
+for f in $prose_targets; do
+    "$CHECK_PROSE" "$(stage_copy "$f")" || fail=1
+done
 
 update_targets=$(grep -E '^doc/weekly_updates/.*\.md$' <<<"$staged" | grep -v 'CLAUDE\.md$' || true)
-if [ -n "$update_targets" ]; then
-    # Reports get both gates: check_language.sh (metaphors, self-justification) covers the
-    # report-specific bans; check_prose.sh covers the banned-word and AI-pattern lists that
-    # a long-form report (e.g. the midterm) needs just as much as the paper does.
-    for f in $update_targets; do
-        [ -x "$CHECK_LANG" ] && { (cd "$ROOT" && "$CHECK_LANG" "$f") || fail=1; }
-        [ -x "$CHECK_PROSE" ] && { (cd "$ROOT" && "$CHECK_PROSE" "$f") || fail=1; }
-    done
-fi
+# Reports get both gates: check_language.sh (metaphors, self-justification) covers the
+# report-specific bans; check_prose.sh covers the banned-word and AI-pattern lists that
+# a long-form report (e.g. the midterm) needs just as much as the paper does.
+for f in $update_targets; do
+    staged_f=$(stage_copy "$f")
+    "$CHECK_LANG" "$staged_f" || fail=1
+    "$CHECK_PROSE" "$staged_f" || fail=1
+done
 
 if [ "$fail" -ne 0 ]; then
     echo ""
-    echo "pre-commit: language gate failed on staged docs (rules: .claude/skills/verify-paper/references/style.md)."
+    echo "pre-commit: language gate failed on staged docs (rules: .claude/skills/write-paper/references/style.md)."
     echo "Rewrite the flagged lines, re-stage, and commit again."
 fi
 exit "$fail"

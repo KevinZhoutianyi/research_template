@@ -15,7 +15,8 @@ Note below which form is this project's usual default.
 because the rules govern how results are reported (baselines, one-variable comparisons, noise
 ranges, what earns a slide).
 
-This project's usual default: `<fill at init>`
+This project's usual default: `<fill at init>` (init_project.sh's "next steps" names this file;
+if still unfilled when the first update is due, ask the user which form and fill it then)
 
 Regardless of form: every claim is grounded in a real `results.json`, run log, or transcript;
 nothing invented, nothing softened, no "should help" written as "helps". After any talk or
