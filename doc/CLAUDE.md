@@ -7,7 +7,7 @@
 | `paper/` | The same argument as LaTeX for Overleaf. Mirrors `paper.md`; lags it. |
 | `weekly_updates/` | Weekly progress reports. Two forms, chosen per week: `/weekly-update` (Markdown) or `/weekly-slides` (Beamer). See `weekly_updates/CLAUDE.md`. |
 | `related_papers/` | One note per cited paper. |
-| `paper/example_papers/` | Reference PDFs whose writing, figure, and section style this paper targets. |
+| `example_papers/` | Reference PDFs whose writing, figure, and section style this paper targets. |
 
 These are living documents. Update in place; never append dated entries.
 
@@ -36,7 +36,7 @@ person rules, the plain-word test) live in one place: the `/verify-paper` skill'
 `references/style.md`. Open it before drafting any prose in this folder, not only at delivery;
 `check_prose.sh` greps the greppable subset at the gate.
 
-Style beyond the rules: match the example papers in `paper/example_papers/` across writing
+Style beyond the rules: match the example papers in `example_papers/` across writing
 voice, figure design, and section structure. Before drafting a section opener, designing a
 figure, or restructuring the paper, open one of those PDFs and check how it handles the same
 situation. The `related_papers/` notes inform what we cite; the example papers inform how the
@@ -174,15 +174,18 @@ One `<citekey>.md` per cited paper: a one-paragraph summary, the relation to our
 
 ---
 
-## 7. `paper/example_papers/`
+## 7. `example_papers/`
 
-PDFs of papers whose presentation this paper aims to match. Different from `related_papers/`: those define what we cite; these define how we write, plot, and structure.
+PDFs of papers whose presentation every doc in this folder aims to match — the paper, the proposal, and weekly updates alike. Different from `related_papers/`: those define what we cite; these define how we write, plot, and structure.
 
-Three dimensions to mirror:
+`example_papers/style_extraction.md` is the per-dimension distillation of the PDFs (title forms, section structure, abstract shape, prose voice, figure-caption formulas, table conventions, algorithm blocks), with verbatim quotes. It is the first stop when drafting; open the PDF itself when the extraction is not enough. Regenerate the extraction when the PDF set changes.
+
+The dimensions to mirror:
 - Writing voice: sentence rhythm, how a claim is introduced and qualified, motivation-first openers, declarative section titles.
 - Figure design: panel layout, axis labels, color palette, caption form (question first, then plot, then implication).
 - Section structure: intro staging, body vs appendix split, how a multi-step argument is laid out across §3/§4.
+- Tables and algorithm blocks: caption conventions, what the caption concludes, markup habits.
 
-Before any non-trivial paper edit, ask: would this paragraph, figure, or section structure fit naturally inside one of the example papers? If no, adjust before committing.
+Before any non-trivial doc edit, ask: would this paragraph, figure, or section structure fit naturally inside one of the example papers? If no, adjust before committing.
 
 Files are named `<short_slug>_<arxiv_id>.pdf`. Update the set when the target venue or paper voice changes.

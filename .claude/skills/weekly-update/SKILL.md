@@ -11,6 +11,8 @@ week and what the plan is, for a reader who tracks the project week to week.
 
 Start from [template.md](template.md) for a new update. Before committing, run
 `scripts/check_language.sh <update.md>` (banned-metaphor and self-justification greps).
+The writing voice follows the exemplars: check drafts against
+`doc/example_papers/style_extraction.md` (matching rule in `doc/CLAUDE.md` §7).
 
 ## 0. Two principles above all others
 

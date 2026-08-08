@@ -13,7 +13,7 @@ applies, fix what it catches, re-run until clean.
 | Reference | Open when |
 |---|---|
 | [references/style.md](references/style.md) | Before drafting any prose: the house structure and language rules (single home; `doc/CLAUDE.md` points here). |
-| `doc/paper/example_papers/` (PDFs; matching rule in `doc/CLAUDE.md` §7) | Before drafting a section opener, an abstract, or a figure, and at the delivery gate: read the corresponding part of one exemplar and check the draft would fit beside it in voice, title form, and caption style. |
+| `doc/example_papers/style_extraction.md` (distilled exemplars; matching rule in `doc/CLAUDE.md` §7) | Before drafting any doc content (section opener, abstract, figure, table, title) and at the delivery gate: check the draft against the matching dimension; open the exemplar PDF itself when the extraction is not enough. |
 | [references/ai-writing-patterns.md](references/ai-writing-patterns.md) | `check_prose.sh` fires, or a paragraph reads as written-for-cadence. Eleven patterns, each with a before/after rewrite at paragraph scale, plus the what-not-to-flag list. |
 | [references/abstract-and-intro-templates.md](references/abstract-and-intro-templates.md) | Drafting or restructuring the abstract or the introduction. Three abstract shapes and a seven-paragraph intro plan, at the sentence level. |
 

@@ -25,6 +25,7 @@ git config core.hooksPath .githooks   # enable the language gate
 | `doc/paper.md` | the working draft of the argument: goal, thesis, outline, per-section evidence |
 | `doc/paper/` | the LaTeX paper for Overleaf; mirrors `paper.md`, lags it |
 | `doc/related_papers/` | one note per cited paper (written by the `/read-paper` skill) |
+| `doc/example_papers/` | exemplar PDFs plus `style_extraction.md`, the distilled style reference every doc follows |
 | `doc/weekly_updates/` | weekly progress reports, one folder per week |
 | `experiments/` | numbered, self-contained experiment folders; `experiments/src/` holds the shared code all experiments import |
 | `theory/` | theory writing, with its own rules |

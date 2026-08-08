@@ -194,4 +194,4 @@ question it would otherwise invite, which is why it goes at the front rather tha
 3. Are the gap, its technical reason, and the mechanism that closes it all explicit?
 4. Is every abstract and intro claim measured by a body section?
 5. Is terminology identical to the body's?
-6. Would this read as a strong opening inside one of the PDFs in `paper/example_papers/`?
+6. Would this read as a strong opening inside one of the PDFs in `example_papers/`?

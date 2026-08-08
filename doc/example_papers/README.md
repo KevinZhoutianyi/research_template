@@ -1,6 +1,8 @@
 # example_papers
 
-PDFs of papers whose **writing voice, figure design, and section structure** this paper aims to mirror. See `doc/CLAUDE.md` §7 for the matching rule.
+PDFs of papers whose **writing voice, figure design, and section structure** every doc in this project aims to mirror (paper, proposal, weekly updates). See `doc/CLAUDE.md` §7 for the matching rule.
+
+`style_extraction.md` is the per-dimension distillation of these PDFs (titles, structure, abstract shape, prose voice, figure captions, tables, algorithm blocks, notation) with verbatim quotes. It is the first stop when drafting; open the PDF when the extraction is not enough. Regenerate it when the PDF set changes.
 
 This folder is different from `doc/related_papers/`: those define what the paper *cites*; these define how it *reads*.
 

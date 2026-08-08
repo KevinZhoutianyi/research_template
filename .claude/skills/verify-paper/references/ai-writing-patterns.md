@@ -8,7 +8,7 @@ scale the damage actually happens, which is the paragraph.
 Adapted from [Wikipedia:Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing)
 (WikiProject AI Cleanup) via the `humanizer` skill (MIT). The pattern taxonomy is theirs; the
 before/after pairs below are written in the register of an empirical paper, so the target voice is
-the one `paper/example_papers/` sets rather than a Wikipedia voice.
+the one `example_papers/` sets rather than a Wikipedia voice.
 
 Two rules govern every rewrite here:
 
