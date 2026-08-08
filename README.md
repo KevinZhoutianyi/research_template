@@ -26,10 +26,9 @@ The destination must be outside the template directory.
 | `doc/related_papers/` | one note per cited paper (written by the `/read-paper` skill) |
 | `doc/example_papers/` | exemplar PDFs plus `style_extraction.md`, the distilled style reference every doc follows |
 | `doc/weekly_updates/` | weekly progress reports, one folder per week |
-| `experiments/` | numbered, self-contained experiment folders; `experiments/src/` holds the shared code all experiments import |
+| `experiments/` | numbered, self-contained experiment folders; `experiments/src/` holds the shared code all experiments import; `experiments/data/` holds checkpoints, datasets, large outputs (gitignored; may symlink to bulk storage) |
 | `theory/` | theory writing, with its own rules |
 | `tmp/` | throwaway scratch (gitignored, deletable at any time) |
-| `data/` | checkpoints, datasets, large outputs (gitignored; may symlink to bulk storage) |
 | `.claude/skills/` | the eight skills (see below) |
 | `.claude/hooks/` + `.claude/settings.json` | the skill-prematch hook |
 | `.githooks/pre-commit` | the language gate on staged docs |

@@ -12,8 +12,8 @@ uv.lock
 # Throwaway scratch (inside the repo so it stays visible; deletable at any time)
 tmp/
 
-# Checkpoints and large outputs — live in data/ inside the repo, gitignored
-data/
+# Checkpoints and large outputs — live in experiments/data/, gitignored
+experiments/data/
 *.pt
 *.bin
 *.safetensors

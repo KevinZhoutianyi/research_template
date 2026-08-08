@@ -11,4 +11,4 @@ Each numbered folder is a self-contained experiment with its own `run.py`, resul
 - `src/` holds the shared package all experiments import (installed via `uv pip install -e .`); code used by two or more experiments moves here instead of being copied.
 - Each folder contains: `run.py`, `args/`, `ckpts/`, `figures/`, and `README.md` (observations).
 - This README should only contain brief descriptions of each experiment. Detailed setup, results, and observations belong in each experiment's own `README.md`.
-- Large outputs (checkpoints, datasets) go in `data/` at the repo root (gitignored), not in the experiment folders.
+- Large outputs (checkpoints, datasets) go in `data/` here (`experiments/data/`, gitignored), not in the numbered experiment folders.

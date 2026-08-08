@@ -50,7 +50,7 @@ if [ -d "$DEST_ABS/experiments/src/PROJECT_NAME" ]; then
 fi
 
 # Create the gitignored data and tmp directories inside the repo
-mkdir -p "$DEST_ABS/data/checkpoints" "$DEST_ABS/data/datasets" "$DEST_ABS/data/outputs" "$DEST_ABS/tmp"
+mkdir -p "$DEST_ABS/experiments/data/checkpoints" "$DEST_ABS/experiments/data/datasets" "$DEST_ABS/experiments/data/outputs" "$DEST_ABS/tmp"
 
 # Initialize git with the language gate enabled from commit one
 cd "$DEST_ABS"

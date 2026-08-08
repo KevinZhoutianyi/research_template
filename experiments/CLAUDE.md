@@ -61,7 +61,7 @@ echo "PID $!"
 
 ### File storage
 
-Everything lives inside the repo (root CLAUDE.md rule). Large files (checkpoints, datasets, generated outputs) go under `data/` at the repo root, which is gitignored: `data/checkpoints/`, `data/datasets/`, `data/outputs/`. Git tracks code, configs, and small artifacts (figures, summary JSON); regenerable per-run outputs may stay in the experiment dir, gitignored. On a cluster where the repo must stay on a small home quota, `data/` may be a symlink to bulk storage — the paths in code never change.
+Everything lives inside the repo (root CLAUDE.md rule). Large files (checkpoints, datasets, generated outputs) go under `experiments/data/`, which is gitignored: `data/checkpoints/`, `data/datasets/`, `data/outputs/`. Git tracks code, configs, and small artifacts (figures, summary JSON); regenerable per-run outputs may stay in the experiment dir, gitignored. On a cluster where the repo must stay on a small home quota, `experiments/data/` may be a symlink to bulk storage — the paths in code never change.
 
 ### If the project routes API models through a LiteLLM proxy
 
