@@ -1,6 +1,6 @@
 ---
 name: weekly-update
-description: Write or edit a weekly-update progress report (doc/weekly_updates/YYYY-MM-DD/update.md) or post_talk_notes.md. Invoke BEFORE gathering numbers or drafting, since the rules govern how results are reported, not just the prose. Use for a written report read asynchronously; the live weekly talk is /weekly-slides, and an ad-hoc status answer in chat is /progress-report.
+description: Write or edit a weekly-update progress report (doc/weekly_updates/YYYY-MM-DD/update.md) or post_talk_notes.md. Invoke BEFORE gathering numbers or drafting, since the rules govern how results are reported, not just the prose; the writing style follows the exemplar papers via doc/example_papers/style_extraction.md, same as the paper. Use for a written report read asynchronously; the live weekly talk is /weekly-slides, and an ad-hoc status answer in chat is /progress-report.
 ---
 
 # Weekly Update Rules
@@ -11,8 +11,14 @@ week and what the plan is, for a reader who tracks the project week to week.
 
 Start from [template.md](template.md) for a new update. Before committing, run
 `scripts/check_language.sh <update.md>` (banned-metaphor and self-justification greps).
-The writing voice follows the exemplars: check drafts against
-`doc/example_papers/style_extraction.md` (matching rule in `doc/CLAUDE.md` §7).
+
+**The exemplars govern the writing here as much as in the paper** (matching rule in
+`doc/CLAUDE.md` §7). Before drafting, open `doc/example_papers/style_extraction.md` and use
+the matching dimension: §4 prose voice for how a finding is stated and hedged, §5 for figure
+captions, §6 for table captions (caption interprets the markup, plain-language metric
+translations). The update's own rules below override where they conflict (e.g. §3 bans
+research slang the papers might use; Result titles carry numbers where paper section titles
+stay noun phrases).
 
 ## 0. Two principles above all others
 
@@ -177,6 +183,8 @@ or mixed, the title says so ("holds on five models, untested on the sixth").
   (honest, whatever it shows, not hidden, visible not, to be fair, we do not hide, we do not
   soften, transparent, unflattering). Any hit is a rewrite: lead with the finding, state the
   number as fact (see `doc/CLAUDE.md` Language rules).
+- Check the draft against the exemplars (`doc/example_papers/style_extraction.md`): findings
+  stated and hedged like theirs, captions that interpret rather than describe.
 - Commit the `.md`. There is no compiled artifact.
 
 Done when: every check in this section passes and `check_language.sh` exits clean. Until then the update is a draft, not done.

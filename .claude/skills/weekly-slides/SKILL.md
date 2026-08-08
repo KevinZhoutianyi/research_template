@@ -1,12 +1,16 @@
 ---
 name: weekly-slides
-description: Write or edit a weekly-update slide deck (doc/weekly_updates/YYYY-MM-DD/slides.tex, Beamer) or post_talk_notes.md. Invoke BEFORE building the deck, since the rules govern what earns a slide, not just formatting. Use for a week with a live talk; a written report nobody presents is /weekly-update, and an ad-hoc status answer in chat is /progress-report.
+description: Write or edit a weekly-update slide deck (doc/weekly_updates/YYYY-MM-DD/slides.tex, Beamer) or post_talk_notes.md. Invoke BEFORE building the deck, since the rules govern what earns a slide, not just formatting; slide prose, titles, and figures follow the exemplar papers via doc/example_papers/style_extraction.md, same as the paper. Use for a week with a live talk; a written report nobody presents is /weekly-update, and an ad-hoc status answer in chat is /progress-report.
 ---
 
 # Weekly Update Slide Rules
 
-Slide prose, titles, and figures follow the exemplars: check drafts against
-`doc/example_papers/style_extraction.md` (matching rule in `doc/CLAUDE.md` §7).
+**The exemplars govern the writing here as much as in the paper** (matching rule in
+`doc/CLAUDE.md` §7). Before drafting, open `doc/example_papers/style_extraction.md` and use
+the matching dimension: §4 prose voice for how a finding is stated and hedged, §5 for figure
+captions and panel design, §6 for table conventions. The slide rules below override where
+they conflict (slide titles are one-sentence conclusions, where paper section titles stay
+noun phrases; slides carry less text than paper prose).
 
 ## 1. Goal first
 
