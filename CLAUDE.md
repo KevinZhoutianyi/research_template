@@ -18,7 +18,6 @@ CLAUDE.md files.
 | weekly updates | `/weekly-update` (Markdown) or `/weekly-slides` (live talk); invoke before drafting |
 | status answers in chat | `/progress-report` |
 | reading a paper into `related_papers/` | `/read-paper` |
-| brainstorming an experiment idea | `/ideate` |
 | deleting or tidying anything (code, docs, tmp files, checkpoints, structure) | `/cleanup` (prove dead first) |
 
 ## Safety rules (full text; these do not move)
@@ -58,8 +57,6 @@ CLAUDE.md files.
   abstraction in one worked example from this project, re-establish any background a reply leans
   on (never "as discussed"), and never cite a run ID or config tag as if remembered (restate in
   words).
-- **Experiment ideas are presented as idea cards.** Question, hypothesis with falsifier, minimal
-  experiment, cost, decision options: the format lives in `/ideate`.
 - **Everything earns its place.** Every sentence is grounded (verified, or marked unverified)
   and necessary (changes what the reader knows or decides). Chat follows the house language
   rules too (`/verify-paper` references/style.md, "Chat replies"): no em dash, contrast

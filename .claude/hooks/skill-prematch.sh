@@ -18,10 +18,9 @@ ci '进展|进度|什么情况|status|where are we|how is it going|progress' && 
 ci 'weekly|周报|update\.md|weekly_update' && add "weekly-update (or weekly-slides for a live talk)"
 ci 'slides|deck|beamer|讲|汇报ppt|幻灯' && add "weekly-slides"
 ci '这篇|读.{0,4}(paper|论文)|arxiv\.org|看一下这个paper|related.?papers' && add "read-paper"
-ci 'brainstorm|头脑风暴|下一步做什么|什么idea|新实验|research direction|ideate' && add "ideate"
 ci '图|figure|plot|画|visualize|matplotlib|chart' && add "scientific-figure-making"
 ci 'paper\.md|proposal\.md|main\.tex|abstract|introduction|rebuttal|改论文|写论文|润色' && add "verify-paper (style.md before drafting)"
-ci '删|清理|delete|dead code|remove.*(file|script)|clean.?up|tidy|mess|stale.*(checkpoint|artifact|output)' && add "cleanup"
+ci '删|清理|delete|dead code|remove.*(file|script)|clean.?up|tidy' && add "cleanup"
 
 [ -z "$matches" ] && exit 0
 cat <<EOF

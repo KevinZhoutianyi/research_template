@@ -1,6 +1,7 @@
 ---
 name: cleanup
-description: The prove-then-delete procedure for anything that clutters the repo — dead code, dead docs, scratch/tmp files, stale checkpoints and outputs, and structure drift (folders that stopped matching the documented layout). Invoke when something looks deletable, when the user says the repo is a mess or asks to clean up / tidy / 清理, or before deciding to leave suspect content in place. Goal: the repo stays concise and every file has a home.
+description: The prove-then-delete procedure for anything that clutters the repo — dead code, dead docs, scratch/tmp files, stale checkpoints and outputs, and structure drift (folders that stopped matching the documented layout). Invoke ONLY when the user explicitly asks to delete or clean up ("clean up", "tidy", "delete X", "清理", "the repo is a mess") — never proactively; noticing clutter mid-task means mentioning it, not invoking this. Goal: the repo stays concise and every file has a home.
+disable-model-invocation: true
 ---
 
 # Cleanup: Keep the Repo Concise

@@ -29,7 +29,7 @@ git config core.hooksPath .githooks   # enable the language gate
 | `doc/weekly_updates/` | weekly progress reports, one folder per week |
 | `experiments/` | numbered, self-contained experiment folders; `experiments/src/` holds the shared code all experiments import |
 | `theory/` | theory writing, with its own rules |
-| `.claude/skills/` | the nine skills (see below) |
+| `.claude/skills/` | the eight skills (see below) |
 | `.claude/hooks/` + `.claude/settings.json` | the skill-prematch hook |
 | `.githooks/pre-commit` | the language gate on staged docs |
 
@@ -63,8 +63,7 @@ Three parts, deliberately short so that all of it survives in attention during l
 - **Behavior rules, one line each.** Goal-first work (relate, never enumerate), ask-don't-assume
   (one targeted question when a reading changes the outcome), verify-each-step, surgical changes,
   tables over prose, reports that carry their own context, plain language with a worked
-  example, experiment ideas as idea cards, everything earns its place. Each line names where
-  the full rule lives.
+  example, everything earns its place. Each line names where the full rule lives.
 
 ### Directory rules
 
@@ -134,14 +133,6 @@ at it.
   bib entries carry `author = {TBD}` for the human to fill from verified metadata. If the
   paper threatens a claim currently in `paper.md`, that surfaces in chat and lands in
   the affected `paper.md` section, never silently filed.
-- **`/ideate`** — structured brainstorming, and the standing format for proposing any
-  experiment: the five-part idea card (question in plain language; hypothesis with a
-  falsifier as concrete as the prediction; the minimal experiment, one variable per
-  comparison; cost in wall-clock and what it displaces; 2-4 decision options, one of which
-  is always "do not run it"). A brainstorm session diverges across four candidate kinds
-  (weakness in the current result, gap the related work leaves open, cheaper/harder version
-  of what works, questions the collected data can already answer), converges by
-  information-per-cost, and lands the chosen card as a (planned) row in the `paper.md` outline.
 - **`/cleanup`** — prove-then-delete, for anything that clutters the repo: dead code, dead
   docs, scratch/tmp files, stale checkpoints, and structure drift. A general "repo is a mess"
   request triggers a five-category sweep presented as a findings table before anything is
