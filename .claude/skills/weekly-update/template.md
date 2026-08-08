@@ -27,10 +27,19 @@ is held fixed across the rows so the comparison changes one variable. -->
 - <!-- 3-5 bullets max. Losses get their evidence-backed failure reason or "reason not
 yet established" + a Plan item. Small-n numbers carry a rerun range. -->
 
+## Open issues
+
+<!-- The week's standing problems in one place: broken, unexplained, or blocking. One
+bullet each: the issue, the evidence that shows it, what would resolve it. An issue
+explained inside a Result gets one pointer line here, not a restatement. -->
+
+-
+
 ## Plan
 
 <!-- Each item names its prediction and, where one exists, its falsifier, both concrete
-("if the score still sits at 67-69, then X"). The update ends here: no Summary section. -->
+("if the score still sits at 67-69, then X"). Items resolving an Open issue name it.
+The update ends here: no Summary section. -->
 
 1.
 

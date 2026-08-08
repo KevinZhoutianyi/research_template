@@ -39,10 +39,14 @@ These govern every sentence; the numbered rules below are how you satisfy them.
 
 ## 1. Goal first
 
-Run the goal-driven workflow from the root CLAUDE.md: state the update's goal in one sentence,
-list subgoals, and name the subgoal every section serves. The goal is usually "show the sponsor
-and advisor what moved this week and what happens next". Config bumps, file formats, and setup
-details almost never serve that goal.
+The update answers exactly two questions for the reader, in this order: **what was done this
+week** (as findings, not activity), and **what issues stand open now** (what is broken,
+unexplained, or blocking, each with its evidence and its Plan item). Both answers must land
+for a reader with zero background (§3); a third question does not exist, so content serving
+neither gets cut. Config bumps, file formats, and setup details almost never serve either.
+
+Run the goal-driven workflow from the root CLAUDE.md: name which of the two questions every
+section serves.
 
 ## 2. Files
 
@@ -97,10 +101,15 @@ The section order is fixed (all headers are Markdown `##`, except the top title 
 3. One `## Result N: <plain-language finding>` per subgoal. The title states the finding
    ("the method helps only where the baseline fails"), not a topic label ("Experiment 3
    results"); the numbers live in the lead bullet and the table, not the title.
-4. `## Plan` -- every item names its prediction and, where one exists, its falsifier,
+4. `## Open issues` -- the week's standing problems in one place: what is broken,
+   unexplained, or blocking, one bullet each, with the evidence that shows it and what would
+   resolve it. An issue already explained inside a Result gets one line here pointing at that
+   Result, not a restatement. Omit the section only in a week with nothing open (rare).
+5. `## Plan` -- every item names its prediction and, where one exists, its falsifier,
    both stated concretely ("if the score still sits inside the baseline's rerun spread, the
-   mechanism is not what we think"). This is the last section: the update ends on the Plan.
-5. Appendix sections (`## Appendix: ...`) -- one verbatim example per claim type (a case the
+   mechanism is not what we think"). Plan items resolving an Open issue name it. This is the
+   last section: the update ends on the Plan.
+6. Appendix sections (`## Appendix: ...`) -- one verbatim example per claim type (a case the
    method solves, one it fails, one where the measurement itself broke), quoted from committed run
    data, never composed. Put verbatim quotes in fenced code blocks.
 

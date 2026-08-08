@@ -14,9 +14,12 @@ noun phrases; slides carry less text than paper prose).
 
 ## 1. Goal first
 
-Run the goal-driven workflow from the root CLAUDE.md: state the deck's goal in one sentence, list subgoals, and name the subgoal every slide serves. No subgoal, no slide.
-
-A weekly update's goal is usually "convince the advisor we made progress on X this week". Slides about config bumps, file formats, or setup details almost never serve that goal.
+The deck answers exactly two questions for the audience, in this order: **what was done this
+week** (as findings, not activity) and **what issues stand open now** (broken, unexplained,
+or blocking, each with its evidence). Every slide serves one of the two; no subgoal, no
+slide. Open issues get their own slide (or section of the closing slide) rather than being
+scattered as caveat bullets. Slides about config bumps, file formats, or setup details almost
+never serve either question.
 
 ## 2. Files
 

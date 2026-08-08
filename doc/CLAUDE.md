@@ -23,7 +23,11 @@ Every paragraph, section, table row, and figure caption leads with why it exists
 
 Test for new content: write "Because [previous claim raised question X], we did [new thing], which shows [new claim]." If that sentence does not write itself, the content does not belong yet.
 
-The same rule kills redundancy. Every claim traces to the thesis or a named subgoal. When a claim appears twice, keep the strongest version and demote the other to a pointer. A body table with more than ~5 rows, or one that repeats numbers from the prose, moves to an appendix.
+### One story, told once
+
+Every doc in this folder (paper, proposal, update) reads as a single narrative line: a question, what was done to answer it, what was found, what that forces next, each section handing to the next. A reader must be able to retell the argument after one read; a pile of individually-true sections that do not hand off is a failed doc even when every sentence passes. The `/write-paper` reverse outline is the check; `/weekly-update` §0 carries the update-specific version.
+
+The same rule kills redundancy: everything is said once, at full strength, in the place the narrative needs it. Every claim traces to the thesis or a named subgoal. When a claim appears twice, keep the strongest version and demote the other to a pointer. A body table with more than ~5 rows, or one that repeats numbers from the prose, moves to an appendix.
 
 ### The stranger-read pass
 
