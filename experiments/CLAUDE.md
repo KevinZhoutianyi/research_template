@@ -2,32 +2,19 @@
 
 Re-read this before writing experiment code, training scripts, or analysis.
 
-## 1. Code style
-
-Logic is minimal: every function, branch, and helper serves the core idea. No defensive type checks, input sanitization, or edge-case handling unless required (exception: Pydantic type annotations, which Pydantic needs).
-
-Explanation is generous: comments, docstrings, illustrative prints, and example invocations teach what the code does. Keep them.
-
-| What | Default |
-|---|---|
-| Logic (functions, branches, helpers, error handling) | minimal, must serve the goal |
-| Explanation (comments, docstrings, example calls, log lines) | generous |
-
-Section comments label major blocks only, formatted exactly `=== <section> ===`, no blank line after.
-
-## 2. Correctness
+## 1. Correctness
 
 Final code has zero tolerance for bugs; the cure is testing, not careful writing. Use Pydantic models over tuples (`output.loss`, not `output[0]`); prefer frozen models. Code whose output reaches a report or the paper (scoring, statistics, data processing) gets pytest coverage by default, without waiting to be asked; the `/verify-experiment` skill is the delivery gate that runs it. One-off scaffolding and exploratory code may skip tests but is flagged as untested. Prefer simple control flow that takes instrumentation (prints, log hooks) without restructuring.
 
-## 3. Figure code
+## 2. Figure code
 
 All figure code follows the `/scientific-figure-making` skill; invoke it before editing any figure script. It carries the house style (semantic palette, minimalist spines, frameless legends, typography and export policy), the layout patterns (ultra-wide multi-metric rows, legend-only subplot, tightened y-limits, hatch and edge encoding for grayscale print), and end-to-end walkthroughs for bars, trends, and heatmaps.
 
-## 4. Experiment visualization
+## 3. Experiment visualization
 
 Every experiment has a `visualize.py` whose figures a reader understands without reading code or configs: the task as an input-output contract, one fully concrete example (input, key intermediate steps, output or failure), and dataset/run stats (split sizes, pass/fail split, key knobs). Style rules live in the `/scientific-figure-making` skill.
 
-## 5. Compute and storage
+## 4. Compute and storage
 
 ### Clusters
 
@@ -82,7 +69,7 @@ Large files (checkpoints, datasets, generated outputs) live outside the repo; th
 - Find the provider's throttling point once, then budget workers across ALL simultaneously running jobs, not per job.
 - Project-specific launch commands and model aliases belong in the experiment's README.
 
-## 6. Logging and monitoring
+## 5. Logging and monitoring
 
 Runs must be reproducible and inspectable from logs alone. Before the run starts, print the config (every hyperparameter that affects results):
 
@@ -98,10 +85,10 @@ Each eval pass logs a few input/generation/label triples so behavior is visible 
 
 After launching a job, hand control back. Do not sit in a polling loop waiting for it: report the job id and how to watch it (`squeue` or the log path on clusters; `kill -0 <PID>`, `tail` the log, `nvidia-smi` on a local node), and let the user drive from there.
 
-## 7. Smoke-test expensive jobs
+## 6. Smoke-test expensive jobs
 
 Before any job longer than ~30 minutes: run the full code path at tiny scale (load the model, one iteration or one sample, save the real `results.json`). Only then launch the full run. This catches the failures that make long jobs worthless: offload bugs, missing files, broken save paths, malformed configs. Implement as a `--smoke` flag or a 5-minute time limit.
 
-## 8. Do not rename directories with running jobs
+## 7. Do not rename directories with running jobs
 
 Before renaming or moving anything an active job writes to, confirm no running job holds that path (`squeue -u $USER` on clusters; `ps`/PIDs locally). A job holding the old path string finishes in memory and crashes at save time. If a job is running: wait, save elsewhere and migrate after, or defer the rename. The same applies to `git mv` and branch switches with uncommitted renames.

@@ -72,7 +72,7 @@ Three parts, deliberately short so that all of it survives in attention during l
   the data, every prediction carrying a falsifier), framing methodology (sketch first,
   stance fixed up front, mechanism verified against data before prose), LaTeX/table/figure
   conventions, and the consistency rule: experiment results and paper claims always agree.
-- `experiments/CLAUDE.md` — code style (minimal logic, generous explanation), correctness
+- `experiments/CLAUDE.md` — correctness
   through tests rather than careful writing, per-project compute rules, logging that makes
   runs reproducible from logs alone, and smoke-testing anything longer than ~30 minutes.
 - `theory/CLAUDE.md` — no obvious theorems, every assumption justified, a concrete takeaway
