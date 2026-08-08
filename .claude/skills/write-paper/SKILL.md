@@ -40,6 +40,16 @@ needed; figure labels colliding with arrows.
 5. Figures get the same pass: render, then read the render. Trace every arrow tail to head. Check every label for collisions. Ask what each icon looks like at actual size.
 6. One logical move per paragraph. A paragraph that presents multiple independent pieces of evidence must signpost each one explicitly ("First... Second... Third...", "Ruling that out, we then show...", "A separate result confirms..."). The reader must never have to infer the logical connection between consecutive sentences. Test: cover every sentence but the last — does the final sentence follow obviously? If not, add a bridge.
 
+## 1a. The shape check (sections with a known anatomy)
+
+Before any sentence-level pass on an abstract or an introduction, check the SHAPE against the
+exemplars: `doc/example_papers/style_extraction.md` §3 (abstract skeleton) and §3a (intro
+anatomy: the five-move order, the method named in move 4, numbers rationed to the worked
+example and the payoff). A draft whose shape is wrong is not fixable by sentence edits, and
+reporting sentence findings on a mis-shaped section wastes the writer's time; report the shape
+gap first (which move is missing, what is in the wrong place) and stop there until it is
+settled.
+
 ## 1b. The reverse outline (global pass)
 
 The pass above is local: it checks sentences and paragraphs one at a time. This one is global, and

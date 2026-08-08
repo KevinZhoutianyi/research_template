@@ -76,6 +76,45 @@ feed-forward modules in storing factual associations and suggest that direct man
 computational mechanisms may be a feasible approach for model editing." ("confirm" for the
 measured part, "suggest ... may be" for the extrapolation, in one sentence.)
 
+## 3a. Introduction anatomy
+
+Extracted paragraph by paragraph from all three intros; the agreement across them is the
+check. An intro is 5-9 paragraphs of 1-8 sentences each (H2O: 9 paragraphs; FOURIER: 5;
+ROME: 6), and the moves come in a fixed order:
+
+1. **Problem, with one worked instance.** All three open on the problem and make it concrete
+   within two paragraphs: H2O computes one cost example ("a 30 billion-parameter model with an
+   input batch size of 128 and a sequence length of 1024 results in 180GB of KV cache");
+   FOURIER quotes its running prompt ("Put together 15 and 93. Answer: ___"); ROME asks its
+   question and grounds it ("The Space Needle is located in the city of" -> "Seattle").
+2. **The gap.** Why the obvious or prior fixes fall short, as a triage of named alternatives
+   (H2O sorts prior work into three failure modes; FOURIER contrasts prior small-model
+   interpretability with pre-trained LLMs).
+3. **The turn.** One pivot sentence from problem to solution ("Fortunately, our preliminary
+   exploration has yielded intriguing observations...", H2O; "We use two approaches.", ROME).
+4. **The approach, walked through evidence-first and keyed to sections.** The mechanism or
+   observations narrated in order, each clause pointing at its section or figure ("In §3, we
+   show that..." / "In Section 4, we present..."). The method IS NAMED here, always: "named
+   heavy-hitters (H2)" then "we propose Heavy-Hitter Oracle (H2O)"; "Fourier
+   features—dimensions in the hidden state that..."; "a Rank-One Model Editing method (ROME)".
+   No exemplar leaves its method or central finding unnamed.
+5. **Payoff or zoom-out.** Headline validation (H2O: models, hardware, 29x/29x/3x) or a
+   two-sentence significance paragraph (FOURIER), calibrated per §3 above.
+
+Numbers in the intro are rationed the same way in all three: the opening worked example, the
+key evidence magnitude, and (H2O only) the closing headline results. ROME's intro carries ZERO
+result numbers; the gap/turn/approach paragraphs are number-free in all three. A draft intro
+dense with percentages in every paragraph does not look like these papers.
+
+Figure 1 is referenced from the intro when it exists as a teaser (H2O three times, ROME three
+times); FOURIER's intro references no figure. A contribution bullet list is optional (H2O has
+a section-indexed one; FOURIER and ROME carry contributions in prose).
+
+**The shape check, run on any draft intro:** (a) list each paragraph's move and match against
+the five-move order above; (b) confirm the method/central finding is named, once, in move 4;
+(c) count result numbers outside the worked example and the payoff paragraph — more than a
+couple is a shape violation, not a style nit; (d) confirm exactly one turn sentence.
+
 ## 4. Prose voice
 
 - First-person plural "we" throughout; present tense for claims and analysis ("Figure 6
