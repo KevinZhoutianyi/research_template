@@ -30,3 +30,6 @@ This skill is the gate: run every step that applies, fix what it catches, re-run
 
 A change is not done while a report-bound path is red, silently untested, or carrying an unresolved
 failure-mode flag.
+
+6. **Status.** Close with `/update-status`: if the verified change landed a result (or
+   falsified one), `doc/status.md` updates in the same commit.

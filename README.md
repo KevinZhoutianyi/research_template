@@ -21,6 +21,7 @@ The destination must be outside the template directory.
 | path | what it holds |
 |---|---|
 | `CLAUDE.md` | the root working guide (see below) |
+| `doc/status.md` | the one-screen dashboard: goal, hypothesis, verdict, per-subgoal progress, open issues, next steps |
 | `doc/paper.md` | the working draft of the argument: goal, thesis, outline, per-section evidence |
 | `doc/paper/` | the LaTeX paper for Overleaf; mirrors `paper.md`, lags it |
 | `doc/related_papers/` | one note per cited paper (written by the `/read-paper` skill) |
@@ -31,7 +32,7 @@ The destination must be outside the template directory.
 | `tmp/` | throwaway scratch (gitignored, deletable at any time) |
 | `doc/discussions/` | meeting and advisor discussion notes, one dated file each |
 | `init_project.sh`, `pyproject.toml` | the project-creation script and the Python package config |
-| `.claude/skills/` | the eight skills (see below) |
+| `.claude/skills/` | the nine skills (see below) |
 | `.claude/hooks/` + `.claude/settings.json` | the skill-prematch hook |
 | `.githooks/pre-commit` | the language gate on staged docs |
 
@@ -156,9 +157,14 @@ at it.
 - **`/weekly-slides`** — the same week's report as a Beamer deck, for a week with a live
   talk. Every slide title is a one-sentence conclusion, one idea per slide, no padding
   slides. Pick one of the two forms per week, never both.
-- **`/progress-report`** — the structure for any ad-hoc status answer in chat: goal restated
-  first, progress judged against it (met / not met / partial and why), one comparison table
-  including unfavorable results, single next step. Never a list of activity.
+- **`/progress-report`** — the structure for any ad-hoc status answer in chat: reads
+  `doc/status.md` first, goal restated, progress judged against it (met / not met / partial
+  and why), one comparison table including unfavorable results, single next step. Never a
+  list of activity.
+- **`/update-status`** — the closing step both delivery gates name: after any experiment or
+  doc change, check whether `doc/status.md` (verdict, subgoal rows, open issues, next steps)
+  still matches reality, and update it in the same commit. State only, one line per row; a
+  stale dashboard is worse than none.
 
 ## Enforcement
 

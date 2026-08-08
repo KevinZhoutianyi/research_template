@@ -149,4 +149,4 @@ to fix first.
 
 ## Done when
 
-Every applicable check above passes and a full read of the rendered pages surfaces nothing new. Anything short of that: report what is still red, do not declare the edit done.
+Every applicable check above passes and a full read of the rendered pages surfaces nothing new. Anything short of that: report what is still red, do not declare the edit done. Then close with `/update-status`: if the edit changed a claim, a verdict, the Goal/Thesis wording, or the outline, `doc/status.md` updates in the same commit.

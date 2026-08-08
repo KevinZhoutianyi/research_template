@@ -2,6 +2,7 @@
 
 | file / folder | what it holds |
 |---|---|
+| `status.md` | The one-screen dashboard: goal, hypothesis, verdict so far, per-subgoal progress, open issues, next steps. State only; the argument lives in `paper.md`. |
 | `paper.md` | The argument: goal, thesis, outline, per-section evidence, related work, appendices. Changes land here first. |
 | `proposal.md` | The research proposal: method, baselines, risks, plan. Same writing rules as `paper.md`. |
 | `paper/` | The same argument as LaTeX for Overleaf. Mirrors `paper.md`; lags it. |
@@ -162,14 +163,15 @@ Overleaf zip, from `doc/paper/`: `zip <project>_overleaf.zip main.tex references
 
 ---
 
-## 5. Results and claims stay consistent
+## 5. Results, claims, and status stay consistent
 
-Two artifacts carry project state: experiment code/results and paper claims. A change to one is incomplete until the other matches:
+Three artifacts carry project state: experiment code/results, paper claims, and `status.md`. A change to one is incomplete until the others match:
 - New paper claim: point it at a supporting `results.json`, or mark the section (planned).
-- Landed result: update the paper's headline number, reading, and caveat. If `results.json` says "15/39 pass" while the paper says "passes the test", the paper is stale.
-- Falsified hypothesis: remove it from the paper body (or mark it ruled out), note the triggered falsifier in the run script docstring.
+- Landed result: update the paper's headline number, reading, and caveat, AND the matching `status.md` row (status + result-so-far line + the Verdict line if the headline moved). If `results.json` says "15/39 pass" while the paper says "passes the test", the paper is stale.
+- Falsified hypothesis: remove it from the paper body (or mark it ruled out), note the triggered falsifier in the run script docstring, and flip the `status.md` row.
+- Direction change (new subgoal, dropped subgoal): the `status.md` table and the paper.md Outline change together.
 
-Job IDs and ETAs never appear in `paper.md`.
+`status.md` quotes paper.md's Goal and Thesis one-liners verbatim; when those change, both files change in the same commit. Job IDs and ETAs never appear in `paper.md` or `status.md`.
 
 ---
 

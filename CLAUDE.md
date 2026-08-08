@@ -16,7 +16,8 @@ CLAUDE.md files.
 | theory writing | `theory/CLAUDE.md` |
 | figures (paper, updates, `visualize.py`) | `/scientific-figure-making` |
 | weekly updates | `/weekly-update` (Markdown) or `/weekly-slides` (live talk); invoke before drafting |
-| status answers in chat | `/progress-report` |
+| status answers in chat | `/progress-report` (reads `doc/status.md` first) |
+| `doc/status.md` (project dashboard) | `doc/CLAUDE.md` §5: updated with every landed result |
 | reading a paper into `related_papers/` | `/read-paper` |
 | deleting or tidying anything (code, docs, tmp files, checkpoints, structure) | `/cleanup` (prove dead first) |
 
