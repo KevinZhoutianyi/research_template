@@ -29,6 +29,8 @@ git config core.hooksPath .githooks   # enable the language gate
 | `doc/weekly_updates/` | weekly progress reports, one folder per week |
 | `experiments/` | numbered, self-contained experiment folders; `experiments/src/` holds the shared code all experiments import |
 | `theory/` | theory writing, with its own rules |
+| `tmp/` | throwaway scratch (gitignored, deletable at any time) |
+| `data/` | checkpoints, datasets, large outputs (gitignored; may symlink to bulk storage) |
 | `.claude/skills/` | the eight skills (see below) |
 | `.claude/hooks/` + `.claude/settings.json` | the skill-prematch hook |
 | `.githooks/pre-commit` | the language gate on staged docs |

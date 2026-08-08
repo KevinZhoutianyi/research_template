@@ -45,9 +45,12 @@ CLAUDE.md files.
   the code runs. Skipping the checklist means the task is not finished.
 - **Surgical changes.** Touch only what the request requires; remove what your change orphaned;
   do not improve adjacent code.
-- **The repo stays clean.** Scratch files, one-off test scripts, and temp dirs go under `/tmp`,
-  never into the repo; every tracked file has a home named in the README layout table, and the
-  repo root gains a new file or folder only by an explicit user decision.
+- **Everything lives inside the repo; nothing outside it is touched.** All files Claude
+  creates — scratch, demos, checkpoints, outputs — go inside the repo: throwaway work in
+  `tmp/` (gitignored, deletable at any time), keepable artifacts in their layout-table home.
+  Never write, move, or delete anything outside the repo directory unless the user explicitly
+  asks. The repo stays clean: every tracked file has a home named in the README layout table,
+  and the repo root gains a new entry only by an explicit user decision.
 - **Tables over prose** for results, configs, and comparisons, everywhere.
 - **Reports carry their own context.** Define every coined term at first use in every report;
   translate each headline number into its concrete meaning. The test: the reader can repeat the

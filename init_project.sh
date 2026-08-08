@@ -35,10 +35,9 @@ if [ -d "$DEST/experiments/src/PROJECT_NAME" ]; then
     mv "$DEST/experiments/src/PROJECT_NAME" "$DEST/experiments/src/$PROJECT_NAME"
 fi
 
-# Create the data directory outside the repo
-DATA_DIR="/data/$PROJECT_NAME"
-mkdir -p "$DATA_DIR/checkpoints" "$DATA_DIR/datasets" "$DATA_DIR/outputs"
-echo "Created data directory at $DATA_DIR"
+# Create the gitignored data and tmp directories inside the repo
+mkdir -p "$DEST/data/checkpoints" "$DEST/data/datasets" "$DEST/data/outputs" "$DEST/tmp"
+echo "Created data/ and tmp/ (both gitignored) inside the repo"
 
 # Initialize git
 cd "$DEST"
