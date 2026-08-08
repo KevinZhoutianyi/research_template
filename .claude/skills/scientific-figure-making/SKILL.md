@@ -59,6 +59,7 @@ are sized for slides.
 
 | File | Open when |
 |------|-----------|
+| `doc/example_papers/style_extraction.md` §5 (figure captions) + the exemplar PDFs | **Every figure**: before designing panels or writing a caption, check the draft against the exemplars' caption formula and panel conventions (matching rule in `doc/CLAUDE.md` §7). |
 | [references/tutorials.md](references/tutorials.md) | End-to-end walkthroughs (bar, trends, heatmap) |
 | [references/api.md](references/api.md) | Function signatures, `PALETTE`, validation rules |
 | [references/common-patterns.md](references/common-patterns.md) | Layout patterns, legend panel, print-safe bars |
@@ -76,5 +77,6 @@ writing a caption.
 
 Done when: the script runs, the exported file has been opened and looked at (not just
 regenerated), the figure follows the palette, spine, y-limit, and export conventions in
-`design-theory.md`, and a variance band is present wherever the results carry stds. A figure whose
-latest export was never viewed is not done.
+`design-theory.md`, the caption and panel design would fit beside the exemplars in
+`doc/example_papers/` (check `style_extraction.md` §5), and a variance band is present wherever
+the results carry stds. A figure whose latest export was never viewed is not done.

@@ -5,6 +5,9 @@ description: Write or edit a weekly-update slide deck (doc/weekly_updates/YYYY-M
 
 # Weekly Update Slide Rules
 
+Slide prose, titles, and figures follow the exemplars: check drafts against
+`doc/example_papers/style_extraction.md` (matching rule in `doc/CLAUDE.md` §7).
+
 ## 1. Goal first
 
 Run the goal-driven workflow from the root CLAUDE.md: state the deck's goal in one sentence, list subgoals, and name the subgoal every slide serves. No subgoal, no slide.
