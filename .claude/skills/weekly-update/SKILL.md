@@ -17,8 +17,8 @@ Start from [template.md](template.md) for a new update. Before committing, run
 the matching dimension: §4 prose voice for how a finding is stated and hedged, §5 for figure
 captions, §6 for table captions (caption interprets the markup, plain-language metric
 translations). The update's own rules below override where they conflict (e.g. §3 bans
-research slang the papers might use; Result titles carry numbers where paper section titles
-stay noun phrases).
+research slang the papers might use; Result titles state findings where paper top-level
+section titles stay noun phrases).
 
 ## 0. Two principles above all others
 
@@ -94,9 +94,9 @@ The section order is fixed (all headers are Markdown `##`, except the top title 
    sentences, with a concrete example where one helps ("one task = one question the model answers
    from a retrieved document, e.g. 'which year did the treaty take effect?'"). The body never
    uses a term before it appears here, and never re-defines inline what belongs here.
-3. One `## Result N: <plain-language finding with its numbers>` per subgoal. Section
-   titles are one-sentence conclusions carrying the key numbers ("on the full benchmark every
-   variant of the method scores 65 to 69; the baseline scores 88.8"), not topic labels.
+3. One `## Result N: <plain-language finding>` per subgoal. The title states the finding
+   ("the method helps only where the baseline fails"), not a topic label ("Experiment 3
+   results"); the numbers live in the lead bullet and the table, not the title.
 4. `## Plan` -- every item names its prediction and, where one exists, its falsifier,
    both stated concretely ("if the score still sits inside the baseline's rerun spread, the
    mechanism is not what we think"). This is the last section: the update ends on the Plan.
@@ -105,7 +105,7 @@ The section order is fixed (all headers are Markdown `##`, except the top title 
    data, never composed. Put verbatim quotes in fenced code blocks.
 
 **No Summary section.** Do not add a closing summary or recap; it duplicates the Result titles
-(which are already one-sentence conclusions with their numbers) and the Plan. End on the Plan.
+(which are already one-sentence conclusions) and the Plan. End on the Plan.
 
 **Every result table is preceded by two labeled lines:**
 

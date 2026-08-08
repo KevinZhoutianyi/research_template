@@ -12,7 +12,7 @@ concrete example where one helps. The body never uses a term before it appears h
 
 - **term** -- plain definition, with example.
 
-## Result 1: <one-sentence conclusion carrying the key numbers>
+## Result 1: <plain-language finding>
 
 **Data.** <!-- dataset, size, exactly what is train and what is test, how the split was
 made, counts on each side, that they do not overlap (or the overlap stated as a caveat). -->
