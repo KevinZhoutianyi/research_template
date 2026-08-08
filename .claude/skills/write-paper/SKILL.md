@@ -1,14 +1,17 @@
 ---
-name: verify-paper
-description: Invoke at two points of any doc edit — before drafting (open references/style.md, the house structure and language rules, and follow them while writing) and before declaring done (the delivery gate: stranger-read pass, reverse outline, self-verification checklist, banned-language greps, reject-risk pass, and for LaTeX the render-and-read audit). Covers paper.md, proposal.md, the LaTeX paper, and any long-form prose report (e.g. a midterm report under doc/weekly_updates/); for reports, the number-reporting rules of /weekly-update apply on top. Prose and LaTeX only; experiment code goes through /verify-experiment.
+name: write-paper
+description: How to write the paper — invoke whenever results are ready to go into paper.md, proposal.md, or the LaTeX paper, and for any other doc edit or long-form prose report (e.g. a midterm report under doc/weekly_updates/). Two invocation points, one skill: before drafting (open references/style.md and the exemplar extraction, follow them while writing; new results follow the claims-and-evidence rules of doc/CLAUDE.md §2) and before declaring done (the delivery gate: stranger-read pass, reverse outline, self-verification checklist, banned-language greps, reject-risk pass, and for LaTeX the render-and-read audit). For reports, the number-reporting rules of /weekly-update apply on top. Prose and LaTeX only; experiment code goes through /verify-experiment.
 ---
 
-# Doc Verification
+# Writing the Paper
 
+The common entry point: a result has landed and belongs in the paper. The path is
+`doc/CLAUDE.md` end to end — where the result goes (§3 structure: claim, evidence tag, headline
+plus reading plus caveat), how strongly it may be claimed (§2 claims and evidence, the
+statistical hard rules), and the framing methodology when the result moves the story (§2a).
 The structure and language rules live in [references/style.md](references/style.md) and apply
-while drafting; the drafting-methodology rules (motivation first, claims calibration, framing)
-live in `doc/CLAUDE.md` §1-§2a. This skill is also the delivery gate: run every part that
-applies, fix what it catches, re-run until clean.
+while drafting. This skill is also the delivery gate: run every part that applies, fix what it
+catches, re-run until clean.
 
 | Reference | Open when |
 |---|---|

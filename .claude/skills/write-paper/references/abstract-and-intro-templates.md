@@ -3,7 +3,7 @@
 `doc/CLAUDE.md` §1 Style and `SKILL.md` §4 fix the *structure* of these two sections: the abstract
 stays under 10 rendered lines and carries the thesis, two or three headline numbers, and the scope;
 the introduction has no subsections, runs as flowing prose, and ends in a numbered contributions
-list. What neither that file nor the `/verify-paper`
+list. What neither that file nor the `/write-paper`
 checklist supplies is the sentence layer: which sentence goes where, and what shape it takes.
 
 Adapted from `Master-cai/Research-Paper-Writing-Skills` (MIT), which repackages Peng Sida's
@@ -74,7 +74,7 @@ Sentence-level rules for all three shapes:
 - A named component appears with its name only, no mechanism. The mechanism belongs in the intro.
 - No sentence carries two messages.
 - Every claim here is one a body section measures. An abstract claim without a section behind it is
-  the fastest way into `/verify-paper` §5's contribution row.
+  the fastest way into `/write-paper` §5's contribution row.
 
 ---
 
@@ -119,7 +119,7 @@ a behaviour, not as a capability, until the paper has earned the capability word
 
 State the prior setup at the level of what was actually done. Describing it fairly and concretely is
 what makes the gap in paragraph 3 land; a prior setup summarized vaguely makes the gap look like a
-strawman, which is `/verify-paper` §5's soundness row.
+strawman, which is `/write-paper` §5's soundness row.
 
 ### Paragraph 3: the gap, and its technical reason
 
@@ -158,7 +158,7 @@ observable limitation and its technical reason.
 - `We work at this level throughout and do not take up [the further question].`
 
 Naming whose criteria, and declining the question we are not answering, is what keeps
-`/verify-paper` §5's soundness row from opening. `doc/CLAUDE.md` §2a requires the central term be
+`/write-paper` §5's soundness row from opening. `doc/CLAUDE.md` §2a requires the central term be
 defined by the source literature's own criteria and referred to the same way throughout.
 
 ### Paragraph 6: contributions

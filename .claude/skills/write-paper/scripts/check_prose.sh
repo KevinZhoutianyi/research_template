@@ -7,7 +7,7 @@
 #   3. self-justifying framing about our own honesty
 #   4. capitals as emphasis (\b[A-Z]{4,}\b)
 #   5. the greppable AI writing patterns, per
-#      .claude/skills/verify-paper/references/ai-writing-patterns.md §1, §2, §3, §8 and filler
+#      .claude/skills/write-paper/references/ai-writing-patterns.md §1, §2, §3, §8 and filler
 # Fenced code blocks are excluded (they may quote logs and protocol tokens verbatim).
 # Any hit is a rewrite, not an allowlist entry. Exit 1 if anything matches.
 #

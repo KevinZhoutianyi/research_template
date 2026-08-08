@@ -88,18 +88,18 @@ of the whole setup:
 **The delivery-gate pattern.** Producing work and verifying work are separate steps, and a
 task is not done until it passes its gate. Writing experiment code follows
 `experiments/CLAUDE.md`; declaring it done invokes `/verify-experiment`. Drafting prose
-follows the style rules; declaring the edit done invokes `/verify-paper`. The gates are
+follows the style rules; declaring the edit done invokes `/write-paper`. The gates are
 checklists with teeth: they run scripts, read rendered output, and report what is still red
 instead of declaring victory.
 
 **The single-home pattern.** A skill that owns a rule set carries it in `references/` files
 that other layers point into. The house writing style lives in
-`verify-paper/references/style.md` and nowhere else; `doc/CLAUDE.md` and the root file point
+`write-paper/references/style.md` and nowhere else; `doc/CLAUDE.md` and the root file point
 at it.
 
 ### Writing and verification
 
-- **`/verify-paper`** — the biggest skill, invoked at two points of any doc edit: before
+- **`/write-paper`** — the biggest skill, invoked at two points of any doc edit: before
   drafting (it loads `references/style.md`, the single home of the structure and language
   rules: banned words and shapes, no emphasis markup, third person, plain-word test) and
   before declaring done. The gate runs: the stranger-read pass (re-read with zero context,

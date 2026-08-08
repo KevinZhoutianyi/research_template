@@ -47,7 +47,7 @@ One idea per slide. A definition + an example + a conclusion is three slides.
 - Readable when projected: one large example per slide, never a 4-up grid of small panels.
 - `\includegraphics[width=\linewidth,height=0.78\textheight,keepaspectratio]{...}`.
 - Too small in the rendered PDF means regenerate at higher resolution or with fewer panels, never cram.
-- Slides and their figures get the stranger-read pass from the `/verify-paper` skill: render the PDF, read every page as the audience, trace arrows and check label collisions before committing.
+- Slides and their figures get the stranger-read pass from the `/write-paper` skill: render the PDF, read every page as the audience, trace arrows and check label collisions before committing.
 
 ## 7. LaTeX
 

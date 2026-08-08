@@ -11,7 +11,7 @@ CLAUDE.md files.
 
 | task | rules live in |
 |---|---|
-| doc edits (`paper.md`, `proposal.md`, LaTeX) | `/verify-paper` (style.md before drafting, gate before done) + `doc/CLAUDE.md` |
+| doc edits (`paper.md`, `proposal.md`, LaTeX) | `/write-paper` (style.md before drafting, gate before done) + `doc/CLAUDE.md` |
 | experiment code / analysis | `experiments/CLAUDE.md` while writing; `/verify-experiment` before done |
 | theory writing | `theory/CLAUDE.md` |
 | figures (paper, updates, `visualize.py`) | `/scientific-figure-making` |
@@ -62,7 +62,7 @@ CLAUDE.md files.
   words).
 - **Everything earns its place.** Every sentence is grounded (verified, or marked unverified)
   and necessary (changes what the reader knows or decides). Chat follows the house language
-  rules too (`/verify-paper` references/style.md, "Chat replies"): no em dash, contrast
+  rules too (`/write-paper` references/style.md, "Chat replies"): no em dash, contrast
   constructions at most once per reply, vary the colon-then-elaboration join.
 
 Enforcement that does not rely on memory: a git pre-commit hook (`.githooks/`; enable with
