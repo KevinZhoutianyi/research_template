@@ -20,7 +20,7 @@ Every experiment has a `visualize.py` whose figures a reader understands without
 
 | cluster | login | storage |
 |---|---|---|
-| Delta (NCSA) | `delta.ncsa.illinois.edu` | `/data/<project>/` |
+| Delta (NCSA) | `delta.ncsa.illinois.edu` | `experiments/data/` (symlink to bulk storage) |
 | Endeavour (USC CARC) | `ssh tzhou029@endeavour.usc.edu` (USC VPN) | `/project2/robinjia_875/tzhou029/` |
 | Local A100 node (AWS) | the current working box (no scheduler, no VPN) | `/home/ubuntu/<project>_ext/` (node-local) |
 

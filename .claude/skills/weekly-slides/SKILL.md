@@ -58,6 +58,6 @@ One idea per slide. A definition + an example + a conclusion is three slides.
 
 ## 7. LaTeX
 
-- Tables over prose for structured comparisons.
+- Tables over prose (root CLAUDE.md behavior rule).
 - Works/Fails predictions: `\color{green!60!black}` / `\color{red!70!black}`.
 - No `\titlepage`, no author slide.

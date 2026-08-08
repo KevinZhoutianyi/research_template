@@ -26,7 +26,7 @@ CLAUDE.md files.
   metered, the parallelism posture, any self-imposed caps. Example (an AWS-sponsored project):
   API calls are unlimited and free, so optimize wall-clock speed with maximum request
   parallelism; every compute job goes through `sbatch` on a compute node, never the login node;
-  GPU jobs self-capped at 40 nodes across all concurrent jobs. Details: `experiments/CLAUDE.md` §5.
+  GPU jobs self-capped at 40 nodes across all concurrent jobs. Details: `experiments/CLAUDE.md` §4.
 - **Delete only what is proven dead** via the `/cleanup` procedure; never on suspicion.
 - **Commit and push after any substantive change.** The user never has to ask.
 - **Decisions are prompted as options.** At any "what should we do" moment (framing, next

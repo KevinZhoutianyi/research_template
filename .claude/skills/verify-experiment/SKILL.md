@@ -6,14 +6,14 @@ allowed-tools: Bash(pytest *), Bash(git diff *), Bash(uv run pytest *)
 
 # Experiment Code Verification
 
-The rules being verified live in `experiments/CLAUDE.md` §2 (correctness) and §7 (smoke-test).
+The rules being verified live in `experiments/CLAUDE.md` §1 (correctness) and §6 (smoke-test).
 This skill is the gate: run every step that applies, fix what it catches, re-run until clean.
 
 1. **Scope.** `git diff --name-only` against the merge base to list changed experiment files.
 2. **Tests.** Run pytest on the packages the changed files belong to. Report the actual
    pass/fail counts, never "tests pass". Report-bound code (scoring, statistics, data
    processing) with no tests is a finding, not a footnote: write the missing tests now
-   (per §2 they are on by default), or list each untested path with one line on why not.
+   (per §1 they are on by default), or list each untested path with one line on why not.
 3. **Smoke.** If a changed script has a `--smoke` flag or a tiny-scale invocation, run it and
    confirm the real artifact (`results.json`, figures) is written where the reader of the run
    expects it.

@@ -4,7 +4,7 @@
 # Greps a weekly update's PROSE (fenced code blocks excluded, since they may quote
 # logs verbatim) for the two banned lists in the weekly-update skill:
 #   1. research slang / metaphor (§3)
-#   2. self-justifying framing about our own honesty (§7 / doc/CLAUDE.md Language rules)
+#   2. self-justifying framing about our own honesty (§7; style home: write-paper references/style.md)
 # Any hit is a rewrite, not an allowlist entry. Exit 1 if anything matches.
 
 set -u

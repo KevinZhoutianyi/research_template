@@ -29,6 +29,8 @@ The destination must be outside the template directory.
 | `experiments/` | numbered, self-contained experiment folders; `experiments/src/` holds the shared code all experiments import; `experiments/data/` holds checkpoints, datasets, large outputs (gitignored; may symlink to bulk storage) |
 | `theory/` | theory writing, with its own rules |
 | `tmp/` | throwaway scratch (gitignored, deletable at any time) |
+| `doc/discussions/` | meeting and advisor discussion notes, one dated file each |
+| `init_project.sh`, `pyproject.toml` | the project-creation script and the Python package config |
 | `.claude/skills/` | the eight skills (see below) |
 | `.claude/hooks/` + `.claude/settings.json` | the skill-prematch hook |
 | `.githooks/pre-commit` | the language gate on staged docs |
@@ -43,17 +45,17 @@ all five. The layers, top to bottom:
 
 | layer | file | answers | size |
 |---|---|---|---|
-| always loaded | `CLAUDE.md` (root) | what must never be violated, and where everything else lives | ~60 lines |
-| per directory | `doc/CLAUDE.md`, `experiments/CLAUDE.md`, `theory/CLAUDE.md` | what the files in this directory are and the constraints specific to them | 30-190 lines |
-| per task | `.claude/skills/*/SKILL.md` | how to do one kind of task and when it counts as done | ≤180 lines each |
+| always loaded | `CLAUDE.md` (root) | what must never be violated, and where everything else lives | ~75 lines |
+| per directory | `doc/CLAUDE.md`, `experiments/CLAUDE.md`, `theory/CLAUDE.md` | what the files in this directory are and the constraints specific to them | 25-200 lines |
+| per task | `.claude/skills/*/SKILL.md` | how to do one kind of task and when it counts as done | ≤200 lines each |
 | enforcement | `.githooks/`, `.claude/hooks/` | which checks run without anyone remembering them | two scripts |
 
 ### Root `CLAUDE.md`
 
 Three parts, deliberately short so that all of it survives in attention during long sessions:
 
-- **A routing table**: one row per task type (doc edit, experiment code, figures, weekly
-  update, status answer, reading a paper, brainstorming, deleting), naming the skill or
+- **A routing table**: one row per task type (doc edit, experiment code, theory, figures,
+  weekly update, status answer, reading a paper, deleting/tidying), naming the skill or
   directory file that owns the rules.
 - **Safety rules, full text.** The rules whose violation is expensive and hard to reverse
   stay verbatim in the root file, never behind a pointer: the compute posture (scheduler
@@ -62,9 +64,10 @@ Three parts, deliberately short so that all of it survives in attention during l
   (at any "what should we do" moment, present 2-4 labeled options with trade-offs and wait).
 - **Behavior rules, one line each.** Goal-first told as a story (docs and chat read as one
   line, never an inventory), ask-don't-assume (one targeted question when a reading changes
-  the outcome), verify-each-step, surgical changes, tables over prose, reports that carry
-  their own context, plain language with a worked example, everything earns its place and
-  nothing is invented. Each line names where the full rule lives.
+  the outcome), verify-each-step, surgical changes, everything-inside-the-repo (scratch in
+  `tmp/`, artifacts in `experiments/data/`, nothing outside touched), tables over prose,
+  reports that carry their own context, plain language with a worked example, everything
+  earns its place and nothing is invented. Each line names where the full rule lives.
 
 ### Directory rules
 
@@ -162,10 +165,10 @@ at it.
 Two hooks exist because "remember to invoke the skill" is the weakest link in any rule
 system:
 
-- **`.githooks/pre-commit`** (enable once with `git config core.hooksPath .githooks`) runs
-  `check_prose.sh` on staged `paper.md` / `proposal.md` / `doc/paper/*.tex` and
-  `check_language.sh` on staged weekly updates. A hit blocks the commit; the fix is a
-  rewrite, never an allowlist entry.
+- **`.githooks/pre-commit`** (enabled automatically by `init_project.sh`) checks the staged
+  content of docs: `check_prose.sh` on `paper.md` / `proposal.md` / `doc/paper/*.tex`, and
+  BOTH `check_language.sh` and `check_prose.sh` on weekly updates. A hit blocks the commit;
+  the fix is a rewrite, never an allowlist entry. It fails loudly if a gate script is missing.
 - **`.claude/hooks/skill-prematch.sh`** (wired via `.claude/settings.json`,
   UserPromptSubmit) matches each user prompt against bilingual keyword lists and injects a
   one-line reminder naming the matching skill; silent when nothing matches. The keyword

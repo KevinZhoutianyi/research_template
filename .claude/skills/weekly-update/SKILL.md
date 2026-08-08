@@ -191,7 +191,7 @@ or mixed, the title says so ("holds on five models, untested on the sixth").
   for the banned-metaphor list in §3 and for self-justifying framing about our own honesty
   (honest, whatever it shows, not hidden, visible not, to be fair, we do not hide, we do not
   soften, transparent, unflattering). Any hit is a rewrite: lead with the finding, state the
-  number as fact (see `doc/CLAUDE.md` Language rules).
+  number as fact (the style rules' home is `/write-paper` references/style.md).
 - Check the draft against the exemplars (`doc/example_papers/style_extraction.md`): findings
   stated and hedged like theirs, captions that interpret rather than describe.
 - Commit the `.md`. There is no compiled artifact.
