@@ -19,7 +19,7 @@ CLAUDE.md files.
 | status answers in chat | `/progress-report` |
 | reading a paper into `related_papers/` | `/read-paper` |
 | brainstorming an experiment idea | `/ideate` |
-| deleting code or docs | `/delete-dead-code` (prove dead first) |
+| deleting or tidying anything (code, docs, tmp files, checkpoints, structure) | `/cleanup` (prove dead first) |
 
 ## Safety rules (full text; these do not move)
 
@@ -28,7 +28,7 @@ CLAUDE.md files.
   API calls are unlimited and free, so optimize wall-clock speed with maximum request
   parallelism; every compute job goes through `sbatch` on a compute node, never the login node;
   GPU jobs self-capped at 40 nodes across all concurrent jobs. Details: `experiments/CLAUDE.md` §5.
-- **Delete only what is proven dead** via the `/delete-dead-code` procedure; never on suspicion.
+- **Delete only what is proven dead** via the `/cleanup` procedure; never on suspicion.
 - **Commit and push after any substantive change.** The user never has to ask.
 - **Decisions are prompted as options.** At any "what should we do" moment (framing, next
   experiment, restructuring), present 2-4 concrete labeled options with trade-offs and wait.

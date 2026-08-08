@@ -142,10 +142,12 @@ at it.
   (weakness in the current result, gap the related work leaves open, cheaper/harder version
   of what works, questions the collected data can already answer), converges by
   information-per-cost, and lands the chosen card as a (planned) row in the `paper.md` outline.
-- **`/delete-dead-code`** — prove-then-delete. Grep for callers, check for half-live files
-  (dead `main()`, live imports), check no running job holds the path, distinguish results
-  artifacts (data, never deleted to tidy up) from code. Deletion is its own commit, and the
-  commit message says what proved it dead.
+- **`/cleanup`** — prove-then-delete, for anything that clutters the repo: dead code, dead
+  docs, scratch/tmp files, stale checkpoints, and structure drift. A general "repo is a mess"
+  request triggers a five-category sweep presented as a findings table before anything is
+  deleted. Per-category proof standards (grep for callers, check half-live files, no running
+  job holds the path, no report reads the artifact); results data is never deleted to tidy up.
+  Deletion is its own commit, and the commit message says what proved it dead.
 
 ### Reporting
 

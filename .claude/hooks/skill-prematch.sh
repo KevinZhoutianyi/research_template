@@ -21,7 +21,7 @@ ci '这篇|读.{0,4}(paper|论文)|arxiv\.org|看一下这个paper|related.?pape
 ci 'brainstorm|头脑风暴|下一步做什么|什么idea|新实验|research direction|ideate' && add "ideate"
 ci '图|figure|plot|画|visualize|matplotlib|chart' && add "scientific-figure-making"
 ci 'paper\.md|proposal\.md|main\.tex|abstract|introduction|rebuttal|改论文|写论文|润色' && add "verify-paper (style.md before drafting)"
-ci '删|delete|dead code|remove.*(file|script)|clean.?up' && add "delete-dead-code"
+ci '删|清理|delete|dead code|remove.*(file|script)|clean.?up|tidy|mess|stale.*(checkpoint|artifact|output)' && add "cleanup"
 
 [ -z "$matches" ] && exit 0
 cat <<EOF
