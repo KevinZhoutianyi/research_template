@@ -81,6 +81,8 @@ not done, and the fix is applied before re-auditing. Skipping the table or summa
 | 10 | Notation/terms | just-in-time prose definitions; coined terms introduced once then used everywhere | where each coined term is defined |
 | 11 | Transitions | previous result becomes the next problem; no meta-narrative | quote one transition |
 | 12 | What-not-to-imitate | none of the extraction's banned habits (enthusiasm markers, self-grading, header arrows) | grep/table check statement |
+| 13 | Abstract length | 185--210 words (FOURIER ~185, ROME ~200, H2O ~230 is the ceiling); over 250 is a FAIL | the word count |
+| 14 | Overview figure | a Figure 1 exists, is referenced from the intro, and carries an interpretive caption (every exemplar has one) | the figure, its intro reference, its caption's first sentence |
 
 ## 1b. The reverse outline (global pass)
 
