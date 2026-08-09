@@ -8,6 +8,7 @@ by reading. Paragraph-scale rewrites for the AI-writing patterns live in
 
 ## Structure
 
+- **A paper has 5--7 top-level sections, never one per experiment.** The exemplar arc is intro, method/setup, one or two evaluation-and-analysis sections, related work late, short conclusion (H2O: 6; FOURIER: 5; ROME: 6). Every result lives as a subsection (with a declarative finding title) inside a consolidated Evaluation or Analysis section; a draft where main result, each extra benchmark, ablation, cost, and boundary each hold a top-level section is mis-shaped regardless of sentence quality, and the fix is restructuring, not retitling. Run the shape check (`SKILL.md` §1a) before any sentence-level pass.
 - Introduction has no subsections. Flowing prose, ending with a numbered contributions list. Sentence-level scaffolding for the abstract and the introduction (three abstract shapes, the seven-paragraph intro plan, what a contribution bullet must contain) is in [abstract-and-intro-templates.md](abstract-and-intro-templates.md); open it before drafting or restructuring either section.
 - Section titles are noun phrases naming the topic ("Depth Generalization"); subsection titles state the finding as a declarative sentence. Claim strength and number rules for titles: `doc/CLAUDE.md` §2a.
 - Related Work is flowing prose, one paragraph per paper or group.

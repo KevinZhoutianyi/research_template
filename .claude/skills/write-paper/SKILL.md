@@ -50,6 +50,14 @@ reporting sentence findings on a mis-shaped section wastes the writer's time; re
 gap first (which move is missing, what is in the wrong place) and stop there until it is
 settled.
 
+The same check applies to the WHOLE paper's skeleton before its sections are drafted: count
+the top-level sections and match the exemplar arc (intro, method/setup, one or two
+consolidated evaluation-and-analysis sections, related work late, short conclusion; 5--7
+total). One experiment never gets one top-level section: each result is a subsection with a
+declarative finding title inside the consolidated section (FOURIER's §3.1--3.3 is the
+pattern). A 10+-section draft is a shape violation to report and restructure before touching
+any sentence.
+
 ## 1b. The reverse outline (global pass)
 
 The pass above is local: it checks sentences and paragraphs one at a time. This one is global, and
