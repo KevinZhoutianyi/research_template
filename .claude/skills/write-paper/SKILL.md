@@ -58,6 +58,30 @@ declarative finding title inside the consolidated section (FOURIER's §3.1--3.3 
 pattern). A 10+-section draft is a shape violation to report and restructure before touching
 any sentence.
 
+## 1b'. The exemplar conformance audit (MANDATORY for the LaTeX paper; strict gate)
+
+Sentence-level greps cannot catch structural or tonal drift from the exemplars, so the paper
+gate includes a conformance audit whose output is a TABLE the writer must produce and show,
+one row per dimension, each row citing evidence from the draft (a section count, a quoted
+title, a quoted caption). A row without evidence is not a pass; any FAIL means the draft is
+not done, and the fix is applied before re-auditing. Skipping the table or summarizing it
+("all dimensions pass") voids the gate.
+
+| # | Dimension | Rule (from style_extraction.md) | Pass evidence to cite |
+|---|---|---|---|
+| 1 | Skeleton | 5--7 top-level sections on the exemplar arc; results as subsections | the numbered section list |
+| 2 | Title | one of the three exemplar forms (named method+benefit / declarative finding / gerund pair) | the title, and which form |
+| 3 | Abstract | the exemplar skeleton, coined term defined inline, numbers only near the end | sentence-by-sentence move list |
+| 4 | Intro | the five moves in order, method named once in move 4, numbers rationed | paragraph-by-move list |
+| 5 | Section titles | top-level = noun phrase; findings only at subsection level, declarative | quote every top-level title |
+| 6 | Section openers | goal-then-roadmap with section refs, or an opening question | quote one opener |
+| 7 | Voice | "we" + present tense for claims, past for procedures; hedging graded to evidence; objections answered in place | one quoted example of graded hedging |
+| 8 | Captions | interpretive: first sentence a claim/scope, markup decoded, direction in words | quote one caption's first sentence |
+| 9 | Tables | booktabs only, baseline first row, same decimals per column, no header arrows | name each table checked |
+| 10 | Notation/terms | just-in-time prose definitions; coined terms introduced once then used everywhere | where each coined term is defined |
+| 11 | Transitions | previous result becomes the next problem; no meta-narrative | quote one transition |
+| 12 | What-not-to-imitate | none of the extraction's banned habits (enthusiasm markers, self-grading, header arrows) | grep/table check statement |
+
 ## 1b. The reverse outline (global pass)
 
 The pass above is local: it checks sentences and paragraphs one at a time. This one is global, and
@@ -157,4 +181,4 @@ to fix first.
 
 ## Done when
 
-Every applicable check above passes and a full read of the rendered pages surfaces nothing new. Anything short of that: report what is still red, do not declare the edit done. Then close with `/update-status`: if the edit changed a claim, a verdict, the Goal/Thesis wording, or the outline, `doc/status.md` updates in the same commit.
+Every applicable check above passes and a full read of the rendered pages surfaces nothing new; for the LaTeX paper, the conformance-audit table (1b') has been produced with all twelve rows at PASS with cited evidence. Anything short of that: report what is still red, do not declare the edit done. Then close with `/update-status`: if the edit changed a claim, a verdict, the Goal/Thesis wording, or the outline, `doc/status.md` updates in the same commit.
