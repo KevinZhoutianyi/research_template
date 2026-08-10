@@ -66,7 +66,21 @@ When there are two or three independent results and no single spine. Each gets o
 4. Contribution 3 + what it buys.
 5. The scope limit.
 
-Sentence-level rules for all three shapes:
+### Shape D: question, then coined mechanism (LOOKBACK's shape)
+
+When the paper's spine is a mechanism it names. Opens on the question itself, then narrates the
+answer in the mechanism's own vocabulary; carries no result numbers at all.
+
+1. The question, verbatim, as a question ("How do language models represent characters' beliefs,
+   especially when those beliefs may differ from reality?").
+2. The instrument or dataset built to ask it.
+3. The coined term with its inline definition ("a pervasive algorithmic pattern that we call a
+   lookback mechanism, which enables the LM to recall important information when it becomes
+   necessary").
+4. The mechanism narrated in its own coined vocabulary, two or three sentences.
+5. A perturbation or extension showing the vocabulary generalizes.
+
+Sentence-level rules for all four shapes:
 
 - The first sentence names this paper's specific subject. If it could open any paper in the area,
   cut it. Banned openings: "Large language models have achieved remarkable success", "In recent

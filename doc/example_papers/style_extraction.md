@@ -1,17 +1,18 @@
 # Style extraction from the exemplar papers
 
-Distilled from the three PDFs in this folder; every quote is verbatim from the source.
+Distilled from the four PDFs in this folder; every quote is verbatim from the source.
 Organized by dimension so a writer drafting one thing (a title, a caption, a table) reads one
 section. When the extraction is not enough, open the PDF itself. Regenerate this file when the
 PDF set changes.
 
-The three exemplars, abbreviated below:
+The four exemplars, abbreviated below:
 
 | tag | paper | style role |
 |---|---|---|
 | H2O | H2O: Heavy-Hitter Oracle for Efficient Generative Inference of LLMs (NeurIPS 2023) | systems/method paper: observation-first arc, named artifact |
 | FOURIER | Pre-trained LLMs Use Fourier Features to Compute Addition (NeurIPS 2024) | mechanism-analysis paper: declarative finding titles, figures do the arguing |
 | ROME | Locating and Editing Factual Associations in GPT (NeurIPS 2022) | causal-analysis paper: trace-then-intervene narrative, interpretive captions |
+| LOOKBACK | Language Models Use Lookbacks to Track Beliefs (ICLR 2026) | causal-abstraction paper: hypothesize-then-verify arc, coined-mechanism vocabulary, prediction-first captions; the one ICLR exemplar, so the venue-format reference |
 
 ---
 
@@ -22,6 +23,11 @@ Three legitimate forms, one per exemplar; pick by what the paper is:
 - **Named method + colon + benefit** (H2O): "H2O: Heavy-Hitter Oracle for Efficient Generative Inference of Large Language Models". The title names the artifact, not the finding.
 - **The finding as a full declarative sentence** (FOURIER): "Pre-trained Large Language Models Use Fourier Features to Compute Addition". The title IS the one-line result; §3's title mirrors it.
 - **Gerund pair naming the two halves of the work** (ROME): "Locating and Editing Factual Associations in GPT". Verb-driven, 7 words, names the object of study and the model family.
+
+LOOKBACK is a second instance of the FOURIER form ("Language Models Use Lookbacks to Track
+Beliefs"): subject + verb + coined term + task. Two of four exemplars now use the declarative
+finding-sentence title, and both embed a coined mechanism name in it, which primes the term
+before the abstract defines it.
 
 Section-title conventions, consistent across all three and with `doc/CLAUDE.md` §2a:
 top-level sections are noun phrases ("Problem Setup", "Observations", "Empirical Evaluation");
@@ -51,9 +57,21 @@ or causal test, evaluation, related work late, conclusion short.
   Storage". A hinge subsection (§2.3) states the hypothesis and ends by posing the test; a
   late subsection closes the loop back to the trace (§3.4). Limitations is a numbered
   subsection inside the experiments section.
+- LOOKBACK: an explicit hypothesize-then-verify split at the section level. §2 defines the
+  coined mechanism abstractly (source/address/pointer/payload, before any experiment), §4 is
+  titled "Hypothesized High-Level Causal Model of Belief Tracking" and states the algorithm as
+  a causal model with "variables with structural roles that do not refer to the details of a
+  transformer architecture", §5 is "Verifying the Hypothesized Causal Model": every §5
+  experiment exists to localize one §4 variable. The paper says the contract out loud: "In
+  Section 5, we will present experiments to verify that the causal model's variables align with
+  representations in the transformer." §6 then perturbs the setting (visibility) and reuses the
+  same machinery, a template for any mechanism section: state the mechanism first as a claim, then
+  key each experiment to the variable it verifies.
 - Formality is quarantined: informal definitions/theorems in the body explicitly tagged
   "(informal)" (H2O), numbered Definition/Remark environments in the appendix (FOURIER
-  Appendix A, H2O Appendix D). Proofs always deferred.
+  Appendix A, H2O Appendix D). Proofs always deferred. LOOKBACK defers full pseudocode of its
+  causal model to an appendix ("Appendix G presents the full pseudocode") and keeps prose plus
+  one schematic in the body.
 
 ## 3. Abstract shape
 
@@ -75,6 +93,14 @@ Calibrated closing move, verbatim (ROME): "Our results confirm an important role
 feed-forward modules in storing factual associations and suggest that direct manipulation of
 computational mechanisms may be a feasible approach for model editing." ("confirm" for the
 measured part, "suggest ... may be" for the extrapolation, in one sentence.)
+
+LOOKBACK's abstract (~226 words, inside the H2O ceiling) opens with two questions ("How do
+language models (LMs) represent characters' beliefs, especially when those beliefs may differ
+from reality?"), then dataset, then the coined term with its inline definition ("a pervasive
+algorithmic pattern that we call a lookback mechanism, which enables the LM to recall important
+information when it becomes necessary"), then the mechanism narrated in its own vocabulary. A
+question-opening abstract is a legitimate fourth shape; the numbers-near-the-end rule still
+holds (its abstract carries no result numbers at all, like FOURIER).
 
 ## 3a. Introduction anatomy
 
@@ -112,7 +138,7 @@ a section-indexed one; FOURIER and ROME carry contributions in prose).
 
 **The shape check, run on any draft intro:** (a) list each paragraph's move and match against
 the five-move order above; (b) confirm the method/central finding is named, once, in move 4;
-(c) count result numbers outside the worked example and the payoff paragraph — more than a
+(c) count result numbers outside the worked example and the payoff paragraph: more than a
 couple is a shape violation, not a style nit; (d) confirm exactly one turn sentence.
 
 ## 4. Prose voice
@@ -164,6 +190,14 @@ which matches `doc/CLAUDE.md` ("captions open with the question the figure answe
 - **Descriptive caption** (H2O): what is plotted, encodings and axes named, condition
   appended; the finding lives in body prose. Acceptable only when the body sentence referencing
   the figure states the finding immediately.
+- **Prediction-first caption** (LOOKBACK): the caption leads with the causal model's prediction,
+  then reports whether the intervention confirmed it, in one breath. Verbatim (Fig. 4): "The
+  causal model predicts that if we alter the 'Answer Payload' of the original to instead take
+  the value of the counterfactual answer payload, the output should change from coffee to tea;
+  the gray curve in the line plot shows this does occur when patching residual vectors at the
+  ':' token beyond layer 56, providing evidence that ...". This is the interpretive school
+  sharpened for causal work: prediction, result, verdict, all inside the caption. The
+  falsifier-first house rule maps onto it directly.
 - Color/typography semantics are decoded inside the caption. Verbatim (ROME Fig. 6): "Prompts
   are italicized, green and red indicate keywords reflecting correct and incorrect behavior,
   respectively..."
@@ -219,6 +253,11 @@ which matches `doc/CLAUDE.md` ("captions open with the question the figure answe
   simplicity" (ROME); "For simplicity, we ignore the subscript N in the following paper"
   (FOURIER). Notation clashes disambiguated in footnotes ("Unrelated to keys and values in
   self-attention.", ROME).
+- Coined-vocabulary discipline (LOOKBACK): the paper mints a small closed lexicon (source,
+  address, pointer, payload, ordering ID/OI, binding lookback, answer lookback, visibility
+  lookback), defines each once in §2/§4, then uses the terms with total consistency through
+  every section title, caption, and appendix; new experiments reuse the lexicon rather than
+  minting more. The pattern: a term per role, never a synonym rotation.
 
 ## 9. What not to imitate
 

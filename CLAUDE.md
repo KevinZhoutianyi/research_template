@@ -19,6 +19,7 @@ CLAUDE.md files.
 | status answers in chat | `/progress-report` (reads `doc/status.md` first) |
 | `doc/status.md` (project dashboard) | `doc/CLAUDE.md` §5: updated with every landed result |
 | reading a paper into `related_papers/` | `/read-paper` |
+| blind referee / blind reproduction of our own paper (盲审, 盲复现) | `/blind-review` (manual-invoke; isolates the PDF in a cell inside the repo) |
 | deleting or tidying anything (code, docs, tmp files, checkpoints, structure) | `/cleanup` (prove dead first) |
 
 ## Safety rules (full text; these do not move)
@@ -30,6 +31,11 @@ CLAUDE.md files.
   GPU jobs self-capped at 40 nodes across all concurrent jobs. Details: `experiments/CLAUDE.md` §4.
 - **Delete only what is proven dead** via the `/cleanup` procedure; never on suspicion.
 - **Commit and push after any substantive change.** The user never has to ask.
+- **Everything the project writes lives inside this repo.** No files, directories, or edits
+  outside the checkout, with the named exceptions the environment requires: the large-file
+  caches the env variables point at (`experiments/CLAUDE.md` §4), scheduler logs where the
+  templates put them, and the session temp directory. A new workspace (an isolation cell, a
+  scratch area, a report) goes in a repo directory, never a sibling path.
 - **Decisions are prompted as options.** At any "what should we do" moment (framing, next
   experiment, restructuring), present 2-4 concrete labeled options with trade-offs and wait.
   Executing an agreed plan needs no prompt; setting direction always does.
