@@ -35,7 +35,12 @@ it goes in the closing next-step line, not in the walk.
 
 Structure, in this order:
 
-1. **Restate the goal in one sentence**, with the success criterion and how it is measured ("beat baseline B and competing method M on benchmark Z, K seeds, reported as mean successes / N").
+1. **Restate the RESEARCH goal in one sentence** -- what the paper/report will claim and how
+   it is measured ("show that lessons learned offline by a stronger teacher lift a frozen
+   agent on held-out tasks, measured as bank beating both the bare agent and the empty-bank
+   reviewer on K seeds"). The research goal, not the delivery milestone: "finish the final
+   presentation with all baselines" is a deadline, and it goes in one clause AFTER the goal
+   sentence, never in place of it (a live report opened with the deadline and was corrected).
 2. **State progress against that goal in one or two sentences** -- met / not met / partial, and *why*. "We led once (+1.7) and tied once, both inside the noise band, so not yet demonstrated" beats "I ran two evals."
 3. **The numbered story-with-experiments walk** (the body, rule above). Order the steps as the argument flows -- motivation, method, main evidence, mechanism, boundaries, cost -- and attach every running or planned experiment to the step it serves. An experiment serving no step either gets its own step (if it changes the story) or is cut from the report.
 4. Condition-comparison numbers go in the step's table too (extra columns or rows), never as prose after it.
