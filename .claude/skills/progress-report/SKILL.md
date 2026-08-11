@@ -46,6 +46,15 @@ as the weekly update's plain-language rule; a live report was corrected on both 
   no help at all -- the number every other row must beat". If the cell needs a coined term,
   define it inline.
 
+**The story is the WHOLE PROJECT's, told at project level.** The walk spans every claim the
+project commits to -- phenomenon, controls, mechanism, origin, boundaries -- in the order the
+paper argues them, not just the workstream currently in motion (a live report walked only that
+week's re-run campaign and was corrected: the asker runs several projects and needs the whole
+arc re-established first). A step whose evidence is settled and untouched since the last report
+still appears, with one "done + headline number" row or a one-line prose note; the active
+campaign shows up as rows and progress cells under the steps it serves, never as the report's
+frame.
+
 **A story beat is a sentence of the ARGUMENT, not a work category.** "Agents lose long tasks
 to recurring process mistakes" is a beat; "Motivation" is a label. "The gain comes from the
 lessons, not from being watched" is a beat; "main results" and "reviewer-requested baselines"
@@ -71,7 +80,7 @@ Structure, in this order:
    presentation with all baselines" is a deadline, and it goes in one clause AFTER the goal
    sentence, never in place of it (a live report opened with the deadline and was corrected).
 2. **State progress against that goal in one or two sentences** -- met / not met / partial, and *why*. "We led once (+1.7) and tied once, both inside the noise band, so not yet demonstrated" beats "I ran two evals."
-3. **The numbered story-with-experiments walk** (the body, rule above). Order the steps as the argument flows -- motivation, method, main evidence, mechanism, boundaries, cost -- and attach every running or planned experiment to the step it serves. An experiment serving no step either gets its own step (if it changes the story) or is cut from the report.
+3. **The numbered story-with-experiments walk** (the body, rules above). Walk the whole project; order the steps as the argument flows -- motivation, method, main evidence, mechanism, boundaries, cost -- and attach every running or planned experiment to the step it serves. An experiment serving no step either gets its own step (if it changes the story) or is cut from the report.
 4. Condition-comparison numbers go in the step's table too (extra columns or rows), never as prose after it.
 5. **Report results that do not support us** plainly, inside their step. A run where we tie or lose is part of the status and is never omitted or softened. Claim strength follows the statistical hard rules in `doc/CLAUDE.md` §2 "Statistical reporting" (single run, no strength claim; gap inside the spread, say so; mid-run counts are direction only, never a claim).
 6. **End with the single next step that moves toward the goal**, plus anything only the user can do.
