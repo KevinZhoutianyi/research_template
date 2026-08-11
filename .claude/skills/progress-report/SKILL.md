@@ -29,10 +29,14 @@ into the table cells, not around them.
 **Both description cells are written for a reader with zero project context** (same standard
 as the weekly update's plain-language rule; a live report was corrected on both cells):
 
-- The *experiment* cell describes the procedure, not a run tag. "Sonnet naive, 100 steps" is
-  a condition label the reader cannot decode; write what concretely happens: "bare Sonnet 4.5
-  solves the 40 held-out tasks alone, 3 seeds, up to 100 actions each". Name the actor, the
-  data, and the setup knobs that matter; internal tags (cond names, run ids) never appear.
+- The *experiment* cell describes the procedure, not a run tag, and is SELF-CONTAINED: every
+  row names the model(s), the benchmark and split ("AppWorld's 40 held-out test tasks", not
+  "the tasks"), the repeat count, and the budget, even when the previous row already said
+  them -- "the same model" / "同一模型" forces the reader to walk back up the table (a live
+  report was corrected for this). "Sonnet naive, 100 steps" is a condition label the reader
+  cannot decode; write "bare Claude Sonnet 4.5 solves AppWorld's 40 held-out test tasks
+  alone, 3 seeds, up to 100 actions per task". Internal tags (cond names, run ids) never
+  appear.
 - The *what it shows* cell states the inference in plain words a non-specialist can repeat,
   tied to the step's sentence: not "floor anchor" but "how many tasks the agent solves with
   no help at all -- the number every other row must beat". If the cell needs a coined term,
