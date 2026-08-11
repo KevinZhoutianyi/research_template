@@ -19,6 +19,13 @@ exactly this split as the failure). Each step reads:
 > N. **<story beat in one sentence>** -- experiment: <what runs/ran to establish it>;
 > progress: <state + the number(s) so far, or "not started / planned for <when>">.
 
+**A story beat is a sentence of the ARGUMENT, not a work category.** "Agents lose long tasks
+to recurring process mistakes" is a beat; "Motivation" is a label. "The gain comes from the
+lessons, not from being watched" is a beat; "main results" and "reviewer-requested baselines"
+and "writing" are work categories -- a numbered list of those is a task list wearing numbers
+(the second failure the same review flagged). If a work item supports no argument sentence,
+it goes in the closing next-step line, not in the walk.
+
 Structure, in this order:
 
 1. **Restate the goal in one sentence**, with the success criterion and how it is measured ("beat baseline B and competing method M on benchmark Z, K seeds, reported as mean successes / N").
