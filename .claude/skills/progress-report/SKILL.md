@@ -16,15 +16,19 @@ sentence of the argument followed by a table of its experiments** -- never a sto
 first and a separate experiment/plan list after (a reader then has to join the two lists
 themselves; a real report review flagged exactly this split as the failure). Each step is:
 
-> N. **<the argument sentence -- one sentence, nothing more>**
+> N. **<the argument sentence -- one sentence>**
+> <optional: 1-3 plain sentences of method/context the reader needs before the table --
+> what the mechanism is, how a term is defined. Prose explains; it never carries numbers.>
 >
 > | experiment | what it shows | progress |
 > | --- | --- | --- |
 > | <what is concretely DONE: who acts on what data under what setup> | <what this experiment establishes for THIS sentence> | <state + numbers so far, or "planned <when>"> |
 
 One row per experiment serving that sentence; a step whose evidence is already settled gets
-one row with progress "done" and the headline number. Prose beyond the one sentence goes
-into the table cells, not around them.
+one row with progress "done" and the headline number. The split is strict: METHOD lives in
+the prose, MEASUREMENTS live in the table. A method explanation never becomes a table row
+(it has nothing to measure), and a result number never hides in the prose (it belongs in a
+row's progress cell).
 
 **Both description cells are written for a reader with zero project context** (same standard
 as the weekly update's plain-language rule; a live report was corrected on both cells):
@@ -53,9 +57,10 @@ it goes in the closing next-step line, not in the walk.
 (a score, a gap, a count from run data). Engineering work -- a pipeline fix, a robustness
 backstop, passing unit tests, a refactor -- is not an experiment and never gets a row (a live
 report put "guidance backstop + 31 tests, done" in an experiment table and was corrected). If
-the engineering matters to the story, it earns at most one clause inside the step sentence
-("...method, whose learning loop is hardened against teacher-style variance"), or the step is
-dropped entirely; a method step with no measurement rows usually should not be a step.
+the engineering matters to the story, it earns at most a clause in the step's prose
+("...method, whose learning loop is hardened against teacher-style variance"). Method
+description belongs in the step's prose lines (see the step template), and a step carrying
+only method prose folds into the step whose measurements it sets up.
 
 Structure, in this order:
 
