@@ -20,11 +20,23 @@ themselves; a real report review flagged exactly this split as the failure). Eac
 >
 > | experiment | what it shows | progress |
 > | --- | --- | --- |
-> | <the run/measurement> | <what this experiment establishes for THIS sentence> | <state + numbers so far, or "planned <when>"> |
+> | <what is concretely DONE: who acts on what data under what setup> | <what this experiment establishes for THIS sentence> | <state + numbers so far, or "planned <when>"> |
 
 One row per experiment serving that sentence; a step whose evidence is already settled gets
 one row with progress "done" and the headline number. Prose beyond the one sentence goes
 into the table cells, not around them.
+
+**Both description cells are written for a reader with zero project context** (same standard
+as the weekly update's plain-language rule; a live report was corrected on both cells):
+
+- The *experiment* cell describes the procedure, not a run tag. "Sonnet naive, 100 steps" is
+  a condition label the reader cannot decode; write what concretely happens: "bare Sonnet 4.5
+  solves the 40 held-out tasks alone, 3 seeds, up to 100 actions each". Name the actor, the
+  data, and the setup knobs that matter; internal tags (cond names, run ids) never appear.
+- The *what it shows* cell states the inference in plain words a non-specialist can repeat,
+  tied to the step's sentence: not "floor anchor" but "how many tasks the agent solves with
+  no help at all -- the number every other row must beat". If the cell needs a coined term,
+  define it inline.
 
 **A story beat is a sentence of the ARGUMENT, not a work category.** "Agents lose long tasks
 to recurring process mistakes" is a beat; "Motivation" is a label. "The gain comes from the
