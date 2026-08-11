@@ -49,6 +49,14 @@ and "writing" are work categories -- a numbered list of those is a task list wea
 (the second failure the same review flagged). If a work item supports no argument sentence,
 it goes in the closing next-step line, not in the walk.
 
+**Table rows are MEASUREMENTS only.** A row must measure something about the research claim
+(a score, a gap, a count from run data). Engineering work -- a pipeline fix, a robustness
+backstop, passing unit tests, a refactor -- is not an experiment and never gets a row (a live
+report put "guidance backstop + 31 tests, done" in an experiment table and was corrected). If
+the engineering matters to the story, it earns at most one clause inside the step sentence
+("...method, whose learning loop is hardened against teacher-style variance"), or the step is
+dropped entirely; a method step with no measurement rows usually should not be a step.
+
 Structure, in this order:
 
 1. **Restate the RESEARCH goal in one sentence** -- what the paper/report will claim and how
