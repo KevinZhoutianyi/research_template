@@ -67,6 +67,13 @@ Two rules that matter more than the table:
 - **Anchor arrows to box edges in code, never hand-place endpoints.** Hand-placed coordinates
   break the moment a box moves, and they break silently.
 
+**Every agent in the loop is its own node.** An arrow alone does not name who does the work: if
+the method has an updater, critic, or modifier seat distinct from the generator and
+discriminator, draw it as its own labeled box on the path between the signal and the object it
+changes, even when that seat is easy to compress into "the arrow back to the generator." A
+reader should be able to list every seat in the method from the figure alone, without reading
+the caption.
+
 **The opener figure is a paradigm comparison, not the pipeline.** A method or agent paper's
 Figure 1 follows the LATENTMEM exemplar (`doc/example_papers/style_extraction.md` §5a): two
 panels sharing one skeleton, the same actors in the same positions on both sides so only the
@@ -116,11 +123,21 @@ file beside `make_figures.py`:
 ```
 
 Compile with `tectonic diagram.tex` (writes `diagram.pdf` beside it); render to PNG for viewing
-and for the collision check with the same pymupdf call the PDF exemplars use:
-`page.get_pixmap(dpi=200).save("diagram.png")`. The compiled `.pdf`/`.png` are the checked-in
-outputs, exactly like a matplotlib export; a one-line comment at the top of the `.tex` says it
-is compiled with `tectonic`, not run through `make_figures.py`, so a future reader does not go
-looking for a Python function that does not exist.
+with the same pymupdf call the PDF exemplars use: `page.get_pixmap(dpi=200).save("diagram.png")`.
+The compiled `.pdf`/`.png` are the checked-in outputs, exactly like a matplotlib export; a
+one-line comment at the top of the `.tex` says it is compiled with `tectonic`, not run through
+`make_figures.py`, so a future reader does not go looking for a Python function that does not
+exist. Absolute coordinates (one grid unit = one cm, named-anchor arrows between nodes) are more
+predictable here than TikZ's `fit`+`label` combo, which corrupted a glyph under this toolchain
+when two panels reused one label style in the same picture -- reproducible in isolation, not
+worth chasing further; draw the background rectangle first in code order so it sits behind
+later content without needing the `backgrounds` library at all.
+
+The collision check works the same way regardless of which tool drew the diagram: read the
+compiled PDF's text spans and their boxes (`page.get_text("dict")`), not the source. A checker
+built once against this (see this project's `doc/paper/figures/check_fig.py`) catches
+matplotlib's and TikZ's output identically, and is more reliable than introspecting a
+matplotlib `Axes` in-process, since it only sees what actually printed.
 
 ---
 
