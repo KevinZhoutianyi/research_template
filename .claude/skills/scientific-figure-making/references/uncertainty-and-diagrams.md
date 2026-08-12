@@ -76,9 +76,51 @@ comparison, then one "instead of [prior mechanism], ours [new mechanism]" senten
 detailed dataflow diagram is a separate, later figure. The opener also follows the exemplar's
 visual language rather than the hairline convention in the table above: rounded tinted panels
 (neutral grey for the prior, a cool tint with a dark border for ours), centered bold serif
-panel titles, serif box labels, and the failure modes in bold red inside the prior panel; no
-emoji icons, hues from the colorblind-safe palette, the single warm accent reserved for the
-learned object.
+panel titles, serif box labels, short icon-tagged annotations on the specific mechanism each
+names (not one paragraph at the panel's foot), and a visual decision (fill, weight) reserved for
+the object the paper claims is different, never spent on a role label. Hues from the
+colorblind-safe palette, the single warm accent reserved for the learned object.
+
+---
+
+## 2c) When matplotlib cannot reach the exemplar: TikZ
+
+matplotlib's shipped fonts (`DejaVu Sans`, `STIXGeneral`) have no icon glyphs worth relying on:
+a snowflake or warning-triangle unicode codepoint may render, but the fire glyph LATENTMEM uses
+is simply absent, and there is no way to know which symbol is missing without test-rendering it
+first (do this before designing around any icon: render a swatch of candidates and read it, the
+same render-then-read discipline as any other figure). When an opener figure needs the
+exemplar's actual icon vocabulary, or icon-level fidelity is the point, switch tools rather than
+approximate with whatever glyph matplotlib happens to have. Use matplotlib for every data plot
+always, and for a diagram whose only requirement is boxes, arrows and text; move to TikZ only
+when the font ceiling is the actual blocker.
+
+`tectonic` is on this project's `PATH` already (a self-contained LaTeX engine that fetches
+packages on first use — no system TeX Live install to manage). A diagram is a standalone `.tex`
+file beside `make_figures.py`:
+
+```latex
+\documentclass[tikz,border=2pt]{standalone}
+\usepackage{tikz}
+\usepackage{fontawesome5}          % \faSnowflake \faFire \faExclamationTriangle \faCheck ...
+\usetikzlibrary{arrows.meta,positioning}
+\definecolor{accent}{HTML}{E69F00} % same Okabe-Ito hex as design-theory.md, so the diagram
+                                    % matches the paper's data-plot palette
+\begin{document}
+\begin{tikzpicture}
+  \node[draw, rounded corners, minimum width=2.4cm, minimum height=1cm] (g) {Generator};
+  \node[draw, rounded corners, minimum width=2.4cm, minimum height=1cm, right=1.8cm of g] (d) {Discriminator};
+  \draw[-{Latex[length=2mm]}] (g) -- (d);
+\end{tikzpicture}
+\end{document}
+```
+
+Compile with `tectonic diagram.tex` (writes `diagram.pdf` beside it); render to PNG for viewing
+and for the collision check with the same pymupdf call the PDF exemplars use:
+`page.get_pixmap(dpi=200).save("diagram.png")`. The compiled `.pdf`/`.png` are the checked-in
+outputs, exactly like a matplotlib export; a one-line comment at the top of the `.tex` says it
+is compiled with `tectonic`, not run through `make_figures.py`, so a future reader does not go
+looking for a Python function that does not exist.
 
 ---
 
