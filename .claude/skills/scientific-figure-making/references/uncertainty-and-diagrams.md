@@ -67,6 +67,15 @@ Two rules that matter more than the table:
 - **Anchor arrows to box edges in code, never hand-place endpoints.** Hand-placed coordinates
   break the moment a box moves, and they break silently.
 
+**The opener figure is a paradigm comparison, not the pipeline.** A method or agent paper's
+Figure 1 follows the LATENTMEM exemplar (`doc/example_papers/style_extraction.md` §5a): two
+panels sharing one skeleton, the same actors in the same positions on both sides so only the
+mechanism differs, the prior paradigm on the left with its claimed failure modes annotated in
+place, and each failure given a visually parallel fix on the right. The caption names the
+comparison, then one "instead of [prior mechanism], ours [new mechanism]" sentence. The
+detailed dataflow diagram is a separate, later figure. Panel-fill semantics translate to the
+house palette: grey for the fixed prior, the single accent for the learned object.
+
 ---
 
 ## 2b) What the figure asserts on its own

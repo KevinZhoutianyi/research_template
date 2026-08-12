@@ -189,7 +189,7 @@ PDFs of papers whose presentation every doc in this folder aims to match — the
 
 The dimensions to mirror:
 - Writing voice: sentence rhythm, how a claim is introduced and qualified, motivation-first openers, declarative section titles.
-- Figure design: panel layout, axis labels, color palette, caption form (question first, then plot, then implication).
+- Figure design: panel layout, axis labels, color palette, caption form (question first, then plot, then implication). A paper's Figure 1 is a paradigm comparison, distinct from the method-pipeline figure; anatomy in `example_papers/style_extraction.md` §5a.
 - Section structure: intro staging, body vs appendix split, how a multi-step argument is laid out across §3/§4.
 - Tables and algorithm blocks: caption conventions, what the caption concludes, markup habits.
 

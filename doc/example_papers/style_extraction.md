@@ -1,11 +1,11 @@
 # Style extraction from the exemplar papers
 
-Distilled from the four PDFs in this folder; every quote is verbatim from the source.
+Distilled from the five PDFs in this folder; every quote is verbatim from the source.
 Organized by dimension so a writer drafting one thing (a title, a caption, a table) reads one
 section. When the extraction is not enough, open the PDF itself. Regenerate this file when the
 PDF set changes.
 
-The four exemplars, abbreviated below:
+The five exemplars, abbreviated below:
 
 | tag | paper | style role |
 |---|---|---|
@@ -13,6 +13,7 @@ The four exemplars, abbreviated below:
 | FOURIER | Pre-trained LLMs Use Fourier Features to Compute Addition (NeurIPS 2024) | mechanism-analysis paper: declarative finding titles, figures do the arguing |
 | ROME | Locating and Editing Factual Associations in GPT (NeurIPS 2022) | causal-analysis paper: trace-then-intervene narrative, interpretive captions |
 | LOOKBACK | Language Models Use Lookbacks to Track Beliefs (ICLR 2026) | causal-abstraction paper: hypothesize-then-verify arc, coined-mechanism vocabulary, prediction-first captions; the one ICLR exemplar, so the venue-format reference |
+| LATENTMEM | LatentMem: Customizing Latent Memory for Multi-Agent Systems (arXiv 2602.03036, 2026) | agent-systems method paper: the opener-figure reference; its Figure 1 is a page-1 paradigm comparison (§5a) |
 
 ---
 
@@ -25,9 +26,11 @@ Three legitimate forms, one per exemplar; pick by what the paper is:
 - **Gerund pair naming the two halves of the work** (ROME): "Locating and Editing Factual Associations in GPT". Verb-driven, 7 words, names the object of study and the model family.
 
 LOOKBACK is a second instance of the FOURIER form ("Language Models Use Lookbacks to Track
-Beliefs"): subject + verb + coined term + task. Two of four exemplars now use the declarative
+Beliefs"): subject + verb + coined term + task. Two of the exemplars now use the declarative
 finding-sentence title, and both embed a coined mechanism name in it, which primes the term
-before the abstract defines it.
+before the abstract defines it. LATENTMEM is a second instance of the H2O form ("LatentMem:
+Customizing Latent Memory for Multi-Agent Systems"): the named artifact, a colon, then a
+gerund phrase naming what it does and for whom.
 
 Section-title conventions, consistent across all three and with `doc/CLAUDE.md` §2a:
 top-level sections are noun phrases ("Problem Setup", "Observations", "Empirical Evaluation");
@@ -203,6 +206,43 @@ which matches `doc/CLAUDE.md` ("captions open with the question the figure answe
   respectively..."
 - Uncertainty named where shown: "We show the mean and the standard deviation of the
   validation accuracy across 5 random seeds." (FOURIER Fig. 7b).
+
+## 5a. The opener figure (LATENTMEM Figure 1)
+
+LATENTMEM is the reference for the page-1 figure of an agent or method paper. Its Figure 1
+sits beside the introduction, single-column, and is a paradigm comparison, not the method
+pipeline; the pipeline is its Figure 2, arriving with §4.1 "Overall Pipeline". The two figures
+divide the labor: Figure 1 sells the delta, Figure 2 explains the machine. Anatomy of
+Figure 1, all verifiable on page 1 of the PDF:
+
+- **Two panels side by side, prior paradigm left, theirs right.** Left is titled "Current MAS
+  Memory" with a frozen-snowflake icon on a grey fill; right is "LatentMem MAS Memory" with a
+  flame icon on a tinted fill. The fills carry the claim: grey means fixed and handcrafted,
+  tinted means learnable.
+- **The same skeleton on both sides.** The actors (Task, Agent1, Agent2, Agent3) appear in
+  identical positions in both panels, so the reader compares only the middle mechanism: a
+  "Token Space" holding "Handcrafted Memory Patterns" that emits a strip of identical token
+  tiles, against a "Latent Space" emitting one distinct compact glyph per agent.
+- **The claimed failure modes are drawn inside the prior panel.** Red warning annotations
+  ("memory homogenization", "long-context memory") sit on the left panel, and each has a
+  visually parallel fix on the right: identical tiles against distinct per-agent glyphs, a
+  long tile strip against one compact glyph per agent. The intro's gap statement is inside
+  the figure.
+- **Arrows are labelled with their operation** ("Retrieve", "Context Injection", "Embedding
+  Injection"); auxiliary inputs feed the mechanism as side boxes with dashed arrows
+  ("External Memory Trajectory", "Agent Role Profiles"); a one-item inline legend decodes the
+  coined glyph ("Latent memory").
+- **Caption, verbatim:** "The paradigm comparison between existing multi-agent memory and
+  LatentMem. Instead of relying on handcrafted memory units, LatentMem extracts agent-specific
+  memories from the latent space by combining raw trajectories with agent profiles." The
+  formula: name the comparison, then one "Instead of [prior mechanism], [ours does new
+  mechanism]" sentence.
+
+House translation, since the diagram convention in the figure skill still governs: no emoji
+icons and no multi-hue panels. Frozen-versus-learnable becomes grey fill versus the single
+accent, and the failure-mode warnings become bold dark-grey annotations. What transfers is
+the structure: two panels sharing one skeleton, the failure modes drawn on the prior side,
+each with a visually parallel fix on ours, and a caption that names the comparison.
 
 ## 6. Table captions and conventions
 

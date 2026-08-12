@@ -8,7 +8,7 @@ This folder is different from `doc/related_papers/`: those define what the paper
 
 How to use: drop PDFs here named `<short_slug>_<arxiv_id>.pdf` (e.g. `h2o_heavy_hitter_oracle_2306.14048.pdf`). Open one before drafting a section opener, designing a figure, or restructuring the paper.
 
-The set should be small (2-4 PDFs) and curated. Update it when the target venue or desired voice changes.
+The set should be small (3-5 PDFs) and curated. Update it when the target venue or desired voice changes.
 
 ## Current set
 
@@ -18,3 +18,4 @@ The set should be small (2-4 PDFs) and curated. Update it when the target venue 
 | `fourier_features_addition_2406.03445.pdf` | Pre-trained LLMs Use Fourier Features to Compute Addition (NeurIPS 2024) | declarative finding-titles, mechanism-analysis structure (question, probe, answer), plot style for per-layer/per-component evidence |
 | `rome_locating_editing_facts_2202.05262.pdf` | Locating and Editing Factual Associations in GPT (ROME, NeurIPS 2022) | causal-analysis narrative (trace, then intervene), figure captions that state the finding, restrained claim language |
 | `lookbacks_belief_tracking_2505.14685.pdf` | Language Models Use Lookbacks to Track Beliefs (ICLR 2026) | hypothesize-then-verify section arc, coined-mechanism vocabulary used with total consistency, prediction-first captions; the ICLR-format reference |
+| `latentmem_multi_agent_memory_2602.03036.pdf` | LatentMem: Customizing Latent Memory for Multi-Agent Systems (arXiv 2026) | the agent-paper opener figure: Figure 1 as a two-panel paradigm comparison with failure modes annotated on the prior side (`style_extraction.md` §5a) |
