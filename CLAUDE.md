@@ -52,6 +52,12 @@ CLAUDE.md files.
   assumption ("assuming X; say otherwise"), never a silent guess.
 - **Verify each step.** A task is done when it passes its gate in the routing table, not when
   the code runs. Skipping the checklist means the task is not finished.
+- **A discovered error is fixed at the root, then propagated.** When a mistake surfaces (a
+  miscount, a swapped label, a stale number, a wrong setting), never patch around it or annotate
+  it in place: re-run every experiment whose numbers depend on the wrong thing, and rewrite every
+  doc, status row, figure, and claim built on it, so nothing downstream still rests on the error.
+  A result quoted from a basis you have since found wrong is not "conservative" or "good enough",
+  it is a known-bad number and gets redone.
 - **Surgical changes.** Touch only what the request requires; remove what your change orphaned;
   do not improve adjacent code.
 - **Everything lives inside the repo; nothing outside it is touched.** All files Claude
