@@ -73,8 +73,12 @@ panels sharing one skeleton, the same actors in the same positions on both sides
 mechanism differs, the prior paradigm on the left with its claimed failure modes annotated in
 place, and each failure given a visually parallel fix on the right. The caption names the
 comparison, then one "instead of [prior mechanism], ours [new mechanism]" sentence. The
-detailed dataflow diagram is a separate, later figure. Panel-fill semantics translate to the
-house palette: grey for the fixed prior, the single accent for the learned object.
+detailed dataflow diagram is a separate, later figure. The opener also follows the exemplar's
+visual language rather than the hairline convention in the table above: rounded tinted panels
+(neutral grey for the prior, a cool tint with a dark border for ours), centered bold serif
+panel titles, serif box labels, and the failure modes in bold red inside the prior panel; no
+emoji icons, hues from the colorblind-safe palette, the single warm accent reserved for the
+learned object.
 
 ---
 

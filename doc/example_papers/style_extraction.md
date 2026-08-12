@@ -238,11 +238,12 @@ Figure 1, all verifiable on page 1 of the PDF:
   formula: name the comparison, then one "Instead of [prior mechanism], [ours does new
   mechanism]" sentence.
 
-House translation, since the diagram convention in the figure skill still governs: no emoji
-icons and no multi-hue panels. Frozen-versus-learnable becomes grey fill versus the single
-accent, and the failure-mode warnings become bold dark-grey annotations. What transfers is
-the structure: two panels sharing one skeleton, the failure modes drawn on the prior side,
-each with a visually parallel fix on ours, and a caption that names the comparison.
+The visual language transfers along with the structure: rounded panels and boxes, tinted
+panel fills (neutral grey for the prior paradigm, a cool tint with a dark border for ours),
+centered bold serif panel titles, serif box labels, and the failure modes in bold red inside
+the prior panel. Two departures from the exemplar: emoji icons (the snowflake, the flame) are
+dropped because they do not render reliably in matplotlib, and box hues stay within the
+colorblind-safe palette, with the single warm accent reserved for the learned object.
 
 ## 6. Table captions and conventions
 
