@@ -38,7 +38,11 @@ CLAUDE.md files.
   scratch area, a report) goes in a repo directory, never a sibling path.
 - **Decisions are prompted as options.** At any "what should we do" moment (framing, next
   experiment, restructuring), present 2-4 concrete labeled options with trade-offs and wait.
-  Executing an agreed plan needs no prompt; setting direction always does.
+  Executing an agreed plan needs no prompt; setting direction always does. This covers small
+  additions bundled into an approved fix, not only large ones: a new tracked metric, an extra
+  safeguard, a helper nobody asked for. Each is its own direction-setting moment and gets its own
+  confirmation before landing, even when it looks like a natural companion to what was just
+  approved.
 
 ## Behavior rules (one line each; the pointer holds the detail)
 
