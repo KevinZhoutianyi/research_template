@@ -277,3 +277,19 @@ Only two figure kinds stay in code: data plots (bars, trends, heatmaps -- anythi
 and measured numbers) stay in matplotlib under the house style; typeset tables and algorithm
 pseudocode blocks stay in LaTeX. GPT image garbles axis numbers, table cells, and pseudocode,
 so those never go through this workflow. Everything else illustrative does.
+
+**Two label rules from the auto-research plotting prompts (SakanaAI AI-Scientist v1/v2), which
+generate every figure as matplotlib code and reflect on it for 5 rounds:** (a) no underscores
+in any visible label -- write `loss vs epoch`, not `loss_vs_epoch`; a stray identifier reads as
+a bug in a figure. (b) set fonts larger than default and keep every legend visible, because
+figures are viewed shrunk to column width. Both apply whether the figure is coded or GPT-rendered.
+
+**GPT image is a deliberate exception, not the field norm; code is the fallback.** The serious
+automated-research systems render NO figures through an image model -- SakanaAI writes matplotlib
+scripts from the data, and the DeTikZify/AutomaTikZ line generates TikZ vector code -- precisely
+because code gives exact text, exact numbers, and unlimited resolution, the three things a
+diffusion model cannot guarantee. We use GPT image only for the card-style illustrative diagrams
+(§2c) that are laborious to hand-code AND carry no measured numbers. If after ~3 correction rounds
+a render still garbles a required string, stop re-rolling and build that figure in code
+(matplotlib for a boxes-and-arrows diagram, or a TikZ/`draw`-based script), where the strings are
+typed and therefore correct by construction.
