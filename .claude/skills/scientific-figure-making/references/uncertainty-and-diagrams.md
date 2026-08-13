@@ -241,22 +241,37 @@ Diffusion renders look right but garble small text, so the division of labor is 
 1. **Claude writes a generation prompt, never the image.** The prompt is SELF-CONTAINED: it
    never says "match the attached image" or points at an exemplar file. The exemplars in
    §2c/§2c.1 are Claude's own reference for what to specify -- Claude reads the design off them
-   and writes it out in words. The prompt contains: (a) the visual style described in plain
-   words (background, card shape and borders, kicker labels, arrow style, the ONE accent color
-   named by hex and by the single role it marks, outcome-band colors, sans type, and the
-   negatives: no drop shadows, gradients, 3D, icons, or photographic elements); (b) the full
-   layout spec (panels, cards, arrows, colors by role, node positions); (c) EVERY literal
-   string, each in quotes, marked "render exactly as written, no misspellings" -- quotes, task
-   text, step labels, scores, takeaway lines. Strings come from run data, verified before they
-   enter the prompt.
-2. **Two hard requirements open every prompt:** (i) largest available resolution, landscape
-   16:9 -- GPT image caps the long edge near 1536px, so a wide diagram is only sharp at print
-   width if it is asked for at max size; (ii) render every string exactly, spelling included
-   (a real render once produced "reyiewer" for "reviewer" -- name the at-risk words).
-3. **The user feeds the prompt to GPT image** (no attachment) and returns the render.
-4. **Claude verifies the render against the string list** before it enters the report: every
+   and writes it out in words. Structure the prompt in this order (OpenAI's own guide: identity
+   -> instructions -> spec -> context, most-important first): (a) ONE opening line naming what
+   the figure is and its single job ("a two-panel method diagram for an AI-agent paper; it
+   shows that only the memory bank changes between training and deployment"); (b) the two hard
+   requirements (see step 2), stated before the detail so they are not buried; (c) the visual
+   style in plain words (background, card shape and borders, kicker labels, arrow style, the ONE
+   accent color named by hex and by the single role it marks, outcome-band colors, sans type,
+   and the negatives: no drop shadows, gradients, 3D, icons, photographic elements); (d) the
+   layout spec panel by panel (cards, arrows, colors by role, node positions); (e) EVERY literal
+   string, each in quotes on its own bullet, marked "render exactly as written, no
+   misspellings". Strings come from run data, verified before they enter the prompt.
+2. **Two hard requirements open every prompt:** (i) **size and quality, stated explicitly** --
+   ask for landscape `1536x1024` (or up to `3840x2160` for a wide multi-panel figure) at `high`
+   quality; gpt-image-2 accepts any size up to a 3840px edge (edges multiples of 16, long:short
+   ratio <= 3:1), but silently defaults to a small draft when size is unstated, which is why a
+   wide diagram comes back soft. (ii) render every string exactly, spelling included, and NAME
+   the at-risk tokens inline (a real render produced "reyiewer" for "reviewer" and leaked a
+   layout shorthand word "sub" into a card) -- underscores, arrows `->`, ellipses `...`, and
+   double-hyphens `--` are the ones that garble, so call them out.
+3. **Keep text per element short.** Text rendering and precise label placement are the model's
+   two weakest areas, and both degrade as the string count and length rise. Push detail into the
+   caption (typeset in the doc, always correct) and keep on-figure text to short labels and the
+   few quotes the figure genuinely needs; a card with a paragraph in it will garble where a
+   three-word card will not.
+4. **The user feeds the prompt to GPT image** (no attachment) and returns the render.
+5. **Claude verifies the render against the string list** before it enters the report: every
    quoted string legible and character-exact, arrows connect the stated boxes, no invented
-   labels. A render with any garbled string goes back with a one-line correction note.
+   labels, resolution adequate for print. A render with any garbled string or wrong element
+   goes back as a ONE-LINE correction note naming only the change (multi-turn edit keeps the
+   rest of the image stable; a full re-prompt re-rolls everything and often breaks a string that
+   was previously correct). Budget 2-3 correction rounds as normal, not as failure.
 
 Only two figure kinds stay in code: data plots (bars, trends, heatmaps -- anything with axes
 and measured numbers) stay in matplotlib under the house style; typeset tables and algorithm
