@@ -30,6 +30,23 @@ to implement per project**, not something to import. Write the helpers into the 
 figure script (or plain matplotlib calls that follow the same conventions), and never emit an
 `import` for them.
 
+## First decision: which figure is this?
+
+Before anything else, route by what the figure carries. The two paths use different tools and
+must not be mixed:
+
+| Figure carries | Path | Tool |
+|---|---|---|
+| **Measured numbers** (bars, trends, scatter, heatmaps, anything with axes/data) | code it | matplotlib, house style (rest of this skill) |
+| **Structure only** — a demonstration/illustrative diagram (method, pipeline, gate, loop, motivation example, system overview) | write a GPT-image prompt | ChatGPT image model, via the workflow in `references/uncertainty-and-diagrams.md` §2c.2 |
+| **Typeset content** (tables, algorithm pseudocode) | code it | LaTeX |
+
+The reason for the split: a data plot must show exact numbers a diffusion model cannot render,
+so it is always code; a card-style demonstration diagram carries no measured numbers and is
+laborious to hand-code, so it is a GPT-image prompt Claude writes and the user renders (§2c.2
+has the full recipe, the resolution/quality rules, and the string-verification loop). Code is
+also the fallback when a GPT render keeps garbling a required string.
+
 Open `references/` only as needed; do not preload every file. Start from the table below, then follow links inside the document you opened (and into `figure_*` code via [references/demos.md](references/demos.md)) instead of loading the full reference set up front.
 
 All 25 upstream demo scripts are vendored under `demos/`, so a demo is a file to open, not a URL to
