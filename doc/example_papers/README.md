@@ -10,6 +10,10 @@ How to use: drop PDFs here named `<short_slug>_<arxiv_id>.pdf` (e.g. `h2o_heavy_
 
 The set should be small (3-5 PDFs) and curated. Update it when the target venue or desired voice changes.
 
+[Paper-writing experience](paper_writing_experience.md) records lessons from author revisions:
+recover the intended contribution, connect experiments through questions, choose statistics
+that answer the claim, and preserve coauthor intent when merging edits.
+
 ## Current set
 
 | file | paper | what to mirror |

@@ -48,6 +48,10 @@ figure, or restructuring the paper, open one of those PDFs and check how it hand
 situation. The `related_papers/` notes inform what we cite; the example papers inform how the
 writing reads.
 
+For lessons from author revisions, read
+[paper_writing_experience.md](example_papers/paper_writing_experience.md). It explains how
+changes in framing, measurements, and paragraph logic reveal the intended argument.
+
 ---
 
 ## 2. Claims and evidence
