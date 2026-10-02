@@ -8,12 +8,16 @@
 
 set -e
 
-if [ -z "$1" ] || [ -z "$2" ]; then
+if [ "$#" -ne 2 ]; then
     echo "Usage: $0 <project_name> <destination_path>"
     exit 1
 fi
 
 PROJECT_NAME="$1"
+if [[ ! "$PROJECT_NAME" =~ ^[a-z][a-z0-9_]*$ ]]; then
+    echo "Error: project name must be a lowercase Python identifier."
+    exit 1
+fi
 DEST="$2"
 TEMPLATE_DIR="$(cd "$(dirname "$0")" && pwd)"
 
@@ -45,17 +49,17 @@ find "$DEST_ABS" -type f \( -name "*.md" -o -name "*.toml" -o -name "*.json" -o 
 done
 
 # Rename the src package directory
-if [ -d "$DEST_ABS/experiments/src/PROJECT_NAME" ]; then
-    mv "$DEST_ABS/experiments/src/PROJECT_NAME" "$DEST_ABS/experiments/src/$PROJECT_NAME"
+if [ -d "$DEST_ABS/src/PROJECT_NAME" ]; then
+    mv "$DEST_ABS/src/PROJECT_NAME" "$DEST_ABS/src/$PROJECT_NAME"
 fi
 
 # Create the gitignored data and tmp directories inside the repo
-mkdir -p "$DEST_ABS/experiments/data/checkpoints" "$DEST_ABS/experiments/data/datasets" "$DEST_ABS/experiments/data/outputs" "$DEST_ABS/tmp"
+mkdir -p "$DEST_ABS/src/data/checkpoints" "$DEST_ABS/src/data/datasets" "$DEST_ABS/src/data/outputs" "$DEST_ABS/src/slurm/logs" "$DEST_ABS/tmp"
 
 # Initialize git with the language gate enabled from commit one
 cd "$DEST_ABS"
 git init
-git config core.hooksPath .githooks
+git config core.hooksPath src/githooks
 git add .
 git commit -m "Initial commit from research_template"
 

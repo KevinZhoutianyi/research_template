@@ -12,8 +12,13 @@ uv.lock
 # Throwaway scratch (inside the repo so it stays visible; deletable at any time)
 tmp/
 
-# Checkpoints and large outputs — live in experiments/data/, gitignored
-experiments/data/
+# Keep small shared inputs tracked; ignore bulk storage and generated logs.
+src/data/checkpoints/
+src/data/datasets/
+src/data/outputs/
+src/slurm/logs/
+src/.pytest_cache/
+src/.ruff_cache/
 *.pt
 *.bin
 *.safetensors

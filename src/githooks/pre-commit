@@ -36,7 +36,7 @@ stage_copy() {
 
 fail=0
 
-prose_targets=$(grep -E '^doc/(paper\.md|proposal\.md|paper/.*\.tex)$' <<<"$staged" || true)
+prose_targets=$(grep -E '^doc/(result\.md|proposal\.md|paper/.*\.tex)$' <<<"$staged" || true)
 for f in $prose_targets; do
     "$CHECK_PROSE" "$(stage_copy "$f")" || fail=1
 done

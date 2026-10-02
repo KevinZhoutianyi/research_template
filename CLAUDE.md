@@ -1,5 +1,23 @@
 # Working Guide
 
+## Current layout contract
+
+The README layout is authoritative. Shared code and support directories live in
+`src/`: the project package, `configs/`, `data/`, `tests/`, `slurm/`, and `githooks/`.
+Number experiment folders by scientific question. Do not create duplicate shared
+directories at the root or under `experiments/`, or empty runner placeholders.
+
+`doc/result.md` is the sole current results narrative. Legacy skill references to
+`doc/paper.md` or `doc/status.md` mean this narrative, not extra files to create.
+Apply result/claim consistency checks there and keep job records beside experiments.
+The optional theory guide is `archive/legacy_template/theory/CLAUDE.md`.
+Legacy `experiments/src`, `experiments/data`, and `.githooks` paths mean `src`,
+`src/data`, and `src/githooks`. These mappings override older bundled instructions.
+
+Archive superseded files with an original-path manifest. Preserve live dependencies
+and never move paths held by running jobs. Keep tool-discovered configuration at
+its required location; caches belong under `src/`.
+
 **Re-read this file periodically during long conversations**, before the next task after extended
 implementation work, so the project goals stay in view.
 
